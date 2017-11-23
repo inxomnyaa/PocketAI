@@ -50,8 +50,7 @@ class Cow extends AIEntity{
 
 		$this->getSkillTree()->addSkills(SkillTree::SKILL_WALK, SkillTree::SKILL_JUMP);
 		$this->setEntityProperties(new EntityProperties("entities/cow.json", $this));
-		$this->getEntityProperties()->getActiveComponentGroups();
-		$this->setLootGenerator(new LootGenerator("loot_tables/entities/cow.json", $this));//TODO get from EntityProperties
+		$this->setLootGenerator(new LootGenerator($this->getEntityProperties()->getLootTableName(), $this));
 	}
 
 	public function getName(): string{

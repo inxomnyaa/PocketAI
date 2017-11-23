@@ -7,6 +7,9 @@ namespace xenialdan\PocketAI\entitytype;
 use pocketmine\block\Liquid;
 use pocketmine\entity\Living;
 use pocketmine\math\Vector3;
+use pocketmine\nbt\tag\ByteTag;
+use pocketmine\nbt\tag\CompoundTag;
+use pocketmine\nbt\tag\ListTag;
 use pocketmine\network\mcpe\protocol\AddEntityPacket;
 use pocketmine\Player;
 use xenialdan\PocketAI\EntityProperties;
@@ -56,7 +59,13 @@ abstract class AIEntity extends Living{
 		return $drops;
 	}
 
-	public function getAdditionalSpawnData(){ }
+	public function getAdditionalSpawnData(){
+		$activeComponents = $this->namedtag->getCompoundTag("components") ?? [];
+		/** @var ByteTag $activeComponent */
+		foreach($activeComponents as $activeComponent){
+			if($activeComponent->getValue() !== 0) $this->getEntityProperties()->addActiveComponentGroup($activeComponent->getName());
+		}
+	}
 
 	/**
 	 * @param Player $player
@@ -73,6 +82,15 @@ abstract class AIEntity extends Living{
 		$this->getAdditionalSpawnData();
 		$player->dataPacket($pk);
 		parent::spawnTo($player);
+	}
+
+	public function saveNBT(){
+		parent::saveNBT();
+
+		$activeComponents = new CompoundTag("components");
+		foreach($this->getEntityProperties()->getActiveComponentGroups() as $activeComponentGroupName => $activeComponentGroupValue){
+			$activeComponents->setByte($activeComponentGroupName, 1);
+		}
 	}
 
 	/**

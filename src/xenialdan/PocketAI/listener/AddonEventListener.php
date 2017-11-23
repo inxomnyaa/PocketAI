@@ -30,7 +30,7 @@ class AddonEventListener implements Listener{
 	 * @param ExplosionPrimeEvent $event
 	 */
 	public function onPrime(ExplosionPrimeEvent $event){
-		if (($entity = $event->getEntity()) instanceof AIEntity){
+		if (($entity = $event->getEntity()) instanceof AIEntity && !$event->isCancelled()){
 			$this->owner->getServer()->getPluginManager()->callEvent($ev = new AddonEvent($this->owner, $entity, "minecraft:on_prime"));
 			$event->setCancelled($ev->isCancelled());
 		}
@@ -47,14 +47,12 @@ class AddonEventListener implements Listener{
 	}
 
 	public function onAddonEvent(AddonEvent $event){
-		switch ($event->getEvent()){
-			case "minecraft:entity_spawned": {//TODO move all handling / getting / calling into EntityProperties
-				$entityProperties = $event->getEntity()->getEntityProperties();
-				$behaviours = $entityProperties->getBehaviours();
-				if (!is_null($behaviours["minecraft:entity"]["events"][$event->getEvent()] ?? null)){
-					$entityProperties->applyEvent($behaviours["minecraft:entity"]["events"][$event->getEvent()]);
-				}
-			}
+		$entityProperties = $event->getEntity()->getEntityProperties();
+		$behaviours = $entityProperties->getBehaviours();
+		if (!is_null($behaviours["minecraft:entity"]["events"][$event->getEvent()] ?? null)){
+			$entityProperties->applyEvent($behaviours["minecraft:entity"]["events"][$event->getEvent()]);
+		} else{
+			$this->owner->getLogger()->alert("An AddonEvent was called, but no such definition was found: " . $event->getEvent());
 		}
 	}
 }

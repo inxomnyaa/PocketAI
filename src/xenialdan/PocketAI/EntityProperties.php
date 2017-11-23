@@ -40,7 +40,7 @@ class EntityProperties{
 	}
 
 	public function getBehaviourComponentGroup(string $component_group_name){
-		return $this->getBehaviourComponentGroups()[$component_group_name]??null;
+		return $this->getBehaviourComponentGroups()[$component_group_name] ?? null;
 	}
 
 	public function getBehaviourComponents(){
@@ -53,28 +53,37 @@ class EntityProperties{
 
 	public function getActiveComponentGroups(){
 		var_dump("============ ACTIVE GROUPS ============");
-		var_dump($this->componentGroups);
+		var_dump(array_keys($this->componentGroups));
 		return $this->componentGroups;
 	}
 
-	public function addActiveComponentGroup($component_group_name){
+	public function addActiveComponentGroup(string $component_group_name){
 		var_dump("============ ADD GROUP NAME ============");
 		var_dump($component_group_name);
-		/*if(!is_null(($component_group = $this->getBehaviourComponentGroup($component_group_name)))){
-			$this->componentGroups[] = $component_group_name;
-			foreach ($component_group as $group_data){
-				//TODO set the groups properties
-				var_dump("============ ADDED GROUP DATA ============");
-				var_dump($group_data);
-			}
-		}*/
-		var_dump("============ ACTIVE GROUPS ============");
-		var_dump($this->getActiveComponentGroups());
+		if (!is_null(($component_group = $this->getBehaviourComponentGroup($component_group_name)))){
+			$this->componentGroups[$component_group_name] = $component_group;
+			var_dump("============ ADDED COMPONENT GROUP ============");
+			var_dump($component_group);
+		}
+		$this->getActiveComponentGroups();
 	}
 
-	public function removeActiveComponentGroup($componentGroup){
+	public function removeActiveComponentGroup(string $component_group_name){
 		//TODO set the groups properties
-		unset($this->componentGroups[$componentGroup]);
+		unset($this->componentGroups[$component_group_name]);
+	}
+
+	/* "API"-alike part */
+
+	/**
+	 * @return string
+	 */
+	public function getLootTableName(){
+		$default = "loot_tables/empty.json";
+		foreach ($this->getActiveComponentGroups() as $activeComponentGroup => $activeComponentGroupData){
+			if(!is_null($activeComponentGroupData["minecraft:loot"]??null) && !is_null($activeComponentGroupData["minecraft:loot"]["table"]??null)) return $activeComponentGroupData["minecraft:loot"]["table"];
+		}
+		return $default;
 	}
 
 	public function applyEvent($behaviourEvent_data){
@@ -91,27 +100,15 @@ class EntityProperties{
 					}
 					//TODO temp fix, remove when fixed
 					$subEvents = $function_properties[$this->getRandomWeightedElement($array)];
-					var_dump("============ SUBEVENTS ============");
-					var_dump($subEvents);
-					#$this->applyEvent($subEvents);
+					$this->applyEvent($subEvents);
 					break;
 				}
 				case "add": {
-					var_dump("============ FUNCTION PROPERTIES INSIDE ADD ============");
-					var_dump($function_properties);
 					foreach ($function_properties as $function_property => $function_property_data){
-						var_dump("============ FUNCTION PROPERTY NAME ============");
-						var_dump($function_property);
-						var_dump("============ FUNCTION DATA ============");
-						var_dump($function_property_data);
 						switch ($function_property){
 							case "component_groups": {
-								//TODO apply component group's data
 								foreach ($function_property_data as $componentgroup){
-									var_dump("============ COMPONENT GROUP NAME ============");
-									var_dump($componentgroup);
-									//TODO THIS IS JUST A TEST!
-									#$this->addActiveComponentGroup($componentgroup);
+									$this->addActiveComponentGroup($componentgroup);
 								}
 								break;
 							}
@@ -126,12 +123,13 @@ class EntityProperties{
 					foreach ($function_properties as $function_property => $function_property_data){
 						switch ($function_property){
 							case "component_group": {
-								//TODO remove component group's data
 								foreach ($function_property_data as $componentgroup){
-									//TODO THIS IS JUST A TEST!
 									$this->removeActiveComponentGroup($componentgroup);
 								}
 								break;
+							}
+							default: {
+								$this->entity->getLevel()->getServer()->getLogger()->notice("Function \"" . $function_property . "\" for add component events is not coded into the plugin yet");
 							}
 						}
 					}
@@ -148,6 +146,7 @@ class EntityProperties{
 		}
 	}
 
+	/* HELPER FUNCTIONS */
 	/**
 	 * https://stackoverflow.com/a/11872928/4532380
 	 * getRandomWeightedElement()
