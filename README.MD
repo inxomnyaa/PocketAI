@@ -4,7 +4,7 @@ This plugin is an experimental plugin for PocketMine-MP by pmmp that works with 
 
 You need to download a vanilla addon for 1.2 from minecraft.net
 
-https://meedownloads.blob.core.windows.net/worlds/Vanilla_Behavior_Pack_1.2.0.zip
+https://aka.ms/behaviorpacktemplate
 
 Then put it into /resource_packs in your server folder
 
