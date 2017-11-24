@@ -28,6 +28,7 @@ use pocketmine\event\entity\EntityDamageByEntityEvent;
 use pocketmine\event\entity\EntityDamageEvent;
 use pocketmine\item\Item as ItemItem;
 use pocketmine\math\Vector3;
+use xenialdan\PocketAI\EntityProperties;
 use xenialdan\PocketAI\LootGenerator;
 use xenialdan\PocketAI\SkillTree;
 
@@ -50,7 +51,7 @@ class ElderGuardian extends Guardian{
 		$this->setDataFlag(self::DATA_FLAGS, self::DATA_FLAG_ELDER, true, self::DATA_TYPE_BYTE);
 
 		$this->getSkillTree()->addSkills(SkillTree::SKILL_WALK, SkillTree::SKILL_JUMP, SkillTree::SKILL_SWIM);
-		$this->setLootGenerator(new LootGenerator("loot_tables/entities/elder_guardian.json", $this));
+		$this->setEntityProperties(new EntityProperties("entities/elder_guardian", $this));
 	}
 
 	public function getName(): string{

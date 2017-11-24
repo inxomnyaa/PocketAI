@@ -27,9 +27,8 @@ use pocketmine\entity\Attribute;
 use pocketmine\event\entity\EntityDamageEvent;
 use pocketmine\inventory\Inventory;
 use pocketmine\inventory\InventoryHolder;
-use pocketmine\item\Item;
-use pocketmine\item\Item as ItemItem;
 use pocketmine\math\Vector3;
+use xenialdan\PocketAI\EntityProperties;
 use xenialdan\PocketAI\entitytype\AIEntity;
 use xenialdan\PocketAI\interfaces\Rideable;
 use xenialdan\PocketAI\interfaces\Tamable;
@@ -65,7 +64,7 @@ class Horse extends AIEntity implements Rideable, Tamable, InventoryHolder{
 		$this->getAttributeMap()->getAttribute(Loader::HORSE_JUMP_POWER)->setValue(3.0, true);
 
 		$this->getSkillTree()->addSkills(SkillTree::SKILL_WALK, SkillTree::SKILL_JUMP);
-		$this->setLootGenerator(new LootGenerator("loot_tables/entities/horse.json", $this));
+		$this->setEntityProperties(new EntityProperties("entities/horse", $this));
 	}
 
 	protected function addAttributes(){

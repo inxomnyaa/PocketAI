@@ -9,7 +9,6 @@ use pocketmine\entity\Living;
 use pocketmine\math\Vector3;
 use pocketmine\nbt\tag\ByteTag;
 use pocketmine\nbt\tag\CompoundTag;
-use pocketmine\nbt\tag\ListTag;
 use pocketmine\network\mcpe\protocol\AddEntityPacket;
 use pocketmine\Player;
 use xenialdan\PocketAI\EntityProperties;
@@ -59,11 +58,11 @@ abstract class AIEntity extends Living{
 		return $drops;
 	}
 
-	public function getAdditionalSpawnData(){
+	public function getAdditionalSpawnData(){//TODO properly fix
 		$activeComponents = $this->namedtag->getCompoundTag("components") ?? [];
 		/** @var ByteTag $activeComponent */
-		foreach($activeComponents as $activeComponent){
-			if($activeComponent->getValue() !== 0) $this->getEntityProperties()->addActiveComponentGroup($activeComponent->getName());
+		foreach ($activeComponents as $activeComponent){
+			if ($activeComponent->getValue() !== 0) $this->getEntityProperties()->addActiveComponentGroup($activeComponent->getName());
 		}
 	}
 
@@ -84,11 +83,11 @@ abstract class AIEntity extends Living{
 		parent::spawnTo($player);
 	}
 
-	public function saveNBT(){
+	public function saveNBT(){//TODO properly fix
 		parent::saveNBT();
 
 		$activeComponents = new CompoundTag("components");
-		foreach($this->getEntityProperties()->getActiveComponentGroups() as $activeComponentGroupName => $activeComponentGroupValue){
+		foreach ($this->getEntityProperties()->getActiveComponentGroups() as $activeComponentGroupName => $activeComponentGroupValue){
 			$activeComponents->setByte($activeComponentGroupName, 1);
 		}
 	}
@@ -122,9 +121,9 @@ abstract class AIEntity extends Living{
 	}
 
 	/**
-	 * @return EntityProperties
+	 * @return null|EntityProperties
 	 */
-	public function getEntityProperties(): EntityProperties{
+	public function getEntityProperties(): ?EntityProperties{
 		return $this->entityProperties;
 	}
 

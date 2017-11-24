@@ -15,10 +15,11 @@ class EntityProperties{
 
 	/**
 	 * EntityProperties constructor.
-	 * @param $behaviour
+	 * @param string $behaviour
 	 * @param AIEntity|null $entity
 	 */
-	public function __construct($behaviour, AIEntity $entity = null){
+	public function __construct(string $behaviour, AIEntity $entity = null){
+		$behaviour = str_replace(".json", "", $behaviour);
 		if (!array_key_exists($behaviour, Loader::$behaviour)) throw new \InvalidArgumentException("Entity behaviour/properties file: " . $behaviour . " not found" . (is_null($entity) ? "" : " for entity of type " . $entity->getName()));
 		$this->behaviour = $behaviour;
 		$this->behaviourFile = Loader::$behaviour[$this->behaviour];
@@ -26,6 +27,7 @@ class EntityProperties{
 			throw new \InvalidArgumentException("The Entity behaviour/properties file: " . $behaviour . " has an unsupported format_version and will not be used");
 		}
 		$this->entity = $entity;
+		$this->entity->setLootGenerator(new LootGenerator($this->getLootTableName(), $this->entity) ?? new LootGenerator(null, $this->entity));
 	}
 
 	/**
@@ -44,6 +46,8 @@ class EntityProperties{
 	}
 
 	public function getBehaviourComponents(){
+		var_dump("============ BEHAVIOUR COMPONENTS ============");
+		var_dump(array_keys($this->behaviourFile["minecraft:entity"]["components"]));
 		return $this->behaviourFile["minecraft:entity"]["components"];
 	}
 
@@ -64,6 +68,7 @@ class EntityProperties{
 			$this->componentGroups[$component_group_name] = $component_group;
 			var_dump("============ ADDED COMPONENT GROUP ============");
 			var_dump($component_group);
+			$this->entity->setLootGenerator(new LootGenerator($this->getLootTableName(), $this->entity) ?? new LootGenerator(null, $this->entity));
 		}
 		$this->getActiveComponentGroups();
 	}
@@ -79,10 +84,16 @@ class EntityProperties{
 	 * @return string
 	 */
 	public function getLootTableName(){
+		var_dump("============ GETLOOTTABLENAME ============");
 		$default = "loot_tables/empty.json";
+		$this->getActiveComponentGroups();
 		foreach ($this->getActiveComponentGroups() as $activeComponentGroup => $activeComponentGroupData){
-			if(!is_null($activeComponentGroupData["minecraft:loot"]??null) && !is_null($activeComponentGroupData["minecraft:loot"]["table"]??null)) return $activeComponentGroupData["minecraft:loot"]["table"];
+			var_dump("============ ACTIVECOMPONENTGROUP ============");
+			var_dump($activeComponentGroup);
+			var_dump($activeComponentGroupData);
+			if (isset($activeComponentGroupData["minecraft:loot"]) && isset($activeComponentGroupData["minecraft:loot"]["table"])) return $activeComponentGroupData["minecraft:loot"]["table"];
 		}
+		if (isset($this->getBehaviourComponents()["minecraft:loot"]) && isset($this->getBehaviourComponents()["minecraft:loot"]["table"])) return $this->getBehaviourComponents()["minecraft:loot"]["table"];
 		return $default;
 	}
 

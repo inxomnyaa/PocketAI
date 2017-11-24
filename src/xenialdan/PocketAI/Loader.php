@@ -53,9 +53,9 @@ class Loader extends PluginBase{
 				for ($i = 0; $i < $za->numFiles; $i++){
 					$stat = $za->statIndex($i);
 					if (explode("/", $stat['name'])[0] === "entities"){
-						self::$behaviour[$stat['name']] = json_decode($za->getFromIndex($i), true);
+						self::$behaviour[str_replace(".json", "", $stat['name'])] = json_decode($za->getFromIndex($i), true);
 					} elseif (explode("/", $stat['name'])[0] === "loot_tables"){
-						self::$loottables[$stat['name']] = json_decode($za->getFromIndex($i), true);
+						self::$loottables[str_replace(".json", "", $stat['name'])] = json_decode($za->getFromIndex($i), true);
 					}
 				}
 

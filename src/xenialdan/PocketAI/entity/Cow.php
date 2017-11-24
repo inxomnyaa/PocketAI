@@ -24,12 +24,9 @@ declare(strict_types=1);
 namespace xenialdan\PocketAI\entity;
 
 use pocketmine\event\entity\EntityDamageEvent;
-use pocketmine\item\Item;
-use pocketmine\item\Item as ItemItem;
 use pocketmine\math\Vector3;
 use xenialdan\PocketAI\EntityProperties;
 use xenialdan\PocketAI\entitytype\AIEntity;
-use xenialdan\PocketAI\LootGenerator;
 use xenialdan\PocketAI\SkillTree;
 
 class Cow extends AIEntity{
@@ -49,8 +46,7 @@ class Cow extends AIEntity{
 		parent::initEntity();
 
 		$this->getSkillTree()->addSkills(SkillTree::SKILL_WALK, SkillTree::SKILL_JUMP);
-		$this->setEntityProperties(new EntityProperties("entities/cow.json", $this));
-		$this->setLootGenerator(new LootGenerator($this->getEntityProperties()->getLootTableName(), $this));
+		$this->setEntityProperties(new EntityProperties("entities/cow", $this));
 	}
 
 	public function getName(): string{
@@ -73,12 +69,5 @@ class Cow extends AIEntity{
 		if ($this->isInAir()){
 			parent::applyGravity();
 		}
-	}
-
-	/**
-	 * @return ItemItem
-	 */
-	public function getFeedingItem(): ItemItem{
-		return ItemItem::get(ItemItem::WHEAT);//TODO
 	}
 }

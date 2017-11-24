@@ -26,8 +26,8 @@ namespace xenialdan\PocketAI\entity;
 use pocketmine\entity\Effect;
 use pocketmine\event\entity\EntityDamageByEntityEvent;
 use pocketmine\event\entity\EntityDamageEvent;
-use pocketmine\item\Item as ItemItem;
 use pocketmine\math\Vector3;
+use xenialdan\PocketAI\EntityProperties;
 use xenialdan\PocketAI\entitytype\AIEntity;
 use xenialdan\PocketAI\LootGenerator;
 use xenialdan\PocketAI\SkillTree;
@@ -53,7 +53,7 @@ class Guardian extends AIEntity{
 		$this->addEffect(Effect::getEffect(Effect::WATER_BREATHING)->setDuration(INT32_MAX)->setVisible(false)); // Fixes death in water
 
 		$this->getSkillTree()->addSkills(SkillTree::SKILL_WALK, SkillTree::SKILL_JUMP, SkillTree::SKILL_SWIM);
-		$this->setLootGenerator(new LootGenerator("loot_tables/entities/guardian.json", $this));
+		$this->setEntityProperties(new EntityProperties("entities/guardian", $this));
 	}
 
 	public function getName(): string{

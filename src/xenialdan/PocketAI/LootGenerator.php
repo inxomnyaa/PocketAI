@@ -19,6 +19,7 @@ class LootGenerator{
 	 * @param AIEntity|null $entity
 	 */
 	public function __construct($lootname = "loot_tables/empty.json", AIEntity $entity = null){
+		$lootname = str_replace(".json", "", $lootname);
 		if (!array_key_exists($lootname, Loader::$loottables)) throw new \InvalidArgumentException("LootTable " . $lootname . " not found" . (is_null($entity) ? "" : " for entity of type " . $entity->getName()));
 		$this->lootname = $lootname;
 		$this->lootFile = Loader::$loottables[$this->lootname];
@@ -27,27 +28,35 @@ class LootGenerator{
 
 	public function getRandomLoot(){
 		$items = [];
-		foreach ($this->lootFile["pools"] as $rolls){
+		if (!isset($this->lootFile["pools"])){
+			return $items;
+		}
+		foreach ($this->lootFile["pools"] as $rolls){//TODO sub-pools, see armor chain etc
+			//TODO roll conditions.. :(
+			//TODO i saw "tiers" and have no idea what these do
 			$array = [];
 			$maxrolls = $rolls["rolls"];//TODO: $rolls["conditions"]
 			while ($maxrolls > 0){
 				$maxrolls--;
+				//TODO debug this roll condition check
+				if (isset($rolls["conditions"])){
+					if (!API::checkConditions($this->entity, $rolls["conditions"])) continue;
+				}
+				//
 				foreach ($rolls["entries"] as $index => $entries){
 					$array[] = $entries["weight"] ?? 1;
 				}
 			}
-			var_dump($array);
-			//TODO temp fix, remove when fixed
 			$val = $rolls["entries"][$this->getRandomWeightedElement($array)];
 			//typecheck
 			if ($val["type"] == "loot_table"){
-				$loottable = new LootGenerator($val["name"], $this->entity);//TODO can not find by name because i cut off the path
+				$loottable = new LootGenerator($val["name"], $this->entity);
 				$items = array_merge($items, $loottable->getRandomLoot());
 				unset($loottable);
 			} elseif ($val["type"] == "item"){
 				print $val["name"] . PHP_EOL;
 				//name fix
-				if ($val["name"] == "minecraft:fish" || $val["name"] == "fish") $val["name"] = "raw_fish";
+				if ($val["name"] == "minecraft:fish" || $val["name"] == "fish") $val["name"] = "raw_fish";//TODO proper name fixes via API
 				$item = Item::fromString($val["name"]);
 				if (isset($val["functions"])){
 					foreach ($val["functions"] as $function){
@@ -87,36 +96,10 @@ class LootGenerator{
 								break;
 							}
 							case "furnace_smelt": {
-								/* TODO
-								Mostly bound to conditions (burning)
-								"conditions": [
-									{
-										"condition": "entity_properties",
-										"entity": "this",
-										"properties": {
-											"on_fire": true
-										}
-									}
-								]
-
-								array(1) {
-								  [0]=>
-								  array(3) {
-									["condition"]=>
-									string(17) "entity_properties"
-									["entity"]=>
-									string(4) "this"
-									["properties"]=>
-									array(1) {
-									  ["on_fire"]=>
-									  bool(true)
-									}
-								  }
+								if (isset($function["conditions"])){
+									if (!API::checkConditions($this->entity, $function["conditions"])) break;
 								}
-								*/
-								var_dump($function["conditions"] ?? []);
-								var_dump($rolls["conditions"] ?? []);
-								// todo foreach condition API::checkCondition
+								// todo foreach condition API::checkConditions
 								if ((!is_null($this->entity) && $this->entity->isOnFire()) || is_null($this->entity))
 									$item = Server::getInstance()->getCraftingManager()->matchFurnaceRecipe($item)->getResult();
 								break;
