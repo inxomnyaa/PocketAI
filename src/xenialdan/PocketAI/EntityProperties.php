@@ -92,20 +92,22 @@ class EntityProperties{
 		$this->components[$component_name] = $component_data;
 		switch ($component_name){
 			case "minecraft:loot": {
-				if (isset($component_data["table"])) $this->entity->setLootGenerator(new LootGenerator($component_data["table"], $this->entity));
 				var_dump("============ SET LOOT TABLE ============");
+				if (isset($component_data["table"])) $this->entity->setLootGenerator(new LootGenerator($component_data["table"], $this->entity));
 				var_dump($component_data["table"]);
 				break;
 			}
 			case "minecraft:collision_box": {
 				var_dump("============ SET AABB ============");
-				$this->entity->setWidth($component_data["width"]);
-				$this->entity->setHeight($component_data["height"]);
+				$this->entity->setWidth(floatval($component_data["width"]));
+				$this->entity->setHeight(floatval($component_data["height"]));
+				var_dump($this->entity->getBoundingBox());
 				break;
 			}
 			case "minecraft:scale": {
 				var_dump("============ SET SCALE ============");
-				$this->entity->setScale($component_data["value"]);
+				$this->entity->setScale(floatval($component_data["value"]));
+				var_dump($this->entity->getScale());
 				break;
 			}
 			case "minecraft:is_baby": {
@@ -118,30 +120,51 @@ class EntityProperties{
 				$this->entity->setCanClimb(true);
 				break;
 			}
-			case "minecraft:breathable": {
+			case "minecraft:breathable": {//TODO add other breathable tags -> see documentation
 				var_dump("============ SET BREATHABLE ============");
-				if (isset($component_data["totalSupply"])) $this->entity->setMaxAirSupplyTicks($component_data["totalSupply"]);
+				if (isset($component_data["totalSupply"])) $this->entity->setMaxAirSupplyTicks(intval($component_data["totalSupply"]));
 				if (isset($component_data["breathesWater"]) && $component_data["breathesWater"] == true){
-					$this->entity->setMaxAirSupplyTicks(PHP_INT_MAX);
+					$this->entity->setMaxAirSupplyTicks(10000);//todo
 				}
-				//whatever suffocatetime is
+				var_dump($this->entity->getMaxAirSupplyTicks());
 				break;
 			}
 			case "minecraft:health": {
 				var_dump("============ SET HEALTH ============");
-				if (isset($component_data["max"])) $this->entity->setMaxHealth($component_data["max"]);
+				if (isset($component_data["max"])) $this->entity->setMaxHealth(intval($component_data["max"]));
 				if (isset($component_data["value"]) && $this->entity->ticksLived < 1){
 					if (is_array($component_data["value"])){
-						$this->entity->setHealth(mt_rand($component_data["value"]["range_min"] ?? 1, $component_data["value"]["range_max"] ?? 1));
+						$this->entity->setHealth(floatval(mt_rand(($component_data["value"]["range_min"] ?? 1) * 10, ($component_data["value"]["range_max"] ?? 1) * 10) / 10));
 					} else{
-						$this->entity->setHealth($component_data["value"]);
+						$this->entity->setHealth(floatval($component_data["value"]));
 					}
 				}
+				var_dump($this->entity->getHealth());
+				break;
+			}
+			case "minecraft:horse.jump_strength": {
+				var_dump("============ SET HORSE JUMP STRENGTH ============");
+				if (isset($component_data["max"])) $this->entity->getAttributeMap()->getAttribute(Loader::HORSE_JUMP_POWER)->setMaxValue(floatval($component_data["max"]));
+				if (isset($component_data["value"]) && $this->entity->ticksLived < 1){
+					if (is_array($component_data["value"])){
+						$this->entity->getAttributeMap()->getAttribute(Loader::HORSE_JUMP_POWER)->setValue(floatval(mt_rand(($component_data["value"]["range_min"] ?? 1) * 10, ($component_data["value"]["range_max"] ?? 1) * 10) / 10));
+					} else{
+						$this->entity->getAttributeMap()->getAttribute(Loader::HORSE_JUMP_POWER)->setValue(floatval($component_data["value"]));
+					}
+				}
+				var_dump($this->entity->getAttributeMap()->getAttribute(Loader::HORSE_JUMP_POWER)->getValue());
 				break;
 			}
 			case "minecraft:movement": {
 				var_dump("============ SET MOVEMENT - AKA SPEED ============");
-				$this->entity->setBaseSpeed($component_data["value"]);
+				if (isset($component_data["value"]) && $this->entity->ticksLived < 1){
+					if (is_array($component_data["value"])){
+						$this->entity->setBaseSpeed(floatval(mt_rand(($component_data["value"]["range_min"] ?? 1) * 10, ($component_data["value"]["range_max"] ?? 1) * 10) / 10));
+					} else{
+						$this->entity->setBaseSpeed(floatval($component_data["value"]));
+					}
+				}
+				var_dump($this->entity->getBaseSpeed());
 				break;
 			}
 			default: {

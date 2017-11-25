@@ -26,31 +26,22 @@ namespace xenialdan\PocketAI\entity;
 use pocketmine\entity\Effect;
 use pocketmine\event\entity\EntityDamageByEntityEvent;
 use pocketmine\event\entity\EntityDamageEvent;
-use pocketmine\item\Item as ItemItem;
 use pocketmine\math\Vector3;
 use xenialdan\PocketAI\EntityProperties;
-use xenialdan\PocketAI\SkillTree;
+use xenialdan\PocketAI\entitytype\AIEntity;
 
 class ElderGuardian extends Guardian{
 	const NETWORK_ID = self::ELDER_GUARDIAN;
 
-	/** @var float */
-	public $height = 0.9;//TODO
-	/** @var float */
-	public $width = 0.5;
-
 	/** @var Vector3 */
 	public $direction = null;
-	public $speed = 0.1 * 5;
 
 	public function initEntity(){
-		$this->setMaxHealth(80);
-		parent::initEntity();
+		$this->setEntityProperties(new EntityProperties("entities/elder_guardian", $this));
+		AIEntity::initEntity();
+
 		$this->addEffect(Effect::getEffect(Effect::WATER_BREATHING)->setDuration(INT32_MAX)->setVisible(false)); // Fixes death in water
 		$this->setDataFlag(self::DATA_FLAGS, self::DATA_FLAG_ELDER, true, self::DATA_TYPE_BYTE);
-
-		$this->getSkillTree()->addSkills(SkillTree::SKILL_WALK, SkillTree::SKILL_JUMP, SkillTree::SKILL_SWIM);
-		$this->setEntityProperties(new EntityProperties("entities/elder_guardian", $this));
 	}
 
 	public function getName(): string{
@@ -70,30 +61,5 @@ class ElderGuardian extends Guardian{
 				$this->direction = (new Vector3($this->x - $e->x, $this->y - $e->y, $this->z - $e->z))->normalize();
 			}
 		}
-	}
-
-
-	public function entityBaseTick(int $tickDiff = 1): bool{
-		if ($this->closed !== false){
-			return false;
-		}
-		$hasUpdate = parent::entityBaseTick($tickDiff);
-		return $hasUpdate;
-	}
-
-	public function getDrops(): array{
-		$drops = [ItemItem::get(ItemItem::PRISMARINE_SHARD, 0, mt_rand(0, 2))];
-
-		if ($this->getLastDamageCause() === EntityDamageEvent::CAUSE_FIRE){//#TODO these are random
-			$drops[] = ItemItem::get(ItemItem::COOKED_FISH, 0, mt_rand(0, 1));
-		} else{
-			$drops[] = ItemItem::get(ItemItem::RAW_FISH, 0, mt_rand(0, 1));
-		}
-
-		$drops[] = ItemItem::get(ItemItem::PRISMARINE_CRYSTALS, 0, mt_rand(0, 100) < 33 ? 1 : 0);
-
-		$drops[] = ItemItem::get(ItemItem::SPONGE, 1);
-
-		return $drops;
 	}
 }

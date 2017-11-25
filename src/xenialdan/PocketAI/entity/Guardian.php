@@ -29,30 +29,22 @@ use pocketmine\event\entity\EntityDamageEvent;
 use pocketmine\math\Vector3;
 use xenialdan\PocketAI\EntityProperties;
 use xenialdan\PocketAI\entitytype\AIEntity;
-use xenialdan\PocketAI\SkillTree;
 
 class Guardian extends AIEntity{
 	const NETWORK_ID = self::GUARDIAN;
 
-	/** @var float */
-	public $height = 0.9;//TODO
-	/** @var float */
-	public $width = 0.5;
-
 	/** @var Vector3 */
 	public $direction = null;
-	public $speed = 0.1 * 5;
+	public $speed = 0.1 * 5;//TODO dynamic
 	public $landSpeed = 0.1 * 2;
 
 	private $switchDirectionTicker = 0;
 
 	public function initEntity(){
-		$this->setMaxHealth(30);
+		$this->setEntityProperties(new EntityProperties("entities/guardian", $this));
+
 		parent::initEntity();
 		$this->addEffect(Effect::getEffect(Effect::WATER_BREATHING)->setDuration(INT32_MAX)->setVisible(false)); // Fixes death in water
-
-		$this->getSkillTree()->addSkills(SkillTree::SKILL_WALK, SkillTree::SKILL_JUMP, SkillTree::SKILL_SWIM);
-		$this->setEntityProperties(new EntityProperties("entities/guardian", $this));
 	}
 
 	public function getName(): string{

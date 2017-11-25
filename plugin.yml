@@ -1,7 +1,7 @@
 ---
 name: PocketAI
 author: XenialDan
-version: 0.4.5
+version: 0.5.2
 main: xenialdan\PocketAI\Loader
 api: 3.0.0-ALPHA9
 ...

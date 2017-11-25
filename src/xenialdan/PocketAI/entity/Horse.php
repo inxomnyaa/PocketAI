@@ -34,36 +34,26 @@ use xenialdan\PocketAI\interfaces\Rideable;
 use xenialdan\PocketAI\interfaces\Tamable;
 use xenialdan\PocketAI\inventory\HorseInventory;
 use xenialdan\PocketAI\Loader;
-use xenialdan\PocketAI\SkillTree;
 
 class Horse extends AIEntity implements Rideable, Tamable, InventoryHolder{
 	const NETWORK_ID = self::HORSE;
 
-	/** @var float */
-	public $height = 0.9;//TODO
-	/** @var float */
-	public $width = 0.5;
-
 	/** @var Vector3 */
 	public $direction = null;
-	public $speed = 0.1 * 3;
 
 	/** @var HorseInventory */
 	private $inventory;
 
 	public function initEntity(){
-		$this->setMaxHealth(10);
-		$this->setDataFlag(self::DATA_FLAGS, self::DATA_FLAG_TAMED, true);
-		$this->setDataFlag(self::DATA_FLAGS, self::DATA_FLAG_WASD_CONTROLLED, true);
-		$this->setDataFlag(self::DATA_FLAGS, self::DATA_FLAG_CAN_POWER_JUMP, true);
-		$this->setDataFlag(self::DATA_FLAGS, self::DATA_FLAG_HAS_COLLISION, true);
+		$this->setEntityProperties(new EntityProperties("entities/horse", $this));
+		#$this->setDataFlag(self::DATA_FLAGS, self::DATA_FLAG_TAMED, true);
+		#$this->setDataFlag(self::DATA_FLAGS, self::DATA_FLAG_WASD_CONTROLLED, true);
+		#$this->setDataFlag(self::DATA_FLAGS, self::DATA_FLAG_CAN_POWER_JUMP, true);
+		#$this->setDataFlag(self::DATA_FLAGS, self::DATA_FLAG_HAS_COLLISION, true);
 		parent::initEntity();
 
 		$this->inventory = new HorseInventory($this);
-		$this->getAttributeMap()->getAttribute(Loader::HORSE_JUMP_POWER)->setValue(3.0, true);
 
-		$this->getSkillTree()->addSkills(SkillTree::SKILL_WALK, SkillTree::SKILL_JUMP);
-		$this->setEntityProperties(new EntityProperties("entities/horse", $this));
 	}
 
 	protected function addAttributes(){

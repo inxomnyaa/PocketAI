@@ -16,6 +16,8 @@ use xenialdan\PocketAI\entity\Cow;
 use xenialdan\PocketAI\entity\ElderGuardian;
 use xenialdan\PocketAI\entity\Guardian;
 use xenialdan\PocketAI\entity\Horse;
+use xenialdan\PocketAI\entity\Squid;
+use xenialdan\PocketAI\entity\Wolf;
 use xenialdan\PocketAI\listener\AddonEventListener;
 use xenialdan\PocketAI\listener\EventListener;
 use xenialdan\PocketAI\listener\InventoryEventListener;
@@ -71,14 +73,18 @@ class Loader extends PluginBase{
 	}
 
 	public function registerEntities(){
-		if (Entity::registerEntity(Guardian::class, false, ["pocketai:guardian", "minecraft:guardian"]))
+		if (Entity::registerEntity(Guardian::class, true, ["pocketai:guardian", "minecraft:guardian"]))
 			$this->getLogger()->notice("Registered AI for: Guardian");
-		if (Entity::registerEntity(ElderGuardian::class, false, ["pocketai:elder_guardian", "minecraft:elder_guardian"]))
+		if (Entity::registerEntity(ElderGuardian::class, true, ["pocketai:elder_guardian", "minecraft:elder_guardian"]))
 			$this->getLogger()->notice("Registered AI for: ElderGuardian");
-		if (Entity::registerEntity(Cow::class, false, ["pocketai:cow", "minecraft:cow"]))
+		if (Entity::registerEntity(Cow::class, true, ["pocketai:cow", "minecraft:cow"]))
 			$this->getLogger()->notice("Registered AI for: Cow");
-		if (Entity::registerEntity(Horse::class, false, ["pocketai:horse", "minecraft:horse"]))
+		if (Entity::registerEntity(Horse::class, true, ["pocketai:horse", "minecraft:horse"]))
 			$this->getLogger()->notice("Registered AI for: Horse");
+		if (Entity::registerEntity(Squid::class, true, ["pocketai:squid", "minecraft:squid"]))
+			$this->getLogger()->notice("Registered AI for: Squid");
+		if (Entity::registerEntity(Wolf::class, true, ["pocketai:wolf", "minecraft:wolf"]))
+			$this->getLogger()->notice("Registered AI for: Wolf");
 	}
 
 	public static function isRiding(Entity $entity){

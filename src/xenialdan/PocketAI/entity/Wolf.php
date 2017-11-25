@@ -27,18 +27,18 @@ use pocketmine\math\Vector3;
 use xenialdan\PocketAI\EntityProperties;
 use xenialdan\PocketAI\entitytype\AIEntity;
 
-class Cow extends AIEntity{
-	const NETWORK_ID = self::COW;
+class Wolf extends AIEntity{
+	const NETWORK_ID = self::WOLF;
 
 	/** @var Vector3 */
 	public $direction = null;
 
 	public function initEntity(){
-		$this->setEntityProperties(new EntityProperties("entities/cow", $this));
+		$this->setEntityProperties(new EntityProperties("entities/wolf", $this));
 		parent::initEntity();
 	}
 
 	public function getName(): string{
-		return "Cow";
+		return "Wolf";
 	}
 }

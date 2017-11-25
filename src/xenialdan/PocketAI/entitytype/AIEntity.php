@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace xenialdan\PocketAI\entitytype;
 
 use pocketmine\block\Liquid;
+use pocketmine\entity\Attribute;
 use pocketmine\entity\Living;
 use pocketmine\math\Vector3;
 use pocketmine\nbt\tag\ByteTag;
@@ -13,12 +14,9 @@ use pocketmine\network\mcpe\protocol\AddEntityPacket;
 use pocketmine\Player;
 use xenialdan\PocketAI\EntityProperties;
 use xenialdan\PocketAI\LootGenerator;
-use xenialdan\PocketAI\SkillTree;
 
 abstract class AIEntity extends Living{
 
-	/** @var SkillTree */
-	public $skillTree;
 	/** @var LootGenerator */
 	public $lootGenerator;
 	/** @var EntityProperties */
@@ -29,7 +27,6 @@ abstract class AIEntity extends Living{
 	protected function initEntity(){
 		parent::initEntity();
 
-		$this->setSkillTree(new SkillTree($this));
 		$this->setLootGenerator(new LootGenerator());
 	}
 
@@ -47,14 +44,14 @@ abstract class AIEntity extends Living{
 	 * @return float
 	 */
 	public function getBaseSpeed(): float{
-		return $this->baseSpeed;
+		return $this->getAttributeMap()->getAttribute(Attribute::MOVEMENT_SPEED)->getDefaultValue();
 	}
 
 	/**
 	 * @param float $baseSpeed
 	 */
 	public function setBaseSpeed(float $baseSpeed){
-		$this->baseSpeed = $baseSpeed;
+		$this->getAttributeMap()->getAttribute(Attribute::MOVEMENT_SPEED)->setDefaultValue($baseSpeed);
 	}
 
 	public function getDrops(): array{
@@ -116,20 +113,6 @@ abstract class AIEntity extends Living{
 
 	public function generateRandomDirection(): Vector3{
 		return new Vector3(mt_rand(-1000, 1000) / 1000, mt_rand(-500, 500) / 1000, mt_rand(-1000, 1000) / 1000);
-	}
-
-	/**
-	 * @return SkillTree
-	 */
-	public function getSkillTree(): SkillTree{
-		return $this->skillTree;
-	}
-
-	/**
-	 * @param SkillTree $skillTree
-	 */
-	public function setSkillTree(SkillTree $skillTree){
-		$this->skillTree = $skillTree;
 	}
 
 	/**
