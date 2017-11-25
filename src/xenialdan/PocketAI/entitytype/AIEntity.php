@@ -23,6 +23,8 @@ abstract class AIEntity extends Living{
 	public $lootGenerator;
 	/** @var EntityProperties */
 	public $entityProperties;
+	/** @var float */
+	public $baseSpeed = 0.0;
 
 	protected function initEntity(){
 		parent::initEntity();
@@ -31,26 +33,28 @@ abstract class AIEntity extends Living{
 		$this->setLootGenerator(new LootGenerator());
 	}
 
+	public function setWidth(float $width){
+		$this->width = $width;
+		$this->setDataProperty(self::DATA_BOUNDING_BOX_WIDTH, self::DATA_TYPE_FLOAT, $width);
+	}
+
+	public function setHeight(float $height){
+		$this->height = $height;
+		$this->setDataProperty(self::DATA_BOUNDING_BOX_HEIGHT, self::DATA_TYPE_FLOAT, $height);
+	}
+
 	/**
-	 * @return bool
+	 * @return float
 	 */
-	public function isInAir(): bool{
-		return !$this->isOnGround() && !$this->isCollidedVertically && !$this->isInsideOfLiquid();//TODO check isCollidedVertically when sth above
+	public function getBaseSpeed(): float{
+		return $this->baseSpeed;
 	}
 
-	public function isInsideOfLiquid(): bool{
-		$block = $this->level->getBlock($this->temporalVector->setComponents(floor($this->x), floor($y = ($this->y + $this->getEyeHeight())), floor($this->z)));
-
-		if ($block instanceof Liquid){
-			$f = ($block->y + 1) - ($block->getFluidHeightPercent() - 0.1111111);
-			return $y < $f;
-		}
-
-		return false;
-	}
-
-	public function generateRandomDirection(): Vector3{
-		return new Vector3(mt_rand(-1000, 1000) / 1000, mt_rand(-500, 500) / 1000, mt_rand(-1000, 1000) / 1000);
+	/**
+	 * @param float $baseSpeed
+	 */
+	public function setBaseSpeed(float $baseSpeed){
+		$this->baseSpeed = $baseSpeed;
 	}
 
 	public function getDrops(): array{
@@ -90,6 +94,28 @@ abstract class AIEntity extends Living{
 		foreach ($this->getEntityProperties()->getActiveComponentGroups() as $activeComponentGroupName => $activeComponentGroupValue){
 			$activeComponents->setByte($activeComponentGroupName, 1);
 		}
+	}
+
+	/**
+	 * @return bool
+	 */
+	public function isInAir(): bool{
+		return !$this->isOnGround() && !$this->isCollidedVertically && !$this->isInsideOfLiquid();//TODO check isCollidedVertically when sth above
+	}
+
+	public function isInsideOfLiquid(): bool{
+		$block = $this->level->getBlock($this->temporalVector->setComponents(floor($this->x), floor($y = ($this->y + $this->getEyeHeight())), floor($this->z)));
+
+		if ($block instanceof Liquid){
+			$f = ($block->y + 1) - ($block->getFluidHeightPercent() - 0.1111111);
+			return $y < $f;
+		}
+
+		return false;
+	}
+
+	public function generateRandomDirection(): Vector3{
+		return new Vector3(mt_rand(-1000, 1000) / 1000, mt_rand(-500, 500) / 1000, mt_rand(-1000, 1000) / 1000);
 	}
 
 	/**

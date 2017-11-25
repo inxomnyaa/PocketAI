@@ -12,6 +12,8 @@ class EntityProperties{
 	private $behaviourFile = [];
 	/** @var array */
 	public $componentGroups = [];
+	/** @var array */
+	public $components = [];
 
 	/**
 	 * EntityProperties constructor.
@@ -27,7 +29,9 @@ class EntityProperties{
 			throw new \InvalidArgumentException("The Entity behaviour/properties file: " . $behaviour . " has an unsupported format_version and will not be used");
 		}
 		$this->entity = $entity;
-		$this->entity->setLootGenerator(new LootGenerator($this->getLootTableName(), $this->entity) ?? new LootGenerator(null, $this->entity));
+		foreach ($this->getBehaviourComponents() as $component_name => $component_data){
+			$this->applyComponent($component_name, $component_data);
+		}
 	}
 
 	/**
@@ -67,8 +71,10 @@ class EntityProperties{
 		if (!is_null(($component_group = $this->getBehaviourComponentGroup($component_group_name)))){
 			$this->componentGroups[$component_group_name] = $component_group;
 			var_dump("============ ADDED COMPONENT GROUP ============");
-			var_dump($component_group);
-			$this->entity->setLootGenerator(new LootGenerator($this->getLootTableName(), $this->entity) ?? new LootGenerator(null, $this->entity));
+			var_dump($component_group_name);
+			foreach ($component_group as $component_name => $component_data){
+				$this->applyComponent($component_name, $component_data);
+			}
 		}
 		$this->getActiveComponentGroups();
 	}
@@ -80,21 +86,69 @@ class EntityProperties{
 
 	/* "API"-alike part */
 
-	/**
-	 * @return string
-	 */
-	public function getLootTableName(){
-		var_dump("============ GETLOOTTABLENAME ============");
-		$default = "loot_tables/empty.json";
-		$this->getActiveComponentGroups();
-		foreach ($this->getActiveComponentGroups() as $activeComponentGroup => $activeComponentGroupData){
-			var_dump("============ ACTIVECOMPONENTGROUP ============");
-			var_dump($activeComponentGroup);
-			var_dump($activeComponentGroupData);
-			if (isset($activeComponentGroupData["minecraft:loot"]) && isset($activeComponentGroupData["minecraft:loot"]["table"])) return $activeComponentGroupData["minecraft:loot"]["table"];
+	public function applyComponent(string $component_name, array $component_data){
+		var_dump("============ APPLY COMPONENT ============");
+		var_dump($component_name);
+		$this->components[$component_name] = $component_data;
+		switch ($component_name){
+			case "minecraft:loot": {
+				if (isset($component_data["table"])) $this->entity->setLootGenerator(new LootGenerator($component_data["table"], $this->entity));
+				var_dump("============ SET LOOT TABLE ============");
+				var_dump($component_data["table"]);
+				break;
+			}
+			case "minecraft:collision_box": {
+				var_dump("============ SET AABB ============");
+				$this->entity->setWidth($component_data["width"]);
+				$this->entity->setHeight($component_data["height"]);
+				break;
+			}
+			case "minecraft:scale": {
+				var_dump("============ SET SCALE ============");
+				$this->entity->setScale($component_data["value"]);
+				break;
+			}
+			case "minecraft:is_baby": {
+				var_dump("============ SET BABY ============");
+				$this->entity->setDataFlag(AIEntity::DATA_FLAGS, AIEntity::DATA_FLAG_BABY, true);
+				break;
+			}
+			case "minecraft:can_climb": {
+				var_dump("============ SET CAN CLIMB ============");
+				$this->entity->setCanClimb(true);
+				break;
+			}
+			case "minecraft:breathable": {
+				var_dump("============ SET BREATHABLE ============");
+				if (isset($component_data["totalSupply"])) $this->entity->setMaxAirSupplyTicks($component_data["totalSupply"]);
+				if (isset($component_data["breathesWater"]) && $component_data["breathesWater"] == true){
+					$this->entity->setMaxAirSupplyTicks(PHP_INT_MAX);
+				}
+				//whatever suffocatetime is
+				break;
+			}
+			case "minecraft:health": {
+				var_dump("============ SET HEALTH ============");
+				if (isset($component_data["max"])) $this->entity->setMaxHealth($component_data["max"]);
+				if (isset($component_data["value"]) && $this->entity->ticksLived < 1){
+					if (is_array($component_data["value"])){
+						$this->entity->setHealth(mt_rand($component_data["value"]["range_min"] ?? 1, $component_data["value"]["range_max"] ?? 1));
+					} else{
+						$this->entity->setHealth($component_data["value"]);
+					}
+				}
+				break;
+			}
+			case "minecraft:movement": {
+				var_dump("============ SET MOVEMENT - AKA SPEED ============");
+				$this->entity->setBaseSpeed($component_data["value"]);
+				break;
+			}
+			default: {
+				var_dump("============ TRIED TO APPLY UNIMPLEMENTED COMPONENT ============");
+				var_dump($component_name);
+			}
 		}
-		if (isset($this->getBehaviourComponents()["minecraft:loot"]) && isset($this->getBehaviourComponents()["minecraft:loot"]["table"])) return $this->getBehaviourComponents()["minecraft:loot"]["table"];
-		return $default;
 	}
 
 	public function applyEvent($behaviourEvent_data){

@@ -34,7 +34,6 @@ use xenialdan\PocketAI\interfaces\Rideable;
 use xenialdan\PocketAI\interfaces\Tamable;
 use xenialdan\PocketAI\inventory\HorseInventory;
 use xenialdan\PocketAI\Loader;
-use xenialdan\PocketAI\LootGenerator;
 use xenialdan\PocketAI\SkillTree;
 
 class Horse extends AIEntity implements Rideable, Tamable, InventoryHolder{

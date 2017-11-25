@@ -29,7 +29,6 @@ use pocketmine\event\entity\EntityDamageEvent;
 use pocketmine\item\Item as ItemItem;
 use pocketmine\math\Vector3;
 use xenialdan\PocketAI\EntityProperties;
-use xenialdan\PocketAI\LootGenerator;
 use xenialdan\PocketAI\SkillTree;
 
 class ElderGuardian extends Guardian{

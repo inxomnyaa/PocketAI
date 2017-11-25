@@ -29,7 +29,6 @@ use pocketmine\event\entity\EntityDamageEvent;
 use pocketmine\math\Vector3;
 use xenialdan\PocketAI\EntityProperties;
 use xenialdan\PocketAI\entitytype\AIEntity;
-use xenialdan\PocketAI\LootGenerator;
 use xenialdan\PocketAI\SkillTree;
 
 class Guardian extends AIEntity{
