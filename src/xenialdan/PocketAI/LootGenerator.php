@@ -47,7 +47,10 @@ class LootGenerator{
 					$array[] = $entries["weight"] ?? 1;
 				}
 			}
-			$val = $rolls["entries"][$this->getRandomWeightedElement($array)];
+			if (count($array) > 1)
+				$val = $rolls["entries"][$this->getRandomWeightedElement($array)] ?? [];
+			else
+				$val = $rolls["entries"][0] ?? [];
 			//typecheck
 			if ($val["type"] == "loot_table"){
 				$loottable = new LootGenerator($val["name"], $this->entity);
