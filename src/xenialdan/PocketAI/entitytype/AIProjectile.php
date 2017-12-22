@@ -7,6 +7,7 @@ namespace xenialdan\PocketAI\entitytype;
 use pocketmine\block\Liquid;
 use pocketmine\entity\Attribute;
 use pocketmine\entity\Living;
+use pocketmine\entity\projectile\Projectile;
 use pocketmine\math\Vector3;
 use pocketmine\nbt\tag\ByteTag;
 use pocketmine\nbt\tag\CompoundTag;
@@ -16,7 +17,7 @@ use xenialdan\PocketAI\EntityProperties;
 use xenialdan\PocketAI\inventory\AIEntityInventory;
 use xenialdan\PocketAI\LootGenerator;
 
-abstract class AIEntity extends Living{
+abstract class AIProjectile extends Projectile{
 
 	/** @var LootGenerator */
 	public $lootGenerator;

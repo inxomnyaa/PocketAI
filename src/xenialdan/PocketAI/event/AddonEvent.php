@@ -1,6 +1,6 @@
 <?php
 
-namespace xenialdan\PocketAI\events;
+namespace xenialdan\PocketAI\event;
 
 use pocketmine\event\Cancellable;
 use pocketmine\event\plugin\PluginEvent;

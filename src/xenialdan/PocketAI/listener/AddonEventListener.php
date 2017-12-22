@@ -7,7 +7,7 @@ use pocketmine\event\entity\ExplosionPrimeEvent;
 use pocketmine\event\Listener;
 use pocketmine\plugin\Plugin;
 use xenialdan\PocketAI\entitytype\AIEntity;
-use xenialdan\PocketAI\events\AddonEvent;
+use xenialdan\PocketAI\event\AddonEvent;
 
 /**
  * Class AddonEventListener

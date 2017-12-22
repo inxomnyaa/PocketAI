@@ -7,6 +7,7 @@ use pocketmine\item\Tool;
 use pocketmine\plugin\PluginException;
 use pocketmine\Server;
 use xenialdan\PocketAI\entitytype\AIEntity;
+use xenialdan\PocketAI\entitytype\AIProjectile;
 
 class LootGenerator{
 	private $lootname = "empty";
@@ -16,9 +17,12 @@ class LootGenerator{
 	/**
 	 * LootGenerator constructor.
 	 * @param $lootname
-	 * @param AIEntity|null $entity
+	 * @param AIEntity|AIProjectile|null $entity
 	 */
-	public function __construct($lootname = "loot_tables/empty.json", AIEntity $entity = null){
+	public function __construct($lootname = "loot_tables/empty.json", $entity = null){
+		if(!$entity instanceof AIEntity && !$entity instanceof AIProjectile && !is_null($entity)){
+			throw new PluginException("Can not initialize LootGenerator for class of type: " . get_class($entity));
+		}
 		$lootname = str_replace(".json", "", $lootname);
 		if (!array_key_exists($lootname, Loader::$loottables)) throw new \InvalidArgumentException("LootTable " . $lootname . " not found" . (is_null($entity) ? "" : " for entity of type " . $entity->getName()));
 		$this->lootname = $lootname;

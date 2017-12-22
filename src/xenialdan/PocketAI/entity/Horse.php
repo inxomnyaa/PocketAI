@@ -25,14 +25,13 @@ namespace xenialdan\PocketAI\entity;
 
 use pocketmine\entity\Attribute;
 use pocketmine\event\entity\EntityDamageEvent;
-use pocketmine\inventory\Inventory;
 use pocketmine\inventory\InventoryHolder;
 use pocketmine\math\Vector3;
 use xenialdan\PocketAI\EntityProperties;
 use xenialdan\PocketAI\entitytype\AIEntity;
+use xenialdan\PocketAI\event\AddonEvent;
 use xenialdan\PocketAI\interfaces\Rideable;
 use xenialdan\PocketAI\interfaces\Tamable;
-use xenialdan\PocketAI\inventory\HorseInventory;
 use xenialdan\PocketAI\Loader;
 
 class Horse extends AIEntity implements Rideable, Tamable, InventoryHolder{
@@ -41,18 +40,18 @@ class Horse extends AIEntity implements Rideable, Tamable, InventoryHolder{
 	/** @var Vector3 */
 	public $direction = null;
 
-	/** @var HorseInventory */
-	private $inventory;
-
 	public function initEntity(){
 		$this->setEntityProperties(new EntityProperties("entities/horse", $this));
-		#$this->setDataFlag(self::DATA_FLAGS, self::DATA_FLAG_TAMED, true);
-		#$this->setDataFlag(self::DATA_FLAGS, self::DATA_FLAG_WASD_CONTROLLED, true);
-		#$this->setDataFlag(self::DATA_FLAGS, self::DATA_FLAG_CAN_POWER_JUMP, true);
-		#$this->setDataFlag(self::DATA_FLAGS, self::DATA_FLAG_HAS_COLLISION, true);
 		parent::initEntity();
 
-		$this->inventory = new HorseInventory($this);
+		// TODO: remove - just for testing purposes
+		//Temp auto-tame
+		Loader::getInstance()->getServer()->getPluginManager()->callEvent($ev = new AddonEvent(Loader::getInstance(), $this, "minecraft:on_tame"));
+		#$this->setDataFlag(self::DATA_FLAGS, self::DATA_FLAG_TAMED, true);
+		$this->setDataFlag(self::DATA_FLAGS, self::DATA_FLAG_WASD_CONTROLLED, true);
+		$this->setDataFlag(self::DATA_FLAGS, self::DATA_FLAG_CAN_POWER_JUMP, true);
+		$this->setDataFlag(self::DATA_FLAGS, self::DATA_FLAG_SADDLED, true);
+		#$this->setDataFlag(self::DATA_FLAGS, self::DATA_FLAG_HAS_COLLISION, true);
 
 	}
 
@@ -83,33 +82,28 @@ class Horse extends AIEntity implements Rideable, Tamable, InventoryHolder{
 		}
 	}
 
-	/**
-	 * Get the object related inventory
-	 *
-	 * @return Inventory
-	 */
-	public function getInventory(){
-		return $this->inventory;
-	}
-
 	public function isTamed(): bool{
-		return $this->getDataFlag(self::DATA_FLAGS, self::DATA_FLAG_TAMED);
+		return $this->getGenericFlag(self::DATA_FLAG_TAMED);
 	}
-
-	/**
-	 * @return bool
-	 */
-	public function isSitting(): bool{ return false; }
-
-	/**
-	 * @param bool $value
-	 */
-	public function setSitting(bool $value = true){ }
 
 	/**
 	 * @param bool $value
 	 */
 	public function setTamed(bool $value = true){
-		$this->setDataFlag(self::DATA_FLAGS, self::DATA_FLAG_TAMED, $value);
+		$this->setGenericFlag(self::DATA_FLAG_TAMED, $value);
+	}
+
+	/**
+	 * @return bool
+	 */
+	public function isSitting(): bool{
+		return $this->getGenericFlag(self::DATA_FLAG_SITTING);
+	}
+
+	/**
+	 * @param bool $value
+	 */
+	public function setSitting(bool $value = true){
+		$this->setGenericFlag(self::DATA_FLAG_SITTING, $value);
 	}
 }

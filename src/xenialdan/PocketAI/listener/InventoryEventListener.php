@@ -7,6 +7,7 @@ use pocketmine\event\Listener;
 use pocketmine\event\server\DataPacketReceiveEvent;
 use pocketmine\inventory\InventoryHolder;
 use pocketmine\network\mcpe\protocol\ContainerOpenPacket;
+use pocketmine\network\mcpe\protocol\ContainerSetDataPacket;
 use pocketmine\network\mcpe\protocol\InteractPacket;
 use pocketmine\network\mcpe\protocol\InventoryTransactionPacket;
 use pocketmine\network\mcpe\protocol\types\WindowTypes;
@@ -65,7 +66,7 @@ class InventoryEventListener implements Listener{
 					return false;
 				}
 				if (!$target instanceof AIEntity) return false;
-				if ($target instanceof InventoryHolder && $target instanceof Tamable/* && $target->isTamed()*/){
+				if ($target instanceof InventoryHolder/* && $target instanceof Tamable && $target->isTamed()*/){
 					return $this->onInventoryOpen($target, $player);
 				}
 				return true;
@@ -114,7 +115,7 @@ class InventoryEventListener implements Listener{
 		return false;
 	}
 
-	private function onRightClick(Entity $target, Player $player){
+	private function onRightClick(Entity $target, Player $player){//TODO move to AIEntity for better handling
 		$itemInHand = $player->getInventory()->getItemInHand();
 		$itemInHandId = $itemInHand->getId();
 		switch ($itemInHandId){
@@ -124,32 +125,26 @@ class InventoryEventListener implements Listener{
 		return false;
 	}
 
-	private function onSneakRightClick(Entity $target, Player $player){
+	private function onSneakRightClick(Entity $target, Player $player){//TODO move to AIEntity for better handling
 		if ($target instanceof AIEntity){
-			if ($target instanceof InventoryHolder && $target instanceof Tamable/* && $target->isTamed()*/){
+			if ($target instanceof InventoryHolder/* && $target instanceof Tamable && $target->isTamed()*/){
 				return $this->onInventoryOpen($target, $player);
 			}
 		}
 		return false;
 	}
 
-	public function onInventoryOpen(InventoryHolder $inventoryHolder, Player $player){ //TODO other entities
-		if ($inventoryHolder instanceof Horse){
-			$int = $player->addWindow($inventoryHolder->getInventory());
-			$pk = new ContainerOpenPacket();
-			$pk->x = $inventoryHolder->getFloorX();
-			$pk->y = $inventoryHolder->getFloorY();
-			$pk->z = $inventoryHolder->getFloorZ();
-			$pk->type = WindowTypes::HORSE;
-			$pk->windowId = $int;
-			$pk->entityUniqueId = $inventoryHolder->getId();
-			$player->dataPacket($pk);
+	public function onInventoryOpen(InventoryHolder $inventoryHolder, Player $player){ //TODO other entities //TODO move to AIEntity for better handling
+		if ($inventoryHolder instanceof AIEntity && !is_null($inventoryHolder->getInventory())){
+			var_dump($inventoryHolder->getInventory()->getName());
+			var_dump($inventoryHolder->getInventory()->getNetworkType());
+			$player->addWindow($inventoryHolder->getInventory());
 			return true;
 		}
 		return false;
 	}
 
-	private function onHover(Entity $target, Player $player){
+	private function onHover(Entity $target, Player $player){//TODO move to AIEntity for better handling
 		$player->setDataProperty(Entity::DATA_INTERACTIVE_TAG, Entity::DATA_TYPE_STRING, $player->getInventory()->getItemInHand()->__toString()); //TODO getAction/getActionName
 		return true;
 	}

@@ -66,7 +66,6 @@ class Guardian extends AIEntity{
 		}
 	}
 
-
 	public function entityBaseTick(int $tickDiff = 1): bool{
 		if ($this->closed !== false){
 			return false;

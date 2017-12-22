@@ -4,6 +4,8 @@ namespace xenialdan\PocketAI;
 
 use pocketmine\plugin\PluginException;
 use xenialdan\PocketAI\entitytype\AIEntity;
+use xenialdan\PocketAI\entitytype\AIProjectile;
+use xenialdan\PocketAI\inventory\AIEntityInventory;
 
 class EntityProperties{
 	private $behaviour = "empty";
@@ -18,9 +20,12 @@ class EntityProperties{
 	/**
 	 * EntityProperties constructor.
 	 * @param string $behaviour
-	 * @param AIEntity|null $entity
+	 * @param AIEntity|AIProjectile|null $entity
 	 */
-	public function __construct(string $behaviour, AIEntity $entity = null){
+	public function __construct(string $behaviour, $entity = null){
+		if(!$entity instanceof AIEntity && !$entity instanceof AIProjectile){
+			throw new PluginException("Can not initialize EntityProperties for class of type: " . get_class($entity));
+		}
 		$behaviour = str_replace(".json", "", $behaviour);
 		if (!array_key_exists($behaviour, Loader::$behaviour)) throw new \InvalidArgumentException("Entity behaviour/properties file: " . $behaviour . " not found" . (is_null($entity) ? "" : " for entity of type " . $entity->getName()));
 		$this->behaviour = $behaviour;
@@ -76,20 +81,62 @@ class EntityProperties{
 				$this->applyComponent($component_name, $component_data);
 			}
 		}
-		$this->getActiveComponentGroups();
+		$this->getActiveComponentGroups();//TODO remove, only var dumps debug
 	}
 
 	public function removeActiveComponentGroup(string $component_group_name){
-		//TODO set the groups properties
-		unset($this->componentGroups[$component_group_name]);
+		var_dump("============ REMOVE GROUP NAME ============");
+		var_dump($component_group_name);
+		if (!is_null(($component_group = $this->getBehaviourComponentGroup($component_group_name)))){
+			$this->componentGroups[$component_group_name] = $component_group;
+			var_dump("============ REMOVED COMPONENT GROUP ============");
+			var_dump($component_group_name);
+			#foreach ($component_group as $component_name => $component_data){
+			#	$this->applyComponent($component_name, $component_data);
+			#}
+			//TODO set the groups properties
+			unset($this->componentGroups[$component_group_name]);
+		}
+		$this->getActiveComponentGroups();
+	}
+
+	/**
+	 * @return array
+	 */
+	public function getComponents(): array{
+		return $this->components;
+	}
+
+	/**
+	 * @param array $components
+	 */
+	public function setComponents(array $components){
+		$this->components = $components;
+	}
+
+	/**
+	 * @param string $component
+	 * @param $value
+	 */
+	public function setComponent(string $component, $value){
+		$this->components[$component] = $value;
+	}
+
+	public function hasComponent(string $component){
+		return array_key_exists($component, $this->getComponents());
+	}
+
+	public function getComponent(string $component){
+		if ($this->hasComponent($component)) return $this->getComponents()[$component];
+		return [];
 	}
 
 	/* "API"-alike part */
 
-	public function applyComponent(string $component_name, array $component_data){
+	public function applyComponent(string $component_name, array $component_data){//TODO add reversing removeComponent function
 		var_dump("============ APPLY COMPONENT ============");
 		var_dump($component_name);
-		$this->components[$component_name] = $component_data;
+		$this->setComponent($component_name, $component_data);
 		switch ($component_name){
 			case "minecraft:loot": {
 				var_dump("============ SET LOOT TABLE ============");
@@ -112,7 +159,12 @@ class EntityProperties{
 			}
 			case "minecraft:is_baby": {
 				var_dump("============ SET BABY ============");
-				$this->entity->setDataFlag(AIEntity::DATA_FLAGS, AIEntity::DATA_FLAG_BABY, true);
+				$this->entity->setGenericFlag(AIEntity::DATA_FLAG_BABY, true);//TODO set falso on removal
+				break;
+			}
+			case "minecraft:is_tamed": {
+				var_dump("============ SET IS_TAMED ============");//TODO set falso on removal
+				$this->entity->setGenericFlag(AIEntity::DATA_FLAG_TAMED, true);
 				break;
 			}
 			case "minecraft:can_climb": {
@@ -159,12 +211,37 @@ class EntityProperties{
 				var_dump("============ SET MOVEMENT - AKA SPEED ============");
 				if (isset($component_data["value"]) && $this->entity->ticksLived < 1){
 					if (is_array($component_data["value"])){
-						$this->entity->setBaseSpeed(floatval(mt_rand(($component_data["value"]["range_min"] ?? 1) * 10, ($component_data["value"]["range_max"] ?? 1) * 10) / 10));
+						$this->entity->setDefaultSpeed(floatval(mt_rand(($component_data["value"]["range_min"] ?? 1) * 10, ($component_data["value"]["range_max"] ?? 1) * 10) / 10));
 					} else{
-						$this->entity->setBaseSpeed(floatval($component_data["value"]));
+						$this->entity->setDefaultSpeed(floatval($component_data["value"]));
 					}
 				}
-				var_dump($this->entity->getBaseSpeed());
+				var_dump($this->entity->getDefaultSpeed());
+				break;
+			}
+			case "minecraft:attack": {
+				if ($this->entity->ticksLived < 1){
+					var_dump("============ SET ATTACK ============");
+					$this->entity->setDefaultAttackDamage(intval($component_data["damage"]));
+				}
+				var_dump($this->entity->getDefaultAttackDamage());
+				break;
+			}
+			case "minecraft:rideable": {
+				var_dump("============ SET RIDEABLE ============");
+				if (isset($component_data["seat_count"])) $this->entity->setSeatCount(intval($component_data["seat_count"]));
+				if (isset($component_data["seats"])) $this->entity->setSeats([$component_data["seats"]]); //TODO validate seatcount === count of "seats"
+				var_dump($this->entity->getSeatCount());
+				var_dump($this->entity->getSeats());
+				break;
+			}
+			case "minecraft:inventory": {
+				var_dump("============ SET INVENTORY ============");
+				var_dump($component_data);
+				if (isset($component_data["container_type"])){
+					$this->entity->setInventory(new AIEntityInventory($this->entity, [], null, null, $component_data["container_type"]));
+				}
+				var_dump($this->entity->getInventory()->getName());
 				break;
 			}
 			default: {
@@ -193,6 +270,7 @@ class EntityProperties{
 				}
 				case "add": {
 					foreach ($function_properties as $function_property => $function_property_data){
+						var_dump($function_property);
 						switch ($function_property){
 							case "component_groups": {
 								foreach ($function_property_data as $componentgroup){
@@ -209,15 +287,16 @@ class EntityProperties{
 				}
 				case "remove": {
 					foreach ($function_properties as $function_property => $function_property_data){
+						var_dump($function_property);
 						switch ($function_property){
-							case "component_group": {
+							case "component_groups": {
 								foreach ($function_property_data as $componentgroup){
 									$this->removeActiveComponentGroup($componentgroup);
 								}
 								break;
 							}
 							default: {
-								$this->entity->getLevel()->getServer()->getLogger()->notice("Function \"" . $function_property . "\" for add component events is not coded into the plugin yet");
+								$this->entity->getLevel()->getServer()->getLogger()->notice("Function \"" . $function_property . "\" for remove component events is not coded into the plugin yet");
 							}
 						}
 					}

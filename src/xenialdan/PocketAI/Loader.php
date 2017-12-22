@@ -4,6 +4,7 @@ namespace xenialdan\PocketAI;
 
 use pocketmine\entity\Attribute;
 use pocketmine\entity\Entity;
+use pocketmine\item\ItemFactory;
 use pocketmine\level\Level;
 use pocketmine\network\mcpe\protocol\SetEntityLinkPacket;
 use pocketmine\network\mcpe\protocol\types\EntityLink;
@@ -11,13 +12,17 @@ use pocketmine\Player;
 use pocketmine\plugin\PluginBase;
 use pocketmine\resourcepacks\ZippedResourcePack;
 use pocketmine\Server;
+use xenialdan\PocketAI\command\KillentityCommand;
 use xenialdan\PocketAI\command\SummonCommand;
 use xenialdan\PocketAI\entity\Cow;
 use xenialdan\PocketAI\entity\ElderGuardian;
+use xenialdan\PocketAI\entity\FishingHook;
 use xenialdan\PocketAI\entity\Guardian;
 use xenialdan\PocketAI\entity\Horse;
 use xenialdan\PocketAI\entity\Squid;
 use xenialdan\PocketAI\entity\Wolf;
+use xenialdan\PocketAI\entitytype\AIEntity;
+use xenialdan\PocketAI\item\FishingRod;
 use xenialdan\PocketAI\listener\AddonEventListener;
 use xenialdan\PocketAI\listener\EventListener;
 use xenialdan\PocketAI\listener\InventoryEventListener;
@@ -28,6 +33,7 @@ class Loader extends PluginBase{
 	/** @var Loader */
 	private static $instance = null;
 	public static $links = [];
+	public static $hooks = [];
 	public static $behaviour = [];
 	public static $loottables = [];
 
@@ -45,7 +51,9 @@ class Loader extends PluginBase{
 
 	public function onEnable(){
 		$this->getServer()->getCommandMap()->register("pocketmine", new SummonCommand("summon"));
-		Attribute::addAttribute(Loader::HORSE_JUMP_POWER, "minecraft:horse_jump_power", 0.00, 4.00, 1.00);
+		$this->getServer()->getCommandMap()->register("pocketmine", new KillentityCommand("killentity"));
+		#Attribute::addAttribute(Loader::HORSE_JUMP_POWER, "minecraft:horse_jump_power", 0.00, 4.00, 1.00);
+		Attribute::addAttribute(Loader::HORSE_JUMP_POWER, "minecraft:horse.jump_strength", 0.00, 4.00, 1.00);
 		foreach ($this->getServer()->getResourceManager()->getResourceStack() as $resourcePack){//TODO check if the priority is ordered in that way, that the top pack overwrites the lower packs
 			if ($resourcePack instanceof ZippedResourcePack){
 				$za = new \ZipArchive();
@@ -66,6 +74,7 @@ class Loader extends PluginBase{
 		}
 
 		$this->registerEntities();
+		$this->registerItems();
 		$this->getServer()->getPluginManager()->registerEvents(new EventListener($this), $this);
 		$this->getServer()->getPluginManager()->registerEvents(new InventoryEventListener($this), $this);
 		$this->getServer()->getPluginManager()->registerEvents(new RidableEventListener($this), $this);
@@ -85,6 +94,13 @@ class Loader extends PluginBase{
 			$this->getLogger()->notice("Registered AI for: Squid");
 		if (Entity::registerEntity(Wolf::class, true, ["pocketai:wolf", "minecraft:wolf"]))
 			$this->getLogger()->notice("Registered AI for: Wolf");
+		if (Entity::registerEntity(FishingHook::class, true, ["pocketai:fishing_hook", "minecraft:fishing_hook"]))
+			$this->getLogger()->notice("Registered AI for: FishingHook");
+	}
+
+	public function registerItems(){
+		ItemFactory::registerItem($item = new FishingRod(), true);
+		$this->getLogger()->notice("Registered Item: " . $item->getName());
 	}
 
 	public static function isRiding(Entity $entity){
@@ -112,7 +128,6 @@ class Loader extends PluginBase{
 					$main->getLevel()->getServer()->broadcastPacket($main->getLevel()->getPlayers(), $pk);
 
 					Loader::removeLink($pk->link);
-					$passenger->setDataProperty(Entity::DATA_RIDER_SEAT_POSITION, Entity::DATA_TYPE_VECTOR3F, [0, $main->getEyeHeight() + ($passenger->getEyeHeight() / 2), 0]);//TODO
 					break;
 				}
 				case 1: {//rider?
@@ -125,7 +140,7 @@ class Loader extends PluginBase{
 					$main->getLevel()->getServer()->broadcastPacket($main->getLevel()->getPlayers(), $pk);
 
 					Loader::setLink($pk->link);
-					if ($passenger instanceof Player) $passenger->setAllowFlight(true);
+					if ($passenger instanceof Player) $passenger->setAllowFlight(true); //TODO stupid dan, this allows you to fly in GMS/GMA. Create a proper workaround.
 
 					#$pk = new SetEntityLinkPacket();
 					#$link = new EntityLink();
@@ -138,7 +153,10 @@ class Loader extends PluginBase{
 					#$passenger->setDataFlag(Entity::DATA_FLAGS, Entity::DATA_FLAG_RIDING, true);
 					$main->setDataFlag(Entity::DATA_FLAGS, Entity::DATA_FLAG_SADDLED, true);
 					$passenger->setDataFlag(Entity::DATA_FLAGS, Entity::DATA_FLAG_CAN_POWER_JUMP, true);
-					$passenger->setDataProperty(Entity::DATA_RIDER_SEAT_POSITION, Entity::DATA_TYPE_VECTOR3F, [0, $main->getEyeHeight() + $passenger->getEyeHeight(), 0]);//TODO
+					if ($main instanceof AIEntity){
+						$position = $main->getSeats()[0]["position"] ?? [0, 0, 0];
+						$passenger->setDataProperty(Entity::DATA_RIDER_SEAT_POSITION, Entity::DATA_TYPE_VECTOR3F, [$position[0], $position[1] * 2, $position[2]]);//TODO correct seat number
+					}
 					break;
 				}
 				/*case 2: {//companion? //TODO multi-links
@@ -187,5 +205,21 @@ class Loader extends PluginBase{
 	 */
 	public static function getEntityLinkMainEntity(EntityLink $link, Level $level = null): ?Entity{
 		return Server::getInstance()->findEntity(Loader::$links[$link->toEntityUniqueId], $level);
+	}
+
+	public static function getHook(Player $player): ?FishingHook{
+		$id = self::$hooks[$player->getId()] ?? -1;
+		if ($id === -1) return null;
+		$entity = $player->getServer()->findEntity($id, $player->getLevel());
+		if ($entity instanceof FishingHook) return $entity;
+		return null;
+	}
+
+	public static function setHook(Player $player, ?FishingHook $hook){
+		if ($hook instanceof FishingHook){
+			self::$hooks[$hook->getOwningEntityId()] = $hook->getId();
+		} else{
+			unset(self::$hooks[$player->getId()]);
+		}
 	}
 }

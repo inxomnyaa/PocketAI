@@ -166,7 +166,7 @@ class RidableEventListener implements Listener{
 		switch ($itemInHandId){
 			case ItemIds::AIR: {
 				if ($target instanceof Rideable){
-					Loader::setEntityLink($target, $player);
+					Loader::setEntityLink($target, $player); //TODO: check lock seat
 					return true;
 				}
 			}
