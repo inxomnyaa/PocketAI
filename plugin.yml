@@ -1,0 +1,9 @@
+---
+name: PocketAI
+author: XenialDan
+version: 0.7.0
+main: xenialdan\PocketAI\Loader
+api: [4.0.0+dev]
+# Changes:
+# 0.7.0: bumped to 4.0.0+dev
+...
