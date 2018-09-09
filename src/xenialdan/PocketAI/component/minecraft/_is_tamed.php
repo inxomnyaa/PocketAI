@@ -9,8 +9,13 @@ use xenialdan\PocketAI\entitytype\AIProjectile;
 class _is_tamed implements BaseComponent
 {
     protected $name = "minecraft:is_tamed";
+    private $value = true;
 
 
+    /**
+     * Sets that this entity is currently tamed.
+     * _is_tamed constructor.
+     */
     public function __construct()
     {
 

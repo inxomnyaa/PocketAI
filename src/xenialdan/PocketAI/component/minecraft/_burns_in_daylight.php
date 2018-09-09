@@ -9,12 +9,15 @@ use xenialdan\PocketAI\entitytype\AIProjectile;
 class _burns_in_daylight implements BaseComponent
 {
     protected $name = "minecraft:burns_in_daylight";
-    private $value;
+    private $value = true;
 
 
-    public function __construct($value)
+    /**
+     * Sets that this entity burns if exposed to daylight.
+     * _burns_in_daylight constructor.
+     */
+    public function __construct()
     {
-        $this->value = $value;
     }
 
     /**

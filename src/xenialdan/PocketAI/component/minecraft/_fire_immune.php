@@ -9,11 +9,14 @@ use xenialdan\PocketAI\entitytype\AIProjectile;
 class _fire_immune implements BaseComponent
 {
     protected $name = "minecraft:fire_immune";
-    private $value;
+    private $value = true;
 
-    public function __construct($value)
+    /**
+     * Sets that this entity doesn't take damage from fire.
+     * _fire_immune constructor.
+     */
+    public function __construct()
     {
-        $this->value = $value;
     }
 
     /**

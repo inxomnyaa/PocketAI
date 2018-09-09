@@ -6,22 +6,22 @@ use xenialdan\PocketAI\component\BaseComponent;
 use xenialdan\PocketAI\entitytype\AIEntity;
 use xenialdan\PocketAI\entitytype\AIProjectile;
 
-class _leashable implements BaseComponent
+class _strength implements BaseComponent
 {
-    protected $name = "minecraft:leashable";
-    private $soft_distance;
-    private $hard_distance;
-    private $max_distance;
-    private $on_leash;
-    private $on_unleash;
+    protected $name = "minecraft:strength";
+    private $max = 5;
+    private $min = 1;
 
-    public function __construct(float $soft_distance, float $hard_distance, float $max_distance, $on_leash, $on_unleash)
+    /**
+     * Defines the entity's strength to carry items.
+     * _strength constructor.
+     * @param int $max The maximum strength of this entity
+     * @param int $min The initial value of the strength
+     */
+    public function __construct(int $max, int $min)
     {
-        $this->soft_distance = $soft_distance;
-        $this->hard_distance = $hard_distance;
-        $this->max_distance = $max_distance;
-        $this->on_leash = $on_leash;
-        $this->on_unleash = $on_unleash;
+        $this->max = $max;
+        $this->min = $min;
     }
 
     /**

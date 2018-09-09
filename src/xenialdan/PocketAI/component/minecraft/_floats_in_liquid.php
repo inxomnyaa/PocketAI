@@ -6,26 +6,25 @@ use xenialdan\PocketAI\component\BaseComponent;
 use xenialdan\PocketAI\entitytype\AIEntity;
 use xenialdan\PocketAI\entitytype\AIProjectile;
 
-class _equipment implements BaseComponent
+class _floats_in_liquid implements BaseComponent
 {
-    protected $name = "minecraft:equipment";
-    private $table;
+    protected $name = "minecraft:floats_in_liquid";
+    private $value = true;
 
     /**
-     * Sets the Equipment table to use for this Entity.
-     * _equipment constructor.
-     * @param string $table The path to the equipment table, relative to the Behavior Pack's root
+     * Sets that this entity can float in liquid blocks.
+     * _floats_in_liquid constructor.
      */
-    public function __construct(string $table)
+    public function __construct()
     {
-        $this->table = $table;
     }
 
     /**
      * Applies the changes to the mob
      * @param AIEntity|AIProjectile $entity
      */
-    public function apply($entity): void
+    public
+    function apply($entity): void
     {
         // TODO: Implement apply() method.
     }
@@ -34,7 +33,8 @@ class _equipment implements BaseComponent
      * Removes the changes from the mob
      * @param AIEntity|AIProjectile $entity
      */
-    public function remove($entity): void
+    public
+    function remove($entity): void
     {
         // TODO: Implement remove() method.
     }

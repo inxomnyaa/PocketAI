@@ -6,22 +6,19 @@ use xenialdan\PocketAI\component\BaseComponent;
 use xenialdan\PocketAI\entitytype\AIEntity;
 use xenialdan\PocketAI\entitytype\AIProjectile;
 
-class _leashable implements BaseComponent
+class _ground_offset implements BaseComponent
 {
-    protected $name = "minecraft:leashable";
-    private $soft_distance;
-    private $hard_distance;
-    private $max_distance;
-    private $on_leash;
-    private $on_unleash;
+    protected $name = "minecraft:ground_offset";
+    private $value = 0.0;
 
-    public function __construct(float $soft_distance, float $hard_distance, float $max_distance, $on_leash, $on_unleash)
+    /**
+     * Sets the offset from the ground that the entity is actually at.
+     * _ground_offset constructor.
+     * @param float $value The value of the entity's offset from the terrain, in blocks
+     */
+    public function __construct(float $value)
     {
-        $this->soft_distance = $soft_distance;
-        $this->hard_distance = $hard_distance;
-        $this->max_distance = $max_distance;
-        $this->on_leash = $on_leash;
-        $this->on_unleash = $on_unleash;
+        $this->value = $value;
     }
 
     /**

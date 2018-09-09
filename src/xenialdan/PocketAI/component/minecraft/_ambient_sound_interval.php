@@ -6,19 +6,22 @@ use xenialdan\PocketAI\component\BaseComponent;
 use xenialdan\PocketAI\entitytype\AIEntity;
 use xenialdan\PocketAI\entitytype\AIProjectile;
 
-class _equipment implements BaseComponent
+class _ambient_sound_interval implements BaseComponent
 {
-    protected $name = "minecraft:equipment";
-    private $table;
+    protected $name = "minecraft:ambient_sound_interval";
+    private $range = 16.0;
+    private $value = 8.0;
 
     /**
-     * Sets the Equipment table to use for this Entity.
-     * _equipment constructor.
-     * @param string $table The path to the equipment table, relative to the Behavior Pack's root
+     * Sets the entity's delay between playing its ambient sound.
+     * _ambient_sound_interval constructor.
+     * @param float $range Maximum time is seconds to randomly add to the ambient sound delay time.
+     * @param float $value Minimum time in seconds before the entity plays its ambient sound again
      */
-    public function __construct(string $table)
+    public function __construct(float $range, float $value)
     {
-        $this->table = $table;
+        $this->range = $range;
+        $this->value = $value;
     }
 
     /**

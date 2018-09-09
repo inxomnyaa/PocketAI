@@ -9,9 +9,14 @@ use xenialdan\PocketAI\entitytype\AIProjectile;
 class _flying_speed implements BaseComponent
 {
     protected $name = "minecraft:flying_speed";
-    private $value;
+    private $value = 0.02;
 
-    public function __construct($value)
+    /**
+     * Flying speed in blocks per tick
+     * _flying_speed constructor.
+     * @param float $value Flying speed in blocks per tick
+     */
+    public function __construct(float $value)
     {
         $this->value = $value;
     }

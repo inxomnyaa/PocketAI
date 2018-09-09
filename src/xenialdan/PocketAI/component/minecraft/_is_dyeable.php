@@ -6,22 +6,21 @@ use xenialdan\PocketAI\component\BaseComponent;
 use xenialdan\PocketAI\entitytype\AIEntity;
 use xenialdan\PocketAI\entitytype\AIProjectile;
 
-class _leashable implements BaseComponent
+class _is_dyeable implements BaseComponent
 {
-    protected $name = "minecraft:leashable";
-    private $soft_distance;
-    private $hard_distance;
-    private $max_distance;
-    private $on_leash;
-    private $on_unleash;
+    protected $name = "minecraft:is_dyeable";
+    private $value = true;
+    private $interact_text = "";
 
-    public function __construct(float $soft_distance, float $hard_distance, float $max_distance, $on_leash, $on_unleash)
+
+    /**
+     * Allows dyes to be used on this entity to change its color.
+     * _is_dyeable constructor.
+     * @param string $interact_text The text that will display when interacting with this entity with a dye when playing with Touch-screen controls
+     */
+    public function __construct(string $interact_text)
     {
-        $this->soft_distance = $soft_distance;
-        $this->hard_distance = $hard_distance;
-        $this->max_distance = $max_distance;
-        $this->on_leash = $on_leash;
-        $this->on_unleash = $on_unleash;
+        $this->interact_text = $interact_text;
     }
 
     /**

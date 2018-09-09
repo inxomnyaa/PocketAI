@@ -6,22 +6,19 @@ use xenialdan\PocketAI\component\BaseComponent;
 use xenialdan\PocketAI\entitytype\AIEntity;
 use xenialdan\PocketAI\entitytype\AIProjectile;
 
-class _leashable implements BaseComponent
+class _mark_variant implements BaseComponent
 {
-    protected $name = "minecraft:leashable";
-    private $soft_distance;
-    private $hard_distance;
-    private $max_distance;
-    private $on_leash;
-    private $on_unleash;
+    protected $name = "minecraft:mark_variant";
+    private $value = 0;
 
-    public function __construct(float $soft_distance, float $hard_distance, float $max_distance, $on_leash, $on_unleash)
+    /**
+     * Additional variant value. Can be used to further differentiate variants.
+     * _mark_variant constructor.
+     * @param int $value The ID of the variant. By convention, 0 is the ID of the base entity
+     */
+    public function __construct(int $value)
     {
-        $this->soft_distance = $soft_distance;
-        $this->hard_distance = $hard_distance;
-        $this->max_distance = $max_distance;
-        $this->on_leash = $on_leash;
-        $this->on_unleash = $on_unleash;
+        $this->value = $value;
     }
 
     /**

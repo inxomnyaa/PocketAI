@@ -11,6 +11,10 @@ class _input_ground_controlled implements BaseComponent
     protected $name = "minecraft:input_ground_controlled";
 
 
+    /**
+     * When configured as a rideable entity, the entity will be controlled using WASD controls.
+     * _input_ground_controlled constructor.
+     */
     public function __construct()
     {
 

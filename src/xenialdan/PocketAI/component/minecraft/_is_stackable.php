@@ -9,8 +9,13 @@ use xenialdan\PocketAI\entitytype\AIProjectile;
 class _is_stackable implements BaseComponent
 {
     protected $name = "minecraft:is_stackable";
+    private $value = true;
 
 
+    /**
+     * Sets that this entity can be stacked.
+     * _is_stackable constructor.
+     */
     public function __construct()
     {
 

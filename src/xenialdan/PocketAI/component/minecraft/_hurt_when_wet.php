@@ -9,11 +9,14 @@ use xenialdan\PocketAI\entitytype\AIProjectile;
 class _hurt_when_wet implements BaseComponent
 {
     protected $name = "minecraft:hurt_when_wet";
-    private $value;
+    private $value = true;
 
-    public function __construct($value)
+    /**
+     * Sets that this entity will take damage when it is wet.
+     * _hurt_when_wet constructor.
+     */
+    public function __construct()
     {
-        $this->value = $value;
     }
 
     /**

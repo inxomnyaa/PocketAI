@@ -9,8 +9,12 @@ use xenialdan\PocketAI\entitytype\AIProjectile;
 class _can_climb implements BaseComponent
 {
     protected $name = "minecraft:can_climb";
+    private $value = true;
 
-
+    /**
+     * Allows this entity to climb up ladders.
+     * _can_climb constructor.
+     */
     public function __construct()
     {
 

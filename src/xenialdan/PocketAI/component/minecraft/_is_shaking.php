@@ -6,22 +6,19 @@ use xenialdan\PocketAI\component\BaseComponent;
 use xenialdan\PocketAI\entitytype\AIEntity;
 use xenialdan\PocketAI\entitytype\AIProjectile;
 
-class _leashable implements BaseComponent
+class _is_shaking implements BaseComponent
 {
-    protected $name = "minecraft:leashable";
-    private $soft_distance;
-    private $hard_distance;
-    private $max_distance;
-    private $on_leash;
-    private $on_unleash;
+    protected $name = "minecraft:is_shaking";
+    private $value = true;
 
-    public function __construct(float $soft_distance, float $hard_distance, float $max_distance, $on_leash, $on_unleash)
+
+    /**
+     * Sets that this entity is currently shaking.
+     * _is_shaking constructor.
+     */
+    public function __construct()
     {
-        $this->soft_distance = $soft_distance;
-        $this->hard_distance = $hard_distance;
-        $this->max_distance = $max_distance;
-        $this->on_leash = $on_leash;
-        $this->on_unleash = $on_unleash;
+
     }
 
     /**

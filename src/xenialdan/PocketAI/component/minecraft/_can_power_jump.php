@@ -9,8 +9,13 @@ use xenialdan\PocketAI\entitytype\AIProjectile;
 class _can_power_jump implements BaseComponent
 {
     protected $name = "minecraft:can_power_jump";
+    private $value = true;
 
 
+    /**
+     * Allows the entity to power jump like the horse does in vanilla.
+     * _can_power_jump constructor.
+     */
     public function __construct()
     {
 

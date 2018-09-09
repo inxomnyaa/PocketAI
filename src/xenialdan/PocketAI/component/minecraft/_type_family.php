@@ -11,7 +11,12 @@ class _type_family implements BaseComponent
     protected $name = "minecraft:type_family";
     private $family;
 
-    public function __construct($family)
+    /**
+     * Defines the families this entity belongs to.
+     * _type_family constructor.
+     * @param array $family List of family names
+     */
+    public function __construct(array $family)
     {
         $this->family = $family;
     }
