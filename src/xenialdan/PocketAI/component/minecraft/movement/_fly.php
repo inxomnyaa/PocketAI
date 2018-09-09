@@ -1,4 +1,3 @@
-
 <?php
 
 namespace xenialdan\PocketAI\component\minecraft\movement;
@@ -10,11 +9,11 @@ use xenialdan\PocketAI\entitytype\AIProjectile;
 class _fly implements BaseComponent
 {
     protected $name = "minecraft:movement.fly";
-    private $;
 
-    public function __construct(string $name, )
+
+    public function __construct()
     {
-        
+
     }
 
     /**

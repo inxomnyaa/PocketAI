@@ -1,4 +1,3 @@
-
 <?php
 
 namespace xenialdan\PocketAI\component\minecraft;
@@ -10,11 +9,15 @@ use xenialdan\PocketAI\entitytype\AIProjectile;
 class _shooter implements BaseComponent
 {
     protected $name = "minecraft:shooter";
-    private $type;private $def;private $auxVal;
+    private $type;
+    private $def;
+    private $auxVal;
 
-    public function __construct(string $name, $type,$def,$auxVal)
+    public function __construct($type, $def, $auxVal)
     {
-        $this->type = type;$this->def = def;$this->auxVal = auxVal;
+        $this->type = $type;
+        $this->def = $def;
+        $this->auxVal = $auxVal;
     }
 
     /**

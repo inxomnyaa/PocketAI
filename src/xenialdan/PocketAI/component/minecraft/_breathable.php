@@ -1,4 +1,3 @@
-
 <?php
 
 namespace xenialdan\PocketAI\component\minecraft;
@@ -10,11 +9,13 @@ use xenialdan\PocketAI\entitytype\AIProjectile;
 class _breathable implements BaseComponent
 {
     protected $name = "minecraft:breathable";
-    private $totalSupply;private $suffocateTime;
+    private $totalSupply;
+    private $suffocateTime;
 
-    public function __construct(string $name, $totalSupply,$suffocateTime)
+    public function __construct($totalSupply, $suffocateTime)
     {
-        $this->totalSupply = totalSupply;$this->suffocateTime = suffocateTime;
+        $this->totalSupply = $totalSupply;
+        $this->suffocateTime = $suffocateTime;
     }
 
     /**

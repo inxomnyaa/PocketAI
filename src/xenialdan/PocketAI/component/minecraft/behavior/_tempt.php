@@ -1,4 +1,3 @@
-
 <?php
 
 namespace xenialdan\PocketAI\component\minecraft\behavior;
@@ -10,11 +9,15 @@ use xenialdan\PocketAI\entitytype\AIProjectile;
 class _tempt implements BaseComponent
 {
     protected $name = "minecraft:behavior.tempt";
-    private $priority;private $speed_multiplier;private $items;
+    private $priority;
+    private $speed_multiplier;
+    private $items;
 
-    public function __construct(string $name, $priority,$speed_multiplier,$items)
+    public function __construct($priority, $speed_multiplier, $items)
     {
-        $this->priority = priority;$this->speed_multiplier = speed_multiplier;$this->items = items;
+        $this->priority = $priority;
+        $this->speed_multiplier = $speed_multiplier;
+        $this->items = $items;
     }
 
     /**

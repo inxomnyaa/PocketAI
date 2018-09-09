@@ -1,4 +1,3 @@
-
 <?php
 
 namespace xenialdan\PocketAI\component\minecraft\behavior;
@@ -10,11 +9,13 @@ use xenialdan\PocketAI\entitytype\AIProjectile;
 class _breed implements BaseComponent
 {
     protected $name = "minecraft:behavior.breed";
-    private $priority;private $speed_multiplier;
+    private $priority;
+    private $speed_multiplier;
 
-    public function __construct(string $name, $priority,$speed_multiplier)
+    public function __construct($priority, $speed_multiplier)
     {
-        $this->priority = priority;$this->speed_multiplier = speed_multiplier;
+        $this->priority = $priority;
+        $this->speed_multiplier = $speed_multiplier;
     }
 
     /**

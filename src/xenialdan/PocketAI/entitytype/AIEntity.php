@@ -8,7 +8,6 @@ use pocketmine\block\Liquid;
 use pocketmine\entity\Attribute;
 use pocketmine\entity\Living;
 use pocketmine\level\particle\RedstoneParticle;
-use pocketmine\level\particle\WaterParticle;
 use pocketmine\math\Vector3;
 use pocketmine\nbt\tag\CompoundTag;
 use xenialdan\PocketAI\EntityProperties;

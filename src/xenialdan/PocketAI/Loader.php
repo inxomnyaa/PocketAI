@@ -16,12 +16,7 @@ use pocketmine\Server;
 use xenialdan\PocketAI\command\KillentityCommand;
 use xenialdan\PocketAI\command\SummonCommand;
 use xenialdan\PocketAI\entity\Cow;
-use xenialdan\PocketAI\entity\ElderGuardian;
 use xenialdan\PocketAI\entity\FishingHook;
-use xenialdan\PocketAI\entity\Guardian;
-use xenialdan\PocketAI\entity\Horse;
-use xenialdan\PocketAI\entity\Squid;
-use xenialdan\PocketAI\entity\Wolf;
 use xenialdan\PocketAI\entitytype\AIEntity;
 use xenialdan\PocketAI\item\FishingRod;
 use xenialdan\PocketAI\listener\AddonEventListener;
@@ -36,7 +31,9 @@ class Loader extends PluginBase
     private static $instance = null;
     public static $links = [];
     public static $hooks = [];
-    public static $behaviour = [];
+    public static $behaviourJson = [];
+    /** @var \SplQueue */
+    public static $behaviours;
     public static $loottables = [];
 
     /**
@@ -69,7 +66,7 @@ class Loader extends PluginBase
                 for ($i = 0; $i < $za->numFiles; $i++) {
                     $stat = $za->statIndex($i);
                     if (explode(DIRECTORY_SEPARATOR, $stat['name'])[0] === "entities") {
-                        self::$behaviour[str_replace(DIRECTORY_SEPARATOR, "/", str_replace(".json", "", $stat['name']))] = json_decode($za->getFromIndex($i), true);
+                        self::$behaviourJson[str_replace(DIRECTORY_SEPARATOR, "/", str_replace(".json", "", $stat['name']))] = json_decode($za->getFromIndex($i), true);
                     } elseif (explode(DIRECTORY_SEPARATOR, $stat['name'])[0] === "loot_tables") {
                         self::$loottables[str_replace(DIRECTORY_SEPARATOR, "/", str_replace(".json", "", $stat['name']))] = json_decode($za->getFromIndex($i), true);
                     } else {
@@ -81,6 +78,7 @@ class Loader extends PluginBase
             }
         }
 
+        $this->preloadBehaviours(self::$behaviourJson);
         $this->registerEntities();
         $this->registerItems();
         $this->getServer()->getPluginManager()->registerEvents(new EventListener($this), $this);
@@ -89,22 +87,42 @@ class Loader extends PluginBase
         $this->getServer()->getPluginManager()->registerEvents(new AddonEventListener($this), $this);
     }
 
+    private function preloadBehaviours(array $behaviours)
+    {
+        foreach ($behaviours as $behaviour) {
+
+            if (version_compare($behaviour["minecraft:entity"]["format_version"] ?? "1.2.0", "1.2.0") !== 0) {
+                throw new \InvalidArgumentException("The Entity behaviour/properties file: " . $behaviour . " has an unsupported format_version and will not be used");
+                continue;
+            }
+
+
+            var_dump("============ COMPONENTS ============");
+            foreach ($behaviour["minecraft:entity"]["components"] ?? [] as $component_name => $component_data) {
+                var_dump($component_name);
+                $c = "xenialdan\\PocketAI\\component\\" . preg_replace('/(\\\\(?!.*\\\\.*))/', '\\_', str_replace(":", "\\", join("\\", explode(".", $component_name))));
+                var_dump($c);
+                if (class_exists($c)) var_dump(new $c($component_name, $component_data));
+            }
+        }
+    }
+
     public function registerEntities()
     {
-        Entity::registerEntity(Guardian::class, true, ["pocketai:guardian", "minecraft:guardian"]);
+        /*Entity::registerEntity(Guardian::class, true, ["pocketai:guardian", "minecraft:guardian"]);
         $this->getLogger()->notice("Registered AI for: Guardian");
         Entity::registerEntity(ElderGuardian::class, true, ["pocketai:elder_guardian", "minecraft:elder_guardian"]);
-        $this->getLogger()->notice("Registered AI for: ElderGuardian");
+        $this->getLogger()->notice("Registered AI for: ElderGuardian");*/
         Entity::registerEntity(Cow::class, true, ["pocketai:cow", "minecraft:cow"]);
         $this->getLogger()->notice("Registered AI for: Cow");
-        Entity::registerEntity(Horse::class, true, ["pocketai:horse", "minecraft:horse"]);
+        /*Entity::registerEntity(Horse::class, true, ["pocketai:horse", "minecraft:horse"]);
         $this->getLogger()->notice("Registered AI for: Horse");
         Entity::registerEntity(Squid::class, true, ["pocketai:squid", "minecraft:squid"]);
         $this->getLogger()->notice("Registered AI for: Squid");
         Entity::registerEntity(Wolf::class, true, ["pocketai:wolf", "minecraft:wolf"]);
         $this->getLogger()->notice("Registered AI for: Wolf");
         Entity::registerEntity(FishingHook::class, true, ["pocketai:fishing_hook", "minecraft:fishing_hook"]);
-        $this->getLogger()->notice("Registered AI for: FishingHook");
+        $this->getLogger()->notice("Registered AI for: FishingHook");*/
     }
 
     public function registerItems()

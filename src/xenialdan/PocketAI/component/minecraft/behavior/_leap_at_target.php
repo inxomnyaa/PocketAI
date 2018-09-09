@@ -1,4 +1,3 @@
-
 <?php
 
 namespace xenialdan\PocketAI\component\minecraft\behavior;
@@ -10,11 +9,13 @@ use xenialdan\PocketAI\entitytype\AIProjectile;
 class _leap_at_target implements BaseComponent
 {
     protected $name = "minecraft:behavior.leap_at_target";
-    private $priority;private $target_dist;
+    private $priority;
+    private $target_dist;
 
-    public function __construct(string $name, $priority,$target_dist)
+    public function __construct($priority, $target_dist)
     {
-        $this->priority = priority;$this->target_dist = target_dist;
+        $this->priority = $priority;
+        $this->target_dist = $target_dist;
     }
 
     /**

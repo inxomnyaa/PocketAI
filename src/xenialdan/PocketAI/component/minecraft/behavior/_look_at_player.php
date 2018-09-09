@@ -1,4 +1,3 @@
-
 <?php
 
 namespace xenialdan\PocketAI\component\minecraft\behavior;
@@ -10,11 +9,15 @@ use xenialdan\PocketAI\entitytype\AIProjectile;
 class _look_at_player implements BaseComponent
 {
     protected $name = "minecraft:behavior.look_at_player";
-    private $priority;private $look_distance;private $probability;
+    private $priority;
+    private $look_distance;
+    private $probability;
 
-    public function __construct(string $name, $priority,$look_distance,$probability)
+    public function __construct($priority, $look_distance, $probability)
     {
-        $this->priority = priority;$this->look_distance = look_distance;$this->probability = probability;
+        $this->priority = $priority;
+        $this->look_distance = $look_distance;
+        $this->probability = $probability;
     }
 
     /**

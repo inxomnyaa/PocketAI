@@ -1,4 +1,3 @@
-
 <?php
 
 namespace xenialdan\PocketAI\component\minecraft\behavior;
@@ -12,9 +11,9 @@ class _enderman_take_block implements BaseComponent
     protected $name = "minecraft:behavior.enderman_take_block";
     private $priority;
 
-    public function __construct(string $name, $priority)
+    public function __construct($priority)
     {
-        $this->priority = priority;
+        $this->priority = $priority;
     }
 
     /**

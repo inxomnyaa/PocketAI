@@ -1,4 +1,3 @@
-
 <?php
 
 namespace xenialdan\PocketAI\component\minecraft\jump;
@@ -10,11 +9,11 @@ use xenialdan\PocketAI\entitytype\AIProjectile;
 class _dynamic implements BaseComponent
 {
     protected $name = "minecraft:jump.dynamic";
-    private $;
 
-    public function __construct(string $name, )
+
+    public function __construct()
     {
-        
+
     }
 
     /**

@@ -1,4 +1,3 @@
-
 <?php
 
 namespace xenialdan\PocketAI\component\minecraft;
@@ -10,11 +9,11 @@ use xenialdan\PocketAI\entitytype\AIProjectile;
 class _npc implements BaseComponent
 {
     protected $name = "minecraft:npc";
-    private $;
 
-    public function __construct(string $name, )
+
+    public function __construct()
     {
-        
+
     }
 
     /**

@@ -1,4 +1,3 @@
-
 <?php
 
 namespace xenialdan\PocketAI\component\minecraft\behavior;
@@ -10,11 +9,13 @@ use xenialdan\PocketAI\entitytype\AIProjectile;
 class _avoid_mob_type implements BaseComponent
 {
     protected $name = "minecraft:behavior.avoid_mob_type";
-    private $priority;private $entity_types;
+    private $priority;
+    private $entity_types;
 
-    public function __construct(string $name, $priority,$entity_types)
+    public function __construct($priority, $entity_types)
     {
-        $this->priority = priority;$this->entity_types = entity_types;
+        $this->priority = $priority;
+        $this->entity_types = $entity_types;
     }
 
     /**

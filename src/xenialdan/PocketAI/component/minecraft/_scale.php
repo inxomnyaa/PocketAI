@@ -1,4 +1,3 @@
-
 <?php
 
 namespace xenialdan\PocketAI\component\minecraft;
@@ -12,9 +11,9 @@ class _scale implements BaseComponent
     protected $name = "minecraft:scale";
     private $value;
 
-    public function __construct(string $name, $value)
+    public function __construct($value)
     {
-        $this->value = value;
+        $this->value = $value;
     }
 
     /**

@@ -1,4 +1,3 @@
-
 <?php
 
 namespace xenialdan\PocketAI\component\minecraft\navigation;
@@ -12,9 +11,9 @@ class _fly implements BaseComponent
     protected $name = "minecraft:navigation.fly";
     private $can_float;
 
-    public function __construct(string $name, $can_float)
+    public function __construct($can_float)
     {
-        $this->can_float = can_float;
+        $this->can_float = $can_float;
     }
 
     /**

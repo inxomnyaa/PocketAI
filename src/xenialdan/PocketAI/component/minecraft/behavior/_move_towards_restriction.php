@@ -1,4 +1,3 @@
-
 <?php
 
 namespace xenialdan\PocketAI\component\minecraft\behavior;
@@ -12,9 +11,9 @@ class _move_towards_restriction implements BaseComponent
     protected $name = "minecraft:behavior.move_towards_restriction";
     private $priority;
 
-    public function __construct(string $name, $priority)
+    public function __construct($priority)
     {
-        $this->priority = priority;
+        $this->priority = $priority;
     }
 
     /**

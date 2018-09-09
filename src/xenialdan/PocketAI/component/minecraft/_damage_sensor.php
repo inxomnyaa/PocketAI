@@ -1,4 +1,3 @@
-
 <?php
 
 namespace xenialdan\PocketAI\component\minecraft;
@@ -10,11 +9,13 @@ use xenialdan\PocketAI\entitytype\AIProjectile;
 class _damage_sensor implements BaseComponent
 {
     protected $name = "minecraft:damage_sensor";
-    private $on_damage;private $deals_damage;
+    private $on_damage;
+    private $deals_damage;
 
-    public function __construct(string $name, $on_damage,$deals_damage)
+    public function __construct($on_damage, $deals_damage)
     {
-        $this->on_damage = on_damage;$this->deals_damage = deals_damage;
+        $this->on_damage = $on_damage;
+        $this->deals_damage = $deals_damage;
     }
 
     /**

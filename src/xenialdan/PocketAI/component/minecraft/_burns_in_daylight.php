@@ -1,4 +1,3 @@
-
 <?php
 
 namespace xenialdan\PocketAI\component\minecraft;
@@ -10,11 +9,12 @@ use xenialdan\PocketAI\entitytype\AIProjectile;
 class _burns_in_daylight implements BaseComponent
 {
     protected $name = "minecraft:burns_in_daylight";
-    private $;
+    private $value;
 
-    public function __construct(string $name, $)
+
+    public function __construct($value)
     {
-        $this-> = ;
+        $this->value = $value;
     }
 
     /**

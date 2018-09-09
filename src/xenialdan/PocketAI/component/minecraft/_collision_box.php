@@ -1,4 +1,3 @@
-
 <?php
 
 namespace xenialdan\PocketAI\component\minecraft;
@@ -10,11 +9,13 @@ use xenialdan\PocketAI\entitytype\AIProjectile;
 class _collision_box implements BaseComponent
 {
     protected $name = "minecraft:collision_box";
-    private $width;private $height;
+    private $width;
+    private $height;
 
-    public function __construct(string $name, $width,$height)
+    public function __construct($width, $height)
     {
-        $this->width = width;$this->height = height;
+        $this->width = $width;
+        $this->height = $height;
     }
 
     /**

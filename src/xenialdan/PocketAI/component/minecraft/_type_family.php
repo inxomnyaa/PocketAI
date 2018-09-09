@@ -1,4 +1,3 @@
-
 <?php
 
 namespace xenialdan\PocketAI\component\minecraft;
@@ -12,9 +11,9 @@ class _type_family implements BaseComponent
     protected $name = "minecraft:type_family";
     private $family;
 
-    public function __construct(string $name, $family)
+    public function __construct($family)
     {
-        $this->family = family;
+        $this->family = $family;
     }
 
     /**

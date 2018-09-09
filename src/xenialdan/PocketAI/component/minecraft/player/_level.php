@@ -1,4 +1,3 @@
-
 <?php
 
 namespace xenialdan\PocketAI\component\minecraft\player;
@@ -10,11 +9,13 @@ use xenialdan\PocketAI\entitytype\AIProjectile;
 class _level implements BaseComponent
 {
     protected $name = "minecraft:player.level";
-    private $value;private $max;
+    private $value;
+    private $max;
 
-    public function __construct(string $name, $value,$max)
+    public function __construct($value, $max)
     {
-        $this->value = value;$this->max = max;
+        $this->value = $value;
+        $this->max = $max;
     }
 
     /**

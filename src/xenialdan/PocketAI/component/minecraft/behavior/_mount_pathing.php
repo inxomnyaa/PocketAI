@@ -1,4 +1,3 @@
-
 <?php
 
 namespace xenialdan\PocketAI\component\minecraft\behavior;
@@ -10,11 +9,17 @@ use xenialdan\PocketAI\entitytype\AIProjectile;
 class _mount_pathing implements BaseComponent
 {
     protected $name = "minecraft:behavior.mount_pathing";
-    private $priority;private $speed_multiplier;private $target_dist;private $track_target;
+    private $priority;
+    private $speed_multiplier;
+    private $target_dist;
+    private $track_target;
 
-    public function __construct(string $name, $priority,$speed_multiplier,$target_dist,$track_target)
+    public function __construct($priority, $speed_multiplier, $target_dist, $track_target)
     {
-        $this->priority = priority;$this->speed_multiplier = speed_multiplier;$this->target_dist = target_dist;$this->track_target = track_target;
+        $this->priority = $priority;
+        $this->speed_multiplier = $speed_multiplier;
+        $this->target_dist = $target_dist;
+        $this->track_target = $track_target;
     }
 
     /**

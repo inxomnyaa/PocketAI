@@ -1,4 +1,3 @@
-
 <?php
 
 namespace xenialdan\PocketAI\component\minecraft\behavior;
@@ -10,11 +9,13 @@ use xenialdan\PocketAI\entitytype\AIProjectile;
 class _eat_block implements BaseComponent
 {
     protected $name = "minecraft:behavior.eat_block";
-    private $priority;private $on_eat;
+    private $priority;
+    private $on_eat;
 
-    public function __construct(string $name, $priority,$on_eat)
+    public function __construct($priority, $on_eat)
     {
-        $this->priority = priority;$this->on_eat = on_eat;
+        $this->priority = $priority;
+        $this->on_eat = $on_eat;
     }
 
     /**

@@ -1,4 +1,3 @@
-
 <?php
 
 namespace xenialdan\PocketAI\component\minecraft\behavior;
@@ -10,11 +9,13 @@ use xenialdan\PocketAI\entitytype\AIProjectile;
 class _send_event implements BaseComponent
 {
     protected $name = "minecraft:behavior.send_event";
-    private $priority;private $event_choices;
+    private $priority;
+    private $event_choices;
 
-    public function __construct(string $name, $priority,$event_choices)
+    public function __construct($priority, $event_choices)
     {
-        $this->priority = priority;$this->event_choices = event_choices;
+        $this->priority = $priority;
+        $this->event_choices = $event_choices;
     }
 
     /**

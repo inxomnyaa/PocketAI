@@ -1,4 +1,3 @@
-
 <?php
 
 namespace xenialdan\PocketAI\component\minecraft;
@@ -10,11 +9,15 @@ use xenialdan\PocketAI\entitytype\AIProjectile;
 class _target_nearby_sensor implements BaseComponent
 {
     protected $name = "minecraft:target_nearby_sensor";
-    private $inside_range;private $outside_range;private $on_inside_range;
+    private $inside_range;
+    private $outside_range;
+    private $on_inside_range;
 
-    public function __construct(string $name, $inside_range,$outside_range,$on_inside_range)
+    public function __construct($inside_range, $outside_range, $on_inside_range)
     {
-        $this->inside_range = inside_range;$this->outside_range = outside_range;$this->on_inside_range = on_inside_range;
+        $this->inside_range = $inside_range;
+        $this->outside_range = $outside_range;
+        $this->on_inside_range = $on_inside_range;
     }
 
     /**

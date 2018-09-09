@@ -1,4 +1,3 @@
-
 <?php
 
 namespace xenialdan\PocketAI\component\minecraft;
@@ -12,9 +11,9 @@ class _equipment implements BaseComponent
     protected $name = "minecraft:equipment";
     private $table;
 
-    public function __construct(string $name, $table)
+    public function __construct($table)
     {
-        $this->table = table;
+        $this->table = $table;
     }
 
     /**

@@ -1,4 +1,3 @@
-
 <?php
 
 namespace xenialdan\PocketAI\component\minecraft;
@@ -10,11 +9,19 @@ use xenialdan\PocketAI\entitytype\AIProjectile;
 class _projectile implements BaseComponent
 {
     protected $name = "minecraft:projectile";
-    private $onHit;private $power;private $gravity;private $angleoffset;private $hitSound;
+    private $onHit;
+    private $power;
+    private $gravity;
+    private $angleoffset;
+    private $hitSound;
 
-    public function __construct(string $name, $onHit,$power,$gravity,$angleoffset,$hitSound)
+    public function __construct($onHit, $power, $gravity, $angleoffset, $hitSound)
     {
-        $this->onHit = onHit;$this->power = power;$this->gravity = gravity;$this->angleoffset = angleoffset;$this->hitSound = hitSound;
+        $this->onHit = $onHit;
+        $this->power = $power;
+        $this->gravity = $gravity;
+        $this->angleoffset = $angleoffset;
+        $this->hitSound = $hitSound;
     }
 
     /**

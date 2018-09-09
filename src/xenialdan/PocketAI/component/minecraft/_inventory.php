@@ -1,4 +1,3 @@
-
 <?php
 
 namespace xenialdan\PocketAI\component\minecraft;
@@ -10,11 +9,15 @@ use xenialdan\PocketAI\entitytype\AIProjectile;
 class _inventory implements BaseComponent
 {
     protected $name = "minecraft:inventory";
-    private $container_type;private $inventory_size;private $can_be_siphoned_from;
+    private $container_type;
+    private $inventory_size;
+    private $can_be_siphoned_from;
 
-    public function __construct(string $name, $container_type,$inventory_size,$can_be_siphoned_from)
+    public function __construct($container_type, $inventory_size, $can_be_siphoned_from)
     {
-        $this->container_type = container_type;$this->inventory_size = inventory_size;$this->can_be_siphoned_from = can_be_siphoned_from;
+        $this->container_type = $container_type;
+        $this->inventory_size = $inventory_size;
+        $this->can_be_siphoned_from = $can_be_siphoned_from;
     }
 
     /**

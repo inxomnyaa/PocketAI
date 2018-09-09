@@ -1,4 +1,3 @@
-
 <?php
 
 namespace xenialdan\PocketAI\component\minecraft\behavior;
@@ -10,11 +9,17 @@ use xenialdan\PocketAI\entitytype\AIProjectile;
 class _beg implements BaseComponent
 {
     protected $name = "minecraft:behavior.beg";
-    private $priority;private $look_distance;private $look_time;private $items;
+    private $priority;
+    private $look_distance;
+    private $look_time;
+    private $items;
 
-    public function __construct(string $name, $priority,$look_distance,$look_time,$items)
+    public function __construct($priority, $look_distance, $look_time, $items)
     {
-        $this->priority = priority;$this->look_distance = look_distance;$this->look_time = look_time;$this->items = items;
+        $this->priority = $priority;
+        $this->look_distance = $look_distance;
+        $this->look_time = $look_time;
+        $this->items = $items;
     }
 
     /**

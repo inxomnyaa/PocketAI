@@ -1,4 +1,3 @@
-
 <?php
 
 namespace xenialdan\PocketAI\component\minecraft;
@@ -10,11 +9,21 @@ use xenialdan\PocketAI\entitytype\AIProjectile;
 class _teleport implements BaseComponent
 {
     protected $name = "minecraft:teleport";
-    private $randomTeleports;private $maxRandomTeleportTime;private $randomTeleportCube;private $targetDistance;private $target_teleport_chance;private $lightTeleportChance;
+    private $randomTeleports;
+    private $maxRandomTeleportTime;
+    private $randomTeleportCube;
+    private $targetDistance;
+    private $target_teleport_chance;
+    private $lightTeleportChance;
 
-    public function __construct(string $name, $randomTeleports,$maxRandomTeleportTime,$randomTeleportCube,$targetDistance,$target_teleport_chance,$lightTeleportChance)
+    public function __construct($randomTeleports, $maxRandomTeleportTime, $randomTeleportCube, $targetDistance, $target_teleport_chance, $lightTeleportChance)
     {
-        $this->randomTeleports = randomTeleports;$this->maxRandomTeleportTime = maxRandomTeleportTime;$this->randomTeleportCube = randomTeleportCube;$this->targetDistance = targetDistance;$this->target_teleport_chance = target_teleport_chance;$this->lightTeleportChance = lightTeleportChance;
+        $this->randomTeleports = $randomTeleports;
+        $this->maxRandomTeleportTime = $maxRandomTeleportTime;
+        $this->randomTeleportCube = $randomTeleportCube;
+        $this->targetDistance = $targetDistance;
+        $this->target_teleport_chance = $target_teleport_chance;
+        $this->lightTeleportChance = $lightTeleportChance;
     }
 
     /**

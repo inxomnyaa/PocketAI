@@ -1,4 +1,3 @@
-
 <?php
 
 namespace xenialdan\PocketAI\component\minecraft\movement;
@@ -12,9 +11,9 @@ class _jump implements BaseComponent
     protected $name = "minecraft:movement.jump";
     private $jump_delay;
 
-    public function __construct(string $name, $jump_delay)
+    public function __construct($jump_delay)
     {
-        $this->jump_delay = jump_delay;
+        $this->jump_delay = $jump_delay;
     }
 
     /**

@@ -1,4 +1,3 @@
-
 <?php
 
 namespace xenialdan\PocketAI\component\minecraft;
@@ -10,18 +9,19 @@ use xenialdan\PocketAI\entitytype\AIProjectile;
 class _fire_immune implements BaseComponent
 {
     protected $name = "minecraft:fire_immune";
-    private $1;
+    private $value;
 
-    public function __construct(string $name, $1)
+    public function __construct($value)
     {
-        $this->1 = 1;
+        $this->value = $value;
     }
 
     /**
      * Applies the changes to the mob
      * @param AIEntity|AIProjectile $entity
      */
-    public function apply($entity): void
+    public
+    function apply($entity): void
     {
         // TODO: Implement apply() method.
     }
@@ -30,7 +30,8 @@ class _fire_immune implements BaseComponent
      * Removes the changes from the mob
      * @param AIEntity|AIProjectile $entity
      */
-    public function remove($entity): void
+    public
+    function remove($entity): void
     {
         // TODO: Implement remove() method.
     }

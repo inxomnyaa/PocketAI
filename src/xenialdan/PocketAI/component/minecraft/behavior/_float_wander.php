@@ -1,4 +1,3 @@
-
 <?php
 
 namespace xenialdan\PocketAI\component\minecraft\behavior;
@@ -10,11 +9,13 @@ use xenialdan\PocketAI\entitytype\AIProjectile;
 class _float_wander implements BaseComponent
 {
     protected $name = "minecraft:behavior.float_wander";
-    private $priority;private $must_reach;
+    private $priority;
+    private $must_reach;
 
-    public function __construct(string $name, $priority,$must_reach)
+    public function __construct($priority, $must_reach)
     {
-        $this->priority = priority;$this->must_reach = must_reach;
+        $this->priority = $priority;
+        $this->must_reach = $must_reach;
     }
 
     /**

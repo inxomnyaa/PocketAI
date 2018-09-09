@@ -1,4 +1,3 @@
-
 <?php
 
 namespace xenialdan\PocketAI\component\minecraft\behavior;
@@ -10,11 +9,15 @@ use xenialdan\PocketAI\entitytype\AIProjectile;
 class _swell implements BaseComponent
 {
     protected $name = "minecraft:behavior.swell";
-    private $start_distance;private $stop_distance;private $priority;
+    private $start_distance;
+    private $stop_distance;
+    private $priority;
 
-    public function __construct(string $name, $start_distance,$stop_distance,$priority)
+    public function __construct($start_distance, $stop_distance, $priority)
     {
-        $this->start_distance = start_distance;$this->stop_distance = stop_distance;$this->priority = priority;
+        $this->start_distance = $start_distance;
+        $this->stop_distance = $stop_distance;
+        $this->priority = $priority;
     }
 
     /**

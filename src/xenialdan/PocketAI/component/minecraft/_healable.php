@@ -1,4 +1,3 @@
-
 <?php
 
 namespace xenialdan\PocketAI\component\minecraft;
@@ -12,9 +11,9 @@ class _healable implements BaseComponent
     protected $name = "minecraft:healable";
     private $items;
 
-    public function __construct(string $name, $items)
+    public function __construct($items)
     {
-        $this->items = items;
+        $this->items = $items;
     }
 
     /**

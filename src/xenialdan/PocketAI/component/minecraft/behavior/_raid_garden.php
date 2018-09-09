@@ -1,4 +1,3 @@
-
 <?php
 
 namespace xenialdan\PocketAI\component\minecraft\behavior;
@@ -10,11 +9,17 @@ use xenialdan\PocketAI\entitytype\AIProjectile;
 class _raid_garden implements BaseComponent
 {
     protected $name = "minecraft:behavior.raid_garden";
-    private $priority;private $blocks;private $search_range;private $goal_radius;
+    private $priority;
+    private $blocks;
+    private $search_range;
+    private $goal_radius;
 
-    public function __construct(string $name, $priority,$blocks,$search_range,$goal_radius)
+    public function __construct($priority, $blocks, $search_range, $goal_radius)
     {
-        $this->priority = priority;$this->blocks = blocks;$this->search_range = search_range;$this->goal_radius = goal_radius;
+        $this->priority = $priority;
+        $this->blocks = $blocks;
+        $this->search_range = $search_range;
+        $this->goal_radius = $goal_radius;
     }
 
     /**

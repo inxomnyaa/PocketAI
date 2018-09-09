@@ -1,4 +1,3 @@
-
 <?php
 
 namespace xenialdan\PocketAI\component\minecraft\behavior;
@@ -10,11 +9,13 @@ use xenialdan\PocketAI\entitytype\AIProjectile;
 class _summon_entity implements BaseComponent
 {
     protected $name = "minecraft:behavior.summon_entity";
-    private $priority;private $summon_choices;
+    private $priority;
+    private $summon_choices;
 
-    public function __construct(string $name, $priority,$summon_choices)
+    public function __construct($priority, $summon_choices)
     {
-        $this->priority = priority;$this->summon_choices = summon_choices;
+        $this->priority = $priority;
+        $this->summon_choices = $summon_choices;
     }
 
     /**

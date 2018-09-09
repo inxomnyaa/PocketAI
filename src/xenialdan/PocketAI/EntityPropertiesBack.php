@@ -8,7 +8,7 @@ use xenialdan\PocketAI\entitytype\AIEntity;
 use xenialdan\PocketAI\entitytype\AIProjectile;
 use xenialdan\PocketAI\inventory\AIEntityInventory;
 
-class EntityProperties
+class EntityPropertiesBack
 {
     private $behaviour = "empty";
     /** @var null|AIEntity|AIProjectile|InventoryHolder */
@@ -40,6 +40,9 @@ class EntityProperties
             throw new \InvalidArgumentException("The Entity behaviour/properties file: " . $behaviour . " has an unsupported format_version and will not be used");
         }
         $this->entity = $entity;
+        foreach ($this->getBehaviourComponents() as $component_name => $component_data) {
+            $this->applyComponent($component_name, $component_data);
+        }
     }
 
     /**

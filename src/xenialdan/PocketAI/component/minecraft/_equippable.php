@@ -1,4 +1,3 @@
-
 <?php
 
 namespace xenialdan\PocketAI\component\minecraft;
@@ -12,9 +11,9 @@ class _equippable implements BaseComponent
     protected $name = "minecraft:equippable";
     private $slots;
 
-    public function __construct(string $name, $slots)
+    public function __construct($slots)
     {
-        $this->slots = slots;
+        $this->slots = $slots;
     }
 
     /**

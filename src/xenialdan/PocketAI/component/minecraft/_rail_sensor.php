@@ -1,4 +1,3 @@
-
 <?php
 
 namespace xenialdan\PocketAI\component\minecraft;
@@ -12,9 +11,9 @@ class _rail_sensor implements BaseComponent
     protected $name = "minecraft:rail_sensor";
     private $eject_on_activate;
 
-    public function __construct(string $name, $eject_on_activate)
+    public function __construct($eject_on_activate)
     {
-        $this->eject_on_activate = eject_on_activate;
+        $this->eject_on_activate = $eject_on_activate;
     }
 
     /**

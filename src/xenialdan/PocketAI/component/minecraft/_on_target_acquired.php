@@ -1,4 +1,3 @@
-
 <?php
 
 namespace xenialdan\PocketAI\component\minecraft;
@@ -10,11 +9,13 @@ use xenialdan\PocketAI\entitytype\AIProjectile;
 class _on_target_acquired implements BaseComponent
 {
     protected $name = "minecraft:on_target_acquired";
-    private $event;private $target;
+    private $event;
+    private $target;
 
-    public function __construct(string $name, $event,$target)
+    public function __construct($event, $target)
     {
-        $this->event = event;$this->target = target;
+        $this->event = $event;
+        $this->target = $target;
     }
 
     /**

@@ -1,4 +1,3 @@
-
 <?php
 
 namespace xenialdan\PocketAI\component\minecraft\horse;
@@ -12,9 +11,9 @@ class _jump_strength implements BaseComponent
     protected $name = "minecraft:horse.jump_strength";
     private $value;
 
-    public function __construct(string $name, $value)
+    public function __construct($value)
     {
-        $this->value = value;
+        $this->value = $value;
     }
 
     /**

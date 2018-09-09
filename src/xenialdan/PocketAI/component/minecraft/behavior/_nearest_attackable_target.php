@@ -1,4 +1,3 @@
-
 <?php
 
 namespace xenialdan\PocketAI\component\minecraft\behavior;
@@ -10,11 +9,15 @@ use xenialdan\PocketAI\entitytype\AIProjectile;
 class _nearest_attackable_target implements BaseComponent
 {
     protected $name = "minecraft:behavior.nearest_attackable_target";
-    private $priority;private $entity_types;private $must_see;
+    private $priority;
+    private $entity_types;
+    private $must_see;
 
-    public function __construct(string $name, $priority,$entity_types,$must_see)
+    public function __construct($priority, $entity_types, $must_see)
     {
-        $this->priority = priority;$this->entity_types = entity_types;$this->must_see = must_see;
+        $this->priority = $priority;
+        $this->entity_types = $entity_types;
+        $this->must_see = $must_see;
     }
 
     /**

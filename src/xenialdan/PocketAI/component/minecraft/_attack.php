@@ -1,4 +1,3 @@
-
 <?php
 
 namespace xenialdan\PocketAI\component\minecraft;
@@ -12,9 +11,9 @@ class _attack implements BaseComponent
     protected $name = "minecraft:attack";
     private $damage;
 
-    public function __construct(string $name, $damage)
+    public function __construct($damage)
     {
-        $this->damage = damage;
+        $this->damage = $damage;
     }
 
     /**

@@ -1,4 +1,3 @@
-
 <?php
 
 namespace xenialdan\PocketAI\component\minecraft;
@@ -10,11 +9,17 @@ use xenialdan\PocketAI\entitytype\AIProjectile;
 class _explode implements BaseComponent
 {
     protected $name = "minecraft:explode";
-    private $fuseLength;private $fuseLit;private $power;private $causesFire;
+    private $fuseLength;
+    private $fuseLit;
+    private $power;
+    private $causesFire;
 
-    public function __construct(string $name, $fuseLength,$fuseLit,$power,$causesFire)
+    public function __construct($fuseLength, $fuseLit, $power, $causesFire)
     {
-        $this->fuseLength = fuseLength;$this->fuseLit = fuseLit;$this->power = power;$this->causesFire = causesFire;
+        $this->fuseLength = $fuseLength;
+        $this->fuseLit = $fuseLit;
+        $this->power = $power;
+        $this->causesFire = $causesFire;
     }
 
     /**
