@@ -6,19 +6,22 @@ use xenialdan\PocketAI\component\BaseComponent;
 use xenialdan\PocketAI\entitytype\AIEntity;
 use xenialdan\PocketAI\entitytype\AIProjectile;
 
-class _sound_volume implements BaseComponent
+class _sound_volume extends BaseComponent
 {
     protected $name = "minecraft:sound_volume";
-    private $value = 1.0;
+    /** @var float $value The value of the volume the entity uses for sound effects */
+    public $value = 1.0;
+
 
     /**
      * Sets the entity's base volume for sound effects.
      * _sound_volume constructor.
-     * @param float $value The value of the volume the entity uses for sound effects
+     * @param array $values
      */
-    public function __construct(float $value)
+    public function __construct(array $values = [])
     {
-        $this->value = $value;
+        $this->value = $values['value'] ?? $this->value;
+
     }
 
     /**

@@ -6,17 +6,17 @@ use xenialdan\PocketAI\component\BaseComponent;
 use xenialdan\PocketAI\entitytype\AIEntity;
 use xenialdan\PocketAI\entitytype\AIProjectile;
 
-class _wants_jockey implements BaseComponent
+class _wants_jockey extends BaseComponent
 {
     protected $name = "minecraft:wants_jockey";
-    private $value = true;
 
 
     /**
      * Sets that this entity wants to become a jockey.
      * _wants_jockey constructor.
+     * @param array $values
      */
-    public function __construct()
+    public function __construct(array $values = [])
     {
 
     }

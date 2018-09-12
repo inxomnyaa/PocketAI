@@ -6,14 +6,22 @@ use xenialdan\PocketAI\component\BaseComponent;
 use xenialdan\PocketAI\entitytype\AIEntity;
 use xenialdan\PocketAI\entitytype\AIProjectile;
 
-class _move_towards_restriction implements BaseComponent
+class _move_towards_restriction extends BaseComponent
 {
     protected $name = "minecraft:behavior.move_towards_restriction";
-    private $priority;
+    /** @var float $speed_multiplier Movement speed multiplier of the mob when using this AI Goal */
+    public $speed_multiplier = 1.0;
 
-    public function __construct($priority)
+
+    /**
+     * Allows mob to move towards a defined area that the mob should be restricted to.
+     * _move_towards_restriction constructor.
+     * @param array $values
+     */
+    public function __construct(array $values = [])
     {
-        $this->priority = $priority;
+        $this->speed_multiplier = $values['speed_multiplier'] ?? $this->speed_multiplier;
+
     }
 
     /**

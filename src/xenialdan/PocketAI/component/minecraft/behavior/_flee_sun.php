@@ -6,16 +6,22 @@ use xenialdan\PocketAI\component\BaseComponent;
 use xenialdan\PocketAI\entitytype\AIEntity;
 use xenialdan\PocketAI\entitytype\AIProjectile;
 
-class _flee_sun implements BaseComponent
+class _flee_sun extends BaseComponent
 {
     protected $name = "minecraft:behavior.flee_sun";
-    private $priority;
-    private $speed_multiplier;
+    /** @var float $speed_multiplier Movement speed multiplier of the mob when using this AI Goal */
+    public $speed_multiplier = 1.0;
 
-    public function __construct($priority, $speed_multiplier)
+
+    /**
+     * Allows the mob to run away from direct sunlight and seek shade.
+     * _flee_sun constructor.
+     * @param array $values
+     */
+    public function __construct(array $values = [])
     {
-        $this->priority = $priority;
-        $this->speed_multiplier = $speed_multiplier;
+        $this->speed_multiplier = $values['speed_multiplier'] ?? $this->speed_multiplier;
+
     }
 
     /**

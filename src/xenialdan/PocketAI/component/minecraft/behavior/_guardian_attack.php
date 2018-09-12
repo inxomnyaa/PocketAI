@@ -6,14 +6,19 @@ use xenialdan\PocketAI\component\BaseComponent;
 use xenialdan\PocketAI\entitytype\AIEntity;
 use xenialdan\PocketAI\entitytype\AIProjectile;
 
-class _guardian_attack implements BaseComponent
+class _guardian_attack extends BaseComponent
 {
     protected $name = "minecraft:behavior.guardian_attack";
-    private $priority;
 
-    public function __construct($priority)
+
+    /**
+     * Allows the guardian to use its laser beam attack. Can only be used by Guardians and Elder Guardians.
+     * _guardian_attack constructor.
+     * @param array $values
+     */
+    public function __construct(array $values = [])
     {
-        $this->priority = $priority;
+
     }
 
     /**

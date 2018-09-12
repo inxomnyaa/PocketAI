@@ -6,14 +6,19 @@ use xenialdan\PocketAI\component\BaseComponent;
 use xenialdan\PocketAI\entitytype\AIEntity;
 use xenialdan\PocketAI\entitytype\AIProjectile;
 
-class _slime_keep_on_jumping implements BaseComponent
+class _slime_keep_on_jumping extends BaseComponent
 {
     protected $name = "minecraft:behavior.slime_keep_on_jumping";
-    private $priority;
 
-    public function __construct($priority)
+
+    /**
+     * Can only be used by Slimes and Magma Cubes. Allows the mob to continuously jump around like a slime.
+     * _slime_keep_on_jumping constructor.
+     * @param array $values
+     */
+    public function __construct(array $values = [])
     {
-        $this->priority = $priority;
+
     }
 
     /**

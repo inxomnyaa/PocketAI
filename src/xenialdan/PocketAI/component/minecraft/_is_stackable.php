@@ -6,17 +6,17 @@ use xenialdan\PocketAI\component\BaseComponent;
 use xenialdan\PocketAI\entitytype\AIEntity;
 use xenialdan\PocketAI\entitytype\AIProjectile;
 
-class _is_stackable implements BaseComponent
+class _is_stackable extends BaseComponent
 {
     protected $name = "minecraft:is_stackable";
-    private $value = true;
 
 
     /**
      * Sets that this entity can be stacked.
      * _is_stackable constructor.
+     * @param array $values
      */
-    public function __construct()
+    public function __construct(array $values = [])
     {
 
     }

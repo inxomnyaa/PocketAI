@@ -6,17 +6,17 @@ use xenialdan\PocketAI\component\BaseComponent;
 use xenialdan\PocketAI\entitytype\AIEntity;
 use xenialdan\PocketAI\entitytype\AIProjectile;
 
-class _is_saddled implements BaseComponent
+class _is_saddled extends BaseComponent
 {
     protected $name = "minecraft:is_saddled";
-    private $value = true;
 
 
     /**
      * Sets that this entity is currently saddled.
      * _is_saddled constructor.
+     * @param array $values
      */
-    public function __construct()
+    public function __construct(array $values = [])
     {
 
     }

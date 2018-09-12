@@ -6,22 +6,19 @@ use xenialdan\PocketAI\component\BaseComponent;
 use xenialdan\PocketAI\entitytype\AIEntity;
 use xenialdan\PocketAI\entitytype\AIProjectile;
 
-class _projectile implements BaseComponent
+class _projectile extends BaseComponent
 {
     protected $name = "minecraft:projectile";
-    private $onHit;
-    private $power;
-    private $gravity;
-    private $angleoffset;
-    private $hitSound;
 
-    public function __construct($onHit, $power, $gravity, $angleoffset, $hitSound)
+
+    /**
+     * Allows the entity to be a thrown entity.
+     * _projectile constructor.
+     * @param array $values
+     */
+    public function __construct(array $values = [])
     {
-        $this->onHit = $onHit;
-        $this->power = $power;
-        $this->gravity = $gravity;
-        $this->angleoffset = $angleoffset;
-        $this->hitSound = $hitSound;
+
     }
 
     /**

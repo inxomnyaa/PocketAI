@@ -6,19 +6,22 @@ use xenialdan\PocketAI\component\BaseComponent;
 use xenialdan\PocketAI\entitytype\AIEntity;
 use xenialdan\PocketAI\entitytype\AIProjectile;
 
-class _variant implements BaseComponent
+class _variant extends BaseComponent
 {
     protected $name = "minecraft:variant";
-    private $value = 0;
+    /** @var int $value The ID of the variant. By convention, 0 is the ID of the base entity */
+    public $value;
+
 
     /**
      * Used to differentiate the component group of a variant of an entity from others (e.g. ocelot, villager)
      * _variant constructor.
-     * @param int $value The ID of the variant. By convention, 0 is the ID of the base entity
+     * @param array $values
      */
-    public function __construct(int $value)
+    public function __construct(array $values = [])
     {
-        $this->value = $value;
+        $this->value = $values['value'] ?? $this->value;
+
     }
 
     /**

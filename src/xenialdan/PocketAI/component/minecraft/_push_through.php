@@ -6,19 +6,22 @@ use xenialdan\PocketAI\component\BaseComponent;
 use xenialdan\PocketAI\entitytype\AIEntity;
 use xenialdan\PocketAI\entitytype\AIProjectile;
 
-class _push_through implements BaseComponent
+class _push_through extends BaseComponent
 {
     protected $name = "minecraft:push_through";
-    private $value = 0.0;
+    /** @var float $value The value of the entity's push-through, in blocks */
+    public $value = 0.0;
+
 
     /**
      * Sets the distance through which the entity can push through.
      * _push_through constructor.
-     * @param float $value The value of the entity's push-through, in blocks
+     * @param array $values
      */
-    public function __construct(float $value)
+    public function __construct(array $values = [])
     {
-        $this->value = $value;
+        $this->value = $values['value'] ?? $this->value;
+
     }
 
     /**

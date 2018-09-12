@@ -6,16 +6,22 @@ use xenialdan\PocketAI\component\BaseComponent;
 use xenialdan\PocketAI\entitytype\AIEntity;
 use xenialdan\PocketAI\entitytype\AIProjectile;
 
-class _eat_block implements BaseComponent
+class _eat_block extends BaseComponent
 {
     protected $name = "minecraft:behavior.eat_block";
-    private $priority;
-    private $on_eat;
+    /** @var mixed (Trigger) $on_eat Trigger to fire when the mob eats a block of grass */
+    public $on_eat;
 
-    public function __construct($priority, $on_eat)
+
+    /**
+     * Allows the mob to eat a block (for example, sheep eating grass).
+     * _eat_block constructor.
+     * @param array $values
+     */
+    public function __construct(array $values = [])
     {
-        $this->priority = $priority;
-        $this->on_eat = $on_eat;
+        $this->on_eat = $values['on_eat'] ?? $this->on_eat;
+
     }
 
     /**

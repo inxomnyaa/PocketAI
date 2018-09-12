@@ -6,13 +6,21 @@ use xenialdan\PocketAI\component\BaseComponent;
 use xenialdan\PocketAI\entitytype\AIEntity;
 use xenialdan\PocketAI\entitytype\AIProjectile;
 
-class _fly implements BaseComponent
+class _fly extends BaseComponent
 {
     protected $name = "minecraft:movement.fly";
+    /** @var float $max_turn The maximum number in degrees the mob can turn per tick. */
+    public $max_turn = 30.0;
 
 
-    public function __construct()
+    /**
+     * This move control causes the mob to fly.
+     * _fly constructor.
+     * @param array $values
+     */
+    public function __construct(array $values = [])
     {
+        $this->max_turn = $values['max_turn'] ?? $this->max_turn;
 
     }
 

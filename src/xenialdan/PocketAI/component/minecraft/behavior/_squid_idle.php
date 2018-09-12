@@ -6,14 +6,19 @@ use xenialdan\PocketAI\component\BaseComponent;
 use xenialdan\PocketAI\entitytype\AIEntity;
 use xenialdan\PocketAI\entitytype\AIProjectile;
 
-class _squid_idle implements BaseComponent
+class _squid_idle extends BaseComponent
 {
     protected $name = "minecraft:behavior.squid_idle";
-    private $priority;
 
-    public function __construct($priority)
+
+    /**
+     * Allows the squid to swim in place idly. Can only be used by the Squid.
+     * _squid_idle constructor.
+     * @param array $values
+     */
+    public function __construct(array $values = [])
     {
-        $this->priority = $priority;
+
     }
 
     /**

@@ -6,19 +6,22 @@ use xenialdan\PocketAI\component\BaseComponent;
 use xenialdan\PocketAI\entitytype\AIEntity;
 use xenialdan\PocketAI\entitytype\AIProjectile;
 
-class _equipment implements BaseComponent
+class _equipment extends BaseComponent
 {
     protected $name = "minecraft:equipment";
-    private $table;
+    /** @var string $table The path to the equipment table, relative to the Behavior Pack's root */
+    public $table;
+
 
     /**
      * Sets the Equipment table to use for this Entity.
      * _equipment constructor.
-     * @param string $table The path to the equipment table, relative to the Behavior Pack's root
+     * @param array $values
      */
-    public function __construct(string $table)
+    public function __construct(array $values = [])
     {
-        $this->table = $table;
+        $this->table = $values['table'] ?? $this->table;
+
     }
 
     /**

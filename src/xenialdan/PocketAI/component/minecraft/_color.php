@@ -6,20 +6,22 @@ use xenialdan\PocketAI\component\BaseComponent;
 use xenialdan\PocketAI\entitytype\AIEntity;
 use xenialdan\PocketAI\entitytype\AIProjectile;
 
-class _color implements BaseComponent
+class _color extends BaseComponent
 {
     protected $name = "minecraft:color";
-    private $value = 0;
+    /** @var int $value The Palette Color value of the entity */
+    public $value;
 
 
     /**
      * Defines the entity's color. Only works on vanilla entities that have predefined color values (sheep, llama, shulker).
      * _color constructor.
-     * @param int $value The Palette Color value of the entity
+     * @param array $values
      */
-    public function __construct(int $value)
+    public function __construct(array $values = [])
     {
-        $this->value = $value;
+        $this->value = $values['value'] ?? $this->value;
+
     }
 
     /**

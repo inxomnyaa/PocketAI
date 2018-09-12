@@ -6,22 +6,25 @@ use xenialdan\PocketAI\component\BaseComponent;
 use xenialdan\PocketAI\entitytype\AIEntity;
 use xenialdan\PocketAI\entitytype\AIProjectile;
 
-class _collision_box implements BaseComponent
+class _collision_box extends BaseComponent
 {
     protected $name = "minecraft:collision_box";
-    private $width = 1.0;
-    private $height = 1.0;
+    /** @var float $height Height of the Collision Box in Blocks */
+    public $height = 1.0;
+    /** @var float $width Width and Depth of the Collision Box in Blocks */
+    public $width = 1.0;
+
 
     /**
      * Sets the width and height of the Entity's collision box.
      * _collision_box constructor.
-     * @param float $width Height of the Collision Box in Blocks
-     * @param float $height Width and Depth of the Collision Box in Blocks
+     * @param array $values
      */
-    public function __construct(float $width, float $height)
+    public function __construct(array $values = [])
     {
-        $this->width = $width;
-        $this->height = $height;
+        $this->height = $values['height'] ?? $this->height;
+        $this->width = $values['width'] ?? $this->width;
+
     }
 
     /**

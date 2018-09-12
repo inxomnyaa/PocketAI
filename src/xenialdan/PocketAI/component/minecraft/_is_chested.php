@@ -6,17 +6,17 @@ use xenialdan\PocketAI\component\BaseComponent;
 use xenialdan\PocketAI\entitytype\AIEntity;
 use xenialdan\PocketAI\entitytype\AIProjectile;
 
-class _is_chested implements BaseComponent
+class _is_chested extends BaseComponent
 {
     protected $name = "minecraft:is_chested";
-    private $value = true;
 
 
     /**
      * Sets that this entity is currently carrying a chest.
      * _is_chested constructor.
+     * @param array $values
      */
-    public function __construct()
+    public function __construct(array $values = [])
     {
 
     }

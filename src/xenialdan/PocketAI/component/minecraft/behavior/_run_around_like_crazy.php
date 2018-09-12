@@ -6,16 +6,22 @@ use xenialdan\PocketAI\component\BaseComponent;
 use xenialdan\PocketAI\entitytype\AIEntity;
 use xenialdan\PocketAI\entitytype\AIProjectile;
 
-class _run_around_like_crazy implements BaseComponent
+class _run_around_like_crazy extends BaseComponent
 {
     protected $name = "minecraft:behavior.run_around_like_crazy";
-    private $priority;
-    private $speed_multiplier;
+    /** @var float $speed_multiplier Movement speed multiplier of the mob when using this AI Goal */
+    public $speed_multiplier = 1.0;
 
-    public function __construct($priority, $speed_multiplier)
+
+    /**
+     * Allows the mob to run around aimlessly.
+     * _run_around_like_crazy constructor.
+     * @param array $values
+     */
+    public function __construct(array $values = [])
     {
-        $this->priority = $priority;
-        $this->speed_multiplier = $speed_multiplier;
+        $this->speed_multiplier = $values['speed_multiplier'] ?? $this->speed_multiplier;
+
     }
 
     /**

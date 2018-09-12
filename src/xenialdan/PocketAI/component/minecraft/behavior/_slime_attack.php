@@ -6,14 +6,19 @@ use xenialdan\PocketAI\component\BaseComponent;
 use xenialdan\PocketAI\entitytype\AIEntity;
 use xenialdan\PocketAI\entitytype\AIProjectile;
 
-class _slime_attack implements BaseComponent
+class _slime_attack extends BaseComponent
 {
     protected $name = "minecraft:behavior.slime_attack";
-    private $priority;
 
-    public function __construct($priority)
+
+    /**
+     * Can only be used by Slimes and Magma Cubes. Allows the mob to use a melee attack like the slime's.
+     * _slime_attack constructor.
+     * @param array $values
+     */
+    public function __construct(array $values = [])
     {
-        $this->priority = $priority;
+
     }
 
     /**

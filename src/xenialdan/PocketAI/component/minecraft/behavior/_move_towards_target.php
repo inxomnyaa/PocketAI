@@ -6,18 +6,22 @@ use xenialdan\PocketAI\component\BaseComponent;
 use xenialdan\PocketAI\entitytype\AIEntity;
 use xenialdan\PocketAI\entitytype\AIProjectile;
 
-class _move_towards_target implements BaseComponent
+class _move_towards_target extends BaseComponent
 {
     protected $name = "minecraft:behavior.move_towards_target";
-    private $priority;
-    private $speed_multiplier;
-    private $within_radius;
+    /** @var float $within_radius Defines the radius in blocks that the mob tries to be from the target. A value of 0 means it tries to occupy the same block as the target */
+    public $within_radius = 0.0;
 
-    public function __construct($priority, $speed_multiplier, $within_radius)
+
+    /**
+     * Allows mob to move towards its current target.
+     * _move_towards_target constructor.
+     * @param array $values
+     */
+    public function __construct(array $values = [])
     {
-        $this->priority = $priority;
-        $this->speed_multiplier = $speed_multiplier;
-        $this->within_radius = $within_radius;
+        $this->within_radius = $values['within_radius'] ?? $this->within_radius;
+
     }
 
     /**

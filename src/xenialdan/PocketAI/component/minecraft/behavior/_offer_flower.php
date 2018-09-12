@@ -6,14 +6,19 @@ use xenialdan\PocketAI\component\BaseComponent;
 use xenialdan\PocketAI\entitytype\AIEntity;
 use xenialdan\PocketAI\entitytype\AIProjectile;
 
-class _offer_flower implements BaseComponent
+class _offer_flower extends BaseComponent
 {
     protected $name = "minecraft:behavior.offer_flower";
-    private $priority;
 
-    public function __construct($priority)
+
+    /**
+     * Allows the mob to offer the player a flower like the Iron Golem does.
+     * _offer_flower constructor.
+     * @param array $values
+     */
+    public function __construct(array $values = [])
     {
-        $this->priority = $priority;
+
     }
 
     /**

@@ -6,13 +6,21 @@ use xenialdan\PocketAI\component\BaseComponent;
 use xenialdan\PocketAI\entitytype\AIEntity;
 use xenialdan\PocketAI\entitytype\AIProjectile;
 
-class _sway implements BaseComponent
+class _sway extends BaseComponent
 {
     protected $name = "minecraft:movement.sway";
+    /** @var float $max_turn The maximum number in degrees the mob can turn per tick. */
+    public $max_turn = 30.0;
 
 
-    public function __construct()
+    /**
+     * This move control causes the mob to sway side to side giving the impression it is swimming.
+     * _sway constructor.
+     * @param array $values
+     */
+    public function __construct(array $values = [])
     {
+        $this->max_turn = $values['max_turn'] ?? $this->max_turn;
 
     }
 

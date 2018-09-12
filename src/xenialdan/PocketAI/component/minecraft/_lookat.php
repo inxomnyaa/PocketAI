@@ -6,20 +6,19 @@ use xenialdan\PocketAI\component\BaseComponent;
 use xenialdan\PocketAI\entitytype\AIEntity;
 use xenialdan\PocketAI\entitytype\AIProjectile;
 
-class _lookat implements BaseComponent
+class _lookat extends BaseComponent
 {
     protected $name = "minecraft:lookat";
-    private $searchRadius;
-    private $setTarget;
-    private $look_cooldown;
-    private $filters;
 
-    public function __construct($searchRadius, $setTarget, $look_cooldown, $filters)
+
+    /**
+     * Defines the behavior when another entity looks at this entity.
+     * _lookat constructor.
+     * @param array $values
+     */
+    public function __construct(array $values = [])
     {
-        $this->searchRadius = $searchRadius;
-        $this->setTarget = $setTarget;
-        $this->look_cooldown = $look_cooldown;
-        $this->filters = $filters;
+
     }
 
     /**

@@ -6,12 +6,17 @@ use xenialdan\PocketAI\component\BaseComponent;
 use xenialdan\PocketAI\entitytype\AIEntity;
 use xenialdan\PocketAI\entitytype\AIProjectile;
 
-class _dynamic implements BaseComponent
+class _dynamic extends BaseComponent
 {
     protected $name = "minecraft:jump.dynamic";
 
 
-    public function __construct()
+    /**
+     * Defines a dynamic type jump control that will change jump properties based on the speed modifier of the mob.
+     * _dynamic constructor.
+     * @param array $values
+     */
+    public function __construct(array $values = [])
     {
 
     }

@@ -6,14 +6,19 @@ use xenialdan\PocketAI\component\BaseComponent;
 use xenialdan\PocketAI\entitytype\AIEntity;
 use xenialdan\PocketAI\entitytype\AIProjectile;
 
-class _restrict_sun implements BaseComponent
+class _restrict_sun extends BaseComponent
 {
     protected $name = "minecraft:behavior.restrict_sun";
-    private $priority;
 
-    public function __construct($priority)
+
+    /**
+     * Allows the mob to automatically start avoiding the sun when its a clear day out.
+     * _restrict_sun constructor.
+     * @param array $values
+     */
+    public function __construct(array $values = [])
     {
-        $this->priority = $priority;
+
     }
 
     /**

@@ -6,16 +6,22 @@ use xenialdan\PocketAI\component\BaseComponent;
 use xenialdan\PocketAI\entitytype\AIEntity;
 use xenialdan\PocketAI\entitytype\AIProjectile;
 
-class _breed implements BaseComponent
+class _breed extends BaseComponent
 {
     protected $name = "minecraft:behavior.breed";
-    private $priority;
-    private $speed_multiplier;
+    /** @var float $speed_multiplier Movement speed multiplier of the mob when using this AI Goal */
+    public $speed_multiplier = 1.0;
 
-    public function __construct($priority, $speed_multiplier)
+
+    /**
+     * Allows this mob to breed with other mobs.
+     * _breed constructor.
+     * @param array $values
+     */
+    public function __construct(array $values = [])
     {
-        $this->priority = $priority;
-        $this->speed_multiplier = $speed_multiplier;
+        $this->speed_multiplier = $values['speed_multiplier'] ?? $this->speed_multiplier;
+
     }
 
     /**

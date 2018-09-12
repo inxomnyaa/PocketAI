@@ -6,17 +6,17 @@ use xenialdan\PocketAI\component\BaseComponent;
 use xenialdan\PocketAI\entitytype\AIEntity;
 use xenialdan\PocketAI\entitytype\AIProjectile;
 
-class _is_ignited implements BaseComponent
+class _is_ignited extends BaseComponent
 {
     protected $name = "minecraft:is_ignited";
-    private $value = true;
 
 
     /**
      * Sets that this entity is currently on fire.
      * _is_ignited constructor.
+     * @param array $values
      */
-    public function __construct()
+    public function __construct(array $values = [])
     {
 
     }

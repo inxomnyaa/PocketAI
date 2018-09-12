@@ -6,14 +6,19 @@ use xenialdan\PocketAI\component\BaseComponent;
 use xenialdan\PocketAI\entitytype\AIEntity;
 use xenialdan\PocketAI\entitytype\AIProjectile;
 
-class _enderman_leave_block implements BaseComponent
+class _enderman_leave_block extends BaseComponent
 {
     protected $name = "minecraft:behavior.enderman_leave_block";
-    private $priority;
 
-    public function __construct($priority)
+
+    /**
+     * Allows the enderman to drop a block they are carrying. Can only be used by Endermen.
+     * _enderman_leave_block constructor.
+     * @param array $values
+     */
+    public function __construct(array $values = [])
     {
-        $this->priority = $priority;
+
     }
 
     /**

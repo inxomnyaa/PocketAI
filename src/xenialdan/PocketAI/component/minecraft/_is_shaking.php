@@ -6,17 +6,17 @@ use xenialdan\PocketAI\component\BaseComponent;
 use xenialdan\PocketAI\entitytype\AIEntity;
 use xenialdan\PocketAI\entitytype\AIProjectile;
 
-class _is_shaking implements BaseComponent
+class _is_shaking extends BaseComponent
 {
     protected $name = "minecraft:is_shaking";
-    private $value = true;
 
 
     /**
      * Sets that this entity is currently shaking.
      * _is_shaking constructor.
+     * @param array $values
      */
-    public function __construct()
+    public function __construct(array $values = [])
     {
 
     }

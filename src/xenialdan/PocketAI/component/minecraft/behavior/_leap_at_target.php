@@ -6,16 +6,25 @@ use xenialdan\PocketAI\component\BaseComponent;
 use xenialdan\PocketAI\entitytype\AIEntity;
 use xenialdan\PocketAI\entitytype\AIProjectile;
 
-class _leap_at_target implements BaseComponent
+class _leap_at_target extends BaseComponent
 {
     protected $name = "minecraft:behavior.leap_at_target";
-    private $priority;
-    private $target_dist;
+    /** @var bool $must_be_on_ground If true, the mob will only jump at its target if its on the ground. Setting it to false will allow it to jump even if its already in the air */
+    public $must_be_on_ground = true;
+    /** @var float $yd The height in blocks the mob jumps when leaping at its target */
+    public $yd = 0.0;
 
-    public function __construct($priority, $target_dist)
+
+    /**
+     * Allows monsters to jump at and attack their target. Can only be used by hostile mobs.
+     * _leap_at_target constructor.
+     * @param array $values
+     */
+    public function __construct(array $values = [])
     {
-        $this->priority = $priority;
-        $this->target_dist = $target_dist;
+        $this->must_be_on_ground = $values['must_be_on_ground'] ?? $this->must_be_on_ground;
+        $this->yd = $values['yd'] ?? $this->yd;
+
     }
 
     /**

@@ -6,14 +6,19 @@ use xenialdan\PocketAI\component\BaseComponent;
 use xenialdan\PocketAI\entitytype\AIEntity;
 use xenialdan\PocketAI\entitytype\AIProjectile;
 
-class _float implements BaseComponent
+class _float extends BaseComponent
 {
     protected $name = "minecraft:behavior.float";
-    private $priority;
 
-    public function __construct($priority)
+
+    /**
+     * Allows the mob to stay afloat while swimming.
+     * _float constructor.
+     * @param array $values
+     */
+    public function __construct(array $values = [])
     {
-        $this->priority = $priority;
+
     }
 
     /**

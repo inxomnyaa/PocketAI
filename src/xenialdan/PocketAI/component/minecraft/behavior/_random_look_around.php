@@ -6,14 +6,19 @@ use xenialdan\PocketAI\component\BaseComponent;
 use xenialdan\PocketAI\entitytype\AIEntity;
 use xenialdan\PocketAI\entitytype\AIProjectile;
 
-class _random_look_around implements BaseComponent
+class _random_look_around extends BaseComponent
 {
     protected $name = "minecraft:behavior.random_look_around";
-    private $priority;
 
-    public function __construct($priority)
+
+    /**
+     * Allows the mob to randomly look around.
+     * _random_look_around constructor.
+     * @param array $values
+     */
+    public function __construct(array $values = [])
     {
-        $this->priority = $priority;
+
     }
 
     /**

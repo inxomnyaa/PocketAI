@@ -6,20 +6,19 @@ use xenialdan\PocketAI\component\BaseComponent;
 use xenialdan\PocketAI\entitytype\AIEntity;
 use xenialdan\PocketAI\entitytype\AIProjectile;
 
-class _beg implements BaseComponent
+class _beg extends BaseComponent
 {
     protected $name = "minecraft:behavior.beg";
-    private $priority;
-    private $look_distance;
-    private $look_time;
-    private $items;
 
-    public function __construct($priority, $look_distance, $look_time, $items)
+
+    /**
+     * Allows this mob to look at and follow the player that holds food they like.
+     * _beg constructor.
+     * @param array $values
+     */
+    public function __construct(array $values = [])
     {
-        $this->priority = $priority;
-        $this->look_distance = $look_distance;
-        $this->look_time = $look_time;
-        $this->items = $items;
+
     }
 
     /**

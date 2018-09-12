@@ -6,19 +6,22 @@ use xenialdan\PocketAI\component\BaseComponent;
 use xenialdan\PocketAI\entitytype\AIEntity;
 use xenialdan\PocketAI\entitytype\AIProjectile;
 
-class _scale implements BaseComponent
+class _scale extends BaseComponent
 {
     protected $name = "minecraft:scale";
-    private $value = 1.0;
+    /** @var float $value The value of the scale. 1.0 means the entity will appear at the scale they are defined in their model. Higher numbers make the entity bigger */
+    public $value = 1.0;
+
 
     /**
      * Sets the entity's visual size.
      * _scale constructor.
-     * @param float $value The value of the scale. 1.0 means the entity will appear at the scale they are defined in their model. Higher numbers make the entity bigger
+     * @param array $values
      */
-    public function __construct(float $value)
+    public function __construct(array $values = [])
     {
-        $this->value = $value;
+        $this->value = $values['value'] ?? $this->value;
+
     }
 
     /**

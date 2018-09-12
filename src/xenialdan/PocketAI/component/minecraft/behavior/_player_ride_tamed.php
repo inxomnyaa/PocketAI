@@ -6,12 +6,17 @@ use xenialdan\PocketAI\component\BaseComponent;
 use xenialdan\PocketAI\entitytype\AIEntity;
 use xenialdan\PocketAI\entitytype\AIProjectile;
 
-class _player_ride_tamed implements BaseComponent
+class _player_ride_tamed extends BaseComponent
 {
     protected $name = "minecraft:behavior.player_ride_tamed";
 
 
-    public function __construct()
+    /**
+     * Allows the mob to be ridden by the player after being tamed.
+     * _player_ride_tamed constructor.
+     * @param array $values
+     */
+    public function __construct(array $values = [])
     {
 
     }

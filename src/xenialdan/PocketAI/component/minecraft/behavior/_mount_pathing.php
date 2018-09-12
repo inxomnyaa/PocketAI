@@ -6,20 +6,28 @@ use xenialdan\PocketAI\component\BaseComponent;
 use xenialdan\PocketAI\entitytype\AIEntity;
 use xenialdan\PocketAI\entitytype\AIProjectile;
 
-class _mount_pathing implements BaseComponent
+class _mount_pathing extends BaseComponent
 {
     protected $name = "minecraft:behavior.mount_pathing";
-    private $priority;
-    private $speed_multiplier;
-    private $target_dist;
-    private $track_target;
+    /** @var float $speed_multiplier Movement speed multiplier of the mob when using this AI Goal */
+    public $speed_multiplier = 1.0;
+    /** @var float $target_dist The distance at which this mob wants to be away from its target */
+    public $target_dist = 0.0;
+    /** @var bool $track_target If true, this mob will chase after the target as long as it's a valid target */
+    public $track_target = false;
 
-    public function __construct($priority, $speed_multiplier, $target_dist, $track_target)
+
+    /**
+     * Allows the mob to move around on its own while mounted seeking a target to attack.
+     * _mount_pathing constructor.
+     * @param array $values
+     */
+    public function __construct(array $values = [])
     {
-        $this->priority = $priority;
-        $this->speed_multiplier = $speed_multiplier;
-        $this->target_dist = $target_dist;
-        $this->track_target = $track_target;
+        $this->speed_multiplier = $values['speed_multiplier'] ?? $this->speed_multiplier;
+        $this->target_dist = $values['target_dist'] ?? $this->target_dist;
+        $this->track_target = $values['track_target'] ?? $this->track_target;
+
     }
 
     /**

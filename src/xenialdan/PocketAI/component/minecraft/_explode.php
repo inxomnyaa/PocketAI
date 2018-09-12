@@ -6,20 +6,19 @@ use xenialdan\PocketAI\component\BaseComponent;
 use xenialdan\PocketAI\entitytype\AIEntity;
 use xenialdan\PocketAI\entitytype\AIProjectile;
 
-class _explode implements BaseComponent
+class _explode extends BaseComponent
 {
     protected $name = "minecraft:explode";
-    private $fuseLength;
-    private $fuseLit;
-    private $power;
-    private $causesFire;
 
-    public function __construct($fuseLength, $fuseLit, $power, $causesFire)
+
+    /**
+     * Defines how the entity explodes.
+     * _explode constructor.
+     * @param array $values
+     */
+    public function __construct(array $values = [])
     {
-        $this->fuseLength = $fuseLength;
-        $this->fuseLit = $fuseLit;
-        $this->power = $power;
-        $this->causesFire = $causesFire;
+
     }
 
     /**

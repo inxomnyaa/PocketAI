@@ -7,25 +7,24 @@ namespace xenialdan\PocketAI\component;
 use xenialdan\PocketAI\entitytype\AIEntity;
 use xenialdan\PocketAI\entitytype\AIProjectile;
 
-interface BaseComponent
+abstract class BaseComponent
 {
 
     /**
      * BaseComponent constructor.
-     * @param string $name
-     * @param $data
-     * /
-    public function __construct(string $name, $data);*/
+     * @param array $values
+     */
+    public abstract function __construct(array $values = []);
 
     /**
      * Applies the changes to the mob
      * @param AIEntity|AIProjectile $entity
      */
-    public function apply($entity): void;
+    public abstract function apply($entity): void;
 
     /**
      * Removes the changes from the mob
      * @param AIEntity|AIProjectile $entity
      */
-    public function remove($entity): void;
+    public abstract function remove($entity): void;
 }

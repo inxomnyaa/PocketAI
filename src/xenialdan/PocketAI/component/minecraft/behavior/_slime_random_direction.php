@@ -6,14 +6,19 @@ use xenialdan\PocketAI\component\BaseComponent;
 use xenialdan\PocketAI\entitytype\AIEntity;
 use xenialdan\PocketAI\entitytype\AIProjectile;
 
-class _slime_random_direction implements BaseComponent
+class _slime_random_direction extends BaseComponent
 {
     protected $name = "minecraft:behavior.slime_random_direction";
-    private $priority;
 
-    public function __construct($priority)
+
+    /**
+     * Can only be used by Slimes and Magma Cubes. Allows the mob to move in random directions like a slime.
+     * _slime_random_direction constructor.
+     * @param array $values
+     */
+    public function __construct(array $values = [])
     {
-        $this->priority = $priority;
+
     }
 
     /**

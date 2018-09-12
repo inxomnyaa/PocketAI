@@ -6,18 +6,19 @@ use xenialdan\PocketAI\component\BaseComponent;
 use xenialdan\PocketAI\entitytype\AIEntity;
 use xenialdan\PocketAI\entitytype\AIProjectile;
 
-class _look_at_player implements BaseComponent
+class _look_at_player extends BaseComponent
 {
     protected $name = "minecraft:behavior.look_at_player";
-    private $priority;
-    private $look_distance;
-    private $probability;
 
-    public function __construct($priority, $look_distance, $probability)
+
+    /**
+     * Allows the mob to look at the player when the player is nearby.
+     * _look_at_player constructor.
+     * @param array $values
+     */
+    public function __construct(array $values = [])
     {
-        $this->priority = $priority;
-        $this->look_distance = $look_distance;
-        $this->probability = $probability;
+
     }
 
     /**

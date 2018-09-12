@@ -6,14 +6,19 @@ use xenialdan\PocketAI\component\BaseComponent;
 use xenialdan\PocketAI\entitytype\AIEntity;
 use xenialdan\PocketAI\entitytype\AIProjectile;
 
-class _charge_attack implements BaseComponent
+class _charge_attack extends BaseComponent
 {
     protected $name = "minecraft:behavior.charge_attack";
-    private $priority;
 
-    public function __construct($priority)
+
+    /**
+     * Allows the mob to attack its target by running at it.
+     * _charge_attack constructor.
+     * @param array $values
+     */
+    public function __construct(array $values = [])
     {
-        $this->priority = $priority;
+
     }
 
     /**

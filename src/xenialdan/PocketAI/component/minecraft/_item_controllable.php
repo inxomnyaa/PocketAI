@@ -6,19 +6,22 @@ use xenialdan\PocketAI\component\BaseComponent;
 use xenialdan\PocketAI\entitytype\AIEntity;
 use xenialdan\PocketAI\entitytype\AIProjectile;
 
-class _item_controllable implements BaseComponent
+class _item_controllable extends BaseComponent
 {
     protected $name = "minecraft:item_controllable";
-    private $control_items;
+    /** @var array $control_items List of items that can be used to control this entity */
+    public $control_items;
+
 
     /**
      * Defines what items can be used to control this entity while ridden
      * _item_controllable constructor.
-     * @param array $control_items List of items that can be used to control this entity
+     * @param array $values
      */
-    public function __construct(array $control_items)
+    public function __construct(array $values = [])
     {
-        $this->control_items = $control_items;
+        $this->control_items = $values['control_items'] ?? $this->control_items;
+
     }
 
     /**

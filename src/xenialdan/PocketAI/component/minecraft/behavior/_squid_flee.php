@@ -6,14 +6,19 @@ use xenialdan\PocketAI\component\BaseComponent;
 use xenialdan\PocketAI\entitytype\AIEntity;
 use xenialdan\PocketAI\entitytype\AIProjectile;
 
-class _squid_flee implements BaseComponent
+class _squid_flee extends BaseComponent
 {
     protected $name = "minecraft:behavior.squid_flee";
-    private $priority;
 
-    public function __construct($priority)
+
+    /**
+     * Allows the squid to swim away. Can only be used by the Squid.
+     * _squid_flee constructor.
+     * @param array $values
+     */
+    public function __construct(array $values = [])
     {
-        $this->priority = $priority;
+
     }
 
     /**

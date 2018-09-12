@@ -6,17 +6,17 @@ use xenialdan\PocketAI\component\BaseComponent;
 use xenialdan\PocketAI\entitytype\AIEntity;
 use xenialdan\PocketAI\entitytype\AIProjectile;
 
-class _can_power_jump implements BaseComponent
+class _can_power_jump extends BaseComponent
 {
     protected $name = "minecraft:can_power_jump";
-    private $value = true;
 
 
     /**
      * Allows the entity to power jump like the horse does in vanilla.
      * _can_power_jump constructor.
+     * @param array $values
      */
-    public function __construct()
+    public function __construct(array $values = [])
     {
 
     }

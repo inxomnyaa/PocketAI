@@ -6,14 +6,19 @@ use xenialdan\PocketAI\component\BaseComponent;
 use xenialdan\PocketAI\entitytype\AIEntity;
 use xenialdan\PocketAI\entitytype\AIProjectile;
 
-class _stay_while_sitting implements BaseComponent
+class _stay_while_sitting extends BaseComponent
 {
     protected $name = "minecraft:behavior.stay_while_sitting";
-    private $priority;
 
-    public function __construct($priority)
+
+    /**
+     * Allows the mob to stay put while it is in a sitting state instead of doing something else.
+     * _stay_while_sitting constructor.
+     * @param array $values
+     */
+    public function __construct(array $values = [])
     {
-        $this->priority = $priority;
+
     }
 
     /**

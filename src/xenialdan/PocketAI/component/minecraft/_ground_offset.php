@@ -6,19 +6,22 @@ use xenialdan\PocketAI\component\BaseComponent;
 use xenialdan\PocketAI\entitytype\AIEntity;
 use xenialdan\PocketAI\entitytype\AIProjectile;
 
-class _ground_offset implements BaseComponent
+class _ground_offset extends BaseComponent
 {
     protected $name = "minecraft:ground_offset";
-    private $value = 0.0;
+    /** @var float $value The value of the entity's offset from the terrain, in blocks */
+    public $value = 0.0;
+
 
     /**
      * Sets the offset from the ground that the entity is actually at.
      * _ground_offset constructor.
-     * @param float $value The value of the entity's offset from the terrain, in blocks
+     * @param array $values
      */
-    public function __construct(float $value)
+    public function __construct(array $values = [])
     {
-        $this->value = $value;
+        $this->value = $values['value'] ?? $this->value;
+
     }
 
     /**

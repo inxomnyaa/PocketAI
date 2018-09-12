@@ -6,18 +6,25 @@ use xenialdan\PocketAI\component\BaseComponent;
 use xenialdan\PocketAI\entitytype\AIEntity;
 use xenialdan\PocketAI\entitytype\AIProjectile;
 
-class _shooter implements BaseComponent
+class _shooter extends BaseComponent
 {
     protected $name = "minecraft:shooter";
-    private $type;
-    private $def;
-    private $auxVal;
+    /** @var int $auxVal ID of the Potion effect to be applied on hit */
+    public $auxVal = -1;
+    /** @var string $def Entity definition to use as projectile for the ranged attack. The entity definition must have the projectile component to be able to be shot as a projectile */
+    public $def;
 
-    public function __construct($type, $def, $auxVal)
+
+    /**
+     * Defines the entity's ranged attack behavior.
+     * _shooter constructor.
+     * @param array $values
+     */
+    public function __construct(array $values = [])
     {
-        $this->type = $type;
-        $this->def = $def;
-        $this->auxVal = $auxVal;
+        $this->auxVal = $values['auxVal'] ?? $this->auxVal;
+        $this->def = $values['def'] ?? $this->def;
+
     }
 
     /**

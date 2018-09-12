@@ -6,21 +6,22 @@ use xenialdan\PocketAI\component\BaseComponent;
 use xenialdan\PocketAI\entitytype\AIEntity;
 use xenialdan\PocketAI\entitytype\AIProjectile;
 
-class _is_dyeable implements BaseComponent
+class _is_dyeable extends BaseComponent
 {
     protected $name = "minecraft:is_dyeable";
-    private $value = true;
-    private $interact_text = "";
+    /** @var string $interact_text The text that will display when interacting with this entity with a dye when playing with Touch-screen controls */
+    public $interact_text;
 
 
     /**
      * Allows dyes to be used on this entity to change its color.
      * _is_dyeable constructor.
-     * @param string $interact_text The text that will display when interacting with this entity with a dye when playing with Touch-screen controls
+     * @param array $values
      */
-    public function __construct(string $interact_text)
+    public function __construct(array $values = [])
     {
-        $this->interact_text = $interact_text;
+        $this->interact_text = $values['interact_text'] ?? $this->interact_text;
+
     }
 
     /**

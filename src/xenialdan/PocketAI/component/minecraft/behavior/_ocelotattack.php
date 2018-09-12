@@ -6,20 +6,28 @@ use xenialdan\PocketAI\component\BaseComponent;
 use xenialdan\PocketAI\entitytype\AIEntity;
 use xenialdan\PocketAI\entitytype\AIProjectile;
 
-class _ocelotattack implements BaseComponent
+class _ocelotattack extends BaseComponent
 {
     protected $name = "minecraft:behavior.ocelotattack";
-    private $priority;
-    private $walk_speed_multiplier;
-    private $sprint_speed_multiplier;
-    private $sneak_speed_multiplier;
+    /** @var float $sneak_speed_multiplier Multiplier for the sneaking speed. 1.0 means the ocelot will move at the speed it normally sneaks */
+    public $sneak_speed_multiplier = 1.0;
+    /** @var float $sprint_speed_multiplier Multiplier for the running speed of this mob while using this attack */
+    public $sprint_speed_multiplier = 1.0;
+    /** @var float $walk_speed_multiplier Multiplier for the walking speed while using this attack */
+    public $walk_speed_multiplier = 1.0;
 
-    public function __construct($priority, $walk_speed_multiplier, $sprint_speed_multiplier, $sneak_speed_multiplier)
+
+    /**
+     * Can only be used by the Ocelot. Allows it to perform the sneak and pounce attack.
+     * _ocelotattack constructor.
+     * @param array $values
+     */
+    public function __construct(array $values = [])
     {
-        $this->priority = $priority;
-        $this->walk_speed_multiplier = $walk_speed_multiplier;
-        $this->sprint_speed_multiplier = $sprint_speed_multiplier;
-        $this->sneak_speed_multiplier = $sneak_speed_multiplier;
+        $this->sneak_speed_multiplier = $values['sneak_speed_multiplier'] ?? $this->sneak_speed_multiplier;
+        $this->sprint_speed_multiplier = $values['sprint_speed_multiplier'] ?? $this->sprint_speed_multiplier;
+        $this->walk_speed_multiplier = $values['walk_speed_multiplier'] ?? $this->walk_speed_multiplier;
+
     }
 
     /**

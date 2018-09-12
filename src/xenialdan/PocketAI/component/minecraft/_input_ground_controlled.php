@@ -6,7 +6,7 @@ use xenialdan\PocketAI\component\BaseComponent;
 use xenialdan\PocketAI\entitytype\AIEntity;
 use xenialdan\PocketAI\entitytype\AIProjectile;
 
-class _input_ground_controlled implements BaseComponent
+class _input_ground_controlled extends BaseComponent
 {
     protected $name = "minecraft:input_ground_controlled";
 
@@ -14,8 +14,9 @@ class _input_ground_controlled implements BaseComponent
     /**
      * When configured as a rideable entity, the entity will be controlled using WASD controls.
      * _input_ground_controlled constructor.
+     * @param array $values
      */
-    public function __construct()
+    public function __construct(array $values = [])
     {
 
     }

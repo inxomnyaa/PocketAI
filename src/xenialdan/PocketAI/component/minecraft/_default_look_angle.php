@@ -6,20 +6,22 @@ use xenialdan\PocketAI\component\BaseComponent;
 use xenialdan\PocketAI\entitytype\AIEntity;
 use xenialdan\PocketAI\entitytype\AIProjectile;
 
-class _default_look_angle implements BaseComponent
+class _default_look_angle extends BaseComponent
 {
     protected $name = "minecraft:default_look_angle";
-    private $value = 0.0;
-
+    /** @var float $value Angle in degrees */
+    public $value = 0.0f;
+            
 
     /**
      * Sets this entity's default head rotation angle.
      * _default_look_angle constructor.
-     * @param float $value Angle in degrees
+     * @param array $values
      */
-    public function __construct(float $value)
+    public function __construct(array $values = [])
     {
-        $this->value = $value;
+        $this->value = $values['value'] ?? $this->value;
+
     }
 
     /**

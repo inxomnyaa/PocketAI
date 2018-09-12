@@ -6,14 +6,19 @@ use xenialdan\PocketAI\component\BaseComponent;
 use xenialdan\PocketAI\entitytype\AIEntity;
 use xenialdan\PocketAI\entitytype\AIProjectile;
 
-class _break_door implements BaseComponent
+class _break_door extends BaseComponent
 {
     protected $name = "minecraft:behavior.break_door";
-    private $priority;
 
-    public function __construct($priority)
+
+    /**
+     * Allows this mob to break doors.
+     * _break_door constructor.
+     * @param array $values
+     */
+    public function __construct(array $values = [])
     {
-        $this->priority = $priority;
+
     }
 
     /**

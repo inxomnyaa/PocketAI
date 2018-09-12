@@ -6,13 +6,21 @@ use xenialdan\PocketAI\component\BaseComponent;
 use xenialdan\PocketAI\entitytype\AIEntity;
 use xenialdan\PocketAI\entitytype\AIProjectile;
 
-class _basic implements BaseComponent
+class _basic extends BaseComponent
 {
     protected $name = "minecraft:movement.basic";
+    /** @var float $max_turn The maximum number in degrees the mob can turn per tick. */
+    public $max_turn = 30.0;
 
 
-    public function __construct()
+    /**
+     * This component accents the movement of an entity.
+     * _basic constructor.
+     * @param array $values
+     */
+    public function __construct(array $values = [])
     {
+        $this->max_turn = $values['max_turn'] ?? $this->max_turn;
 
     }
 

@@ -6,17 +6,17 @@ use xenialdan\PocketAI\component\BaseComponent;
 use xenialdan\PocketAI\entitytype\AIEntity;
 use xenialdan\PocketAI\entitytype\AIProjectile;
 
-class _is_charged implements BaseComponent
+class _is_charged extends BaseComponent
 {
     protected $name = "minecraft:is_charged";
-    private $value = true;
 
 
     /**
      * Sets that this entity is charged.
      * _is_charged constructor.
+     * @param array $values
      */
-    public function __construct()
+    public function __construct(array $values = [])
     {
 
     }

@@ -6,19 +6,22 @@ use xenialdan\PocketAI\component\BaseComponent;
 use xenialdan\PocketAI\entitytype\AIEntity;
 use xenialdan\PocketAI\entitytype\AIProjectile;
 
-class _flying_speed implements BaseComponent
+class _flying_speed extends BaseComponent
 {
     protected $name = "minecraft:flying_speed";
-    private $value = 0.02;
+    /** @var float $value Flying speed in blocks per tick */
+    public $value = 0.02;
+
 
     /**
-     * Flying speed in blocks per tick
+     * Speed in Blocks that this entity flies at.
      * _flying_speed constructor.
-     * @param float $value Flying speed in blocks per tick
+     * @param array $values
      */
-    public function __construct(float $value)
+    public function __construct(array $values = [])
     {
-        $this->value = $value;
+        $this->value = $values['value'] ?? $this->value;
+
     }
 
     /**

@@ -6,14 +6,19 @@ use xenialdan\PocketAI\component\BaseComponent;
 use xenialdan\PocketAI\entitytype\AIEntity;
 use xenialdan\PocketAI\entitytype\AIProjectile;
 
-class _squid_out_of_water implements BaseComponent
+class _squid_out_of_water extends BaseComponent
 {
     protected $name = "minecraft:behavior.squid_out_of_water";
-    private $priority;
 
-    public function __construct($priority)
+
+    /**
+     * Allows the squid to stick to the ground when outside water. Can only be used by the Squid.
+     * _squid_out_of_water constructor.
+     * @param array $values
+     */
+    public function __construct(array $values = [])
     {
-        $this->priority = $priority;
+
     }
 
     /**

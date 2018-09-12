@@ -6,14 +6,19 @@ use xenialdan\PocketAI\component\BaseComponent;
 use xenialdan\PocketAI\entitytype\AIEntity;
 use xenialdan\PocketAI\entitytype\AIProjectile;
 
-class _jump implements BaseComponent
+class _jump extends BaseComponent
 {
     protected $name = "minecraft:movement.jump";
-    private $jump_delay;
 
-    public function __construct($jump_delay)
+
+    /**
+     * Move control that causes the mob to jump as it moves with a specified delay between jumps.
+     * _jump constructor.
+     * @param array $values
+     */
+    public function __construct(array $values = [])
     {
-        $this->jump_delay = $jump_delay;
+
     }
 
     /**

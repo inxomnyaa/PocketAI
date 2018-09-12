@@ -6,24 +6,19 @@ use xenialdan\PocketAI\component\BaseComponent;
 use xenialdan\PocketAI\entitytype\AIEntity;
 use xenialdan\PocketAI\entitytype\AIProjectile;
 
-class _teleport implements BaseComponent
+class _teleport extends BaseComponent
 {
     protected $name = "minecraft:teleport";
-    private $randomTeleports;
-    private $maxRandomTeleportTime;
-    private $randomTeleportCube;
-    private $targetDistance;
-    private $target_teleport_chance;
-    private $lightTeleportChance;
 
-    public function __construct($randomTeleports, $maxRandomTeleportTime, $randomTeleportCube, $targetDistance, $target_teleport_chance, $lightTeleportChance)
+
+    /**
+     * Defines an entity's teleporting behavior.
+     * _teleport constructor.
+     * @param array $values
+     */
+    public function __construct(array $values = [])
     {
-        $this->randomTeleports = $randomTeleports;
-        $this->maxRandomTeleportTime = $maxRandomTeleportTime;
-        $this->randomTeleportCube = $randomTeleportCube;
-        $this->targetDistance = $targetDistance;
-        $this->target_teleport_chance = $target_teleport_chance;
-        $this->lightTeleportChance = $lightTeleportChance;
+
     }
 
     /**

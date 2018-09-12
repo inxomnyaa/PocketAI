@@ -6,22 +6,19 @@ use xenialdan\PocketAI\component\BaseComponent;
 use xenialdan\PocketAI\entitytype\AIEntity;
 use xenialdan\PocketAI\entitytype\AIProjectile;
 
-class _rideable implements BaseComponent
+class _rideable extends BaseComponent
 {
     protected $name = "minecraft:rideable";
-    private $priority;
-    private $seat_count;
-    private $family_types;
-    private $interact_text;
-    private $seats;
 
-    public function __construct($priority, $seat_count, $family_types, $interact_text, $seats)
+
+    /**
+     * Determines whether this entity can be ridden. Allows specifying the different seat positions and quantity.
+     * _rideable constructor.
+     * @param array $values
+     */
+    public function __construct(array $values = [])
     {
-        $this->priority = $priority;
-        $this->seat_count = $seat_count;
-        $this->family_types = $family_types;
-        $this->interact_text = $interact_text;
-        $this->seats = $seats;
+
     }
 
     /**

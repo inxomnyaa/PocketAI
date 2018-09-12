@@ -6,18 +6,25 @@ use xenialdan\PocketAI\component\BaseComponent;
 use xenialdan\PocketAI\entitytype\AIEntity;
 use xenialdan\PocketAI\entitytype\AIProjectile;
 
-class _move_through_village implements BaseComponent
+class _move_through_village extends BaseComponent
 {
     protected $name = "minecraft:behavior.move_through_village";
-    private $priority;
-    private $speed_multiplier;
-    private $only_at_night;
+    /** @var bool $only_at_night If true, the mob will only move through the village during night time */
+    public $only_at_night = false;
+    /** @var float $speed_multiplier Movement speed multiplier of the mob when using this AI Goal */
+    public $speed_multiplier = 1.0;
 
-    public function __construct($priority, $speed_multiplier, $only_at_night)
+
+    /**
+     * Allows mob to path through villages.
+     * _move_through_village constructor.
+     * @param array $values
+     */
+    public function __construct(array $values = [])
     {
-        $this->priority = $priority;
-        $this->speed_multiplier = $speed_multiplier;
-        $this->only_at_night = $only_at_night;
+        $this->only_at_night = $values['only_at_night'] ?? $this->only_at_night;
+        $this->speed_multiplier = $values['speed_multiplier'] ?? $this->speed_multiplier;
+
     }
 
     /**

@@ -6,16 +6,25 @@ use xenialdan\PocketAI\component\BaseComponent;
 use xenialdan\PocketAI\entitytype\AIEntity;
 use xenialdan\PocketAI\entitytype\AIProjectile;
 
-class _random_stroll implements BaseComponent
+class _random_stroll extends BaseComponent
 {
     protected $name = "minecraft:behavior.random_stroll";
-    private $priority;
-    private $speed_multiplier;
+    /** @var int $xz_dist Distance in blocks on ground that the mob will look for a new spot to move to. Must be at least 1 */
+    public $xz_dist = 10;
+    /** @var int $y_dist Distance in blocks that the mob will look up or down for a new spot to move to. Must be at least 1 */
+    public $y_dist = 7;
 
-    public function __construct($priority, $speed_multiplier)
+
+    /**
+     * Allows a mob to randomly stroll around.
+     * _random_stroll constructor.
+     * @param array $values
+     */
+    public function __construct(array $values = [])
     {
-        $this->priority = $priority;
-        $this->speed_multiplier = $speed_multiplier;
+        $this->xz_dist = $values['xz_dist'] ?? $this->xz_dist;
+        $this->y_dist = $values['y_dist'] ?? $this->y_dist;
+
     }
 
     /**

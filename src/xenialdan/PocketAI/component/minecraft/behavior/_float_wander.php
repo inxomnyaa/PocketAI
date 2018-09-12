@@ -6,16 +6,19 @@ use xenialdan\PocketAI\component\BaseComponent;
 use xenialdan\PocketAI\entitytype\AIEntity;
 use xenialdan\PocketAI\entitytype\AIProjectile;
 
-class _float_wander implements BaseComponent
+class _float_wander extends BaseComponent
 {
     protected $name = "minecraft:behavior.float_wander";
-    private $priority;
-    private $must_reach;
 
-    public function __construct($priority, $must_reach)
+
+    /**
+     * Allows the mob to float around like the Ghast.
+     * _float_wander constructor.
+     * @param array $values
+     */
+    public function __construct(array $values = [])
     {
-        $this->priority = $priority;
-        $this->must_reach = $must_reach;
+
     }
 
     /**

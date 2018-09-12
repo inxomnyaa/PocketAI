@@ -6,17 +6,17 @@ use xenialdan\PocketAI\component\BaseComponent;
 use xenialdan\PocketAI\entitytype\AIEntity;
 use xenialdan\PocketAI\entitytype\AIProjectile;
 
-class _is_sheared implements BaseComponent
+class _is_sheared extends BaseComponent
 {
     protected $name = "minecraft:is_sheared";
-    private $value = true;
 
 
     /**
      * Sets that this entity is currently sheared.
      * _is_sheared constructor.
+     * @param array $values
      */
-    public function __construct()
+    public function __construct(array $values = [])
     {
 
     }

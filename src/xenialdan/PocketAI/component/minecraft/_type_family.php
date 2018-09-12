@@ -6,19 +6,22 @@ use xenialdan\PocketAI\component\BaseComponent;
 use xenialdan\PocketAI\entitytype\AIEntity;
 use xenialdan\PocketAI\entitytype\AIProjectile;
 
-class _type_family implements BaseComponent
+class _type_family extends BaseComponent
 {
     protected $name = "minecraft:type_family";
-    private $family;
+    /** @var array $family List of family names */
+    public $family;
+
 
     /**
      * Defines the families this entity belongs to.
      * _type_family constructor.
-     * @param array $family List of family names
+     * @param array $values
      */
-    public function __construct(array $family)
+    public function __construct(array $values = [])
     {
-        $this->family = $family;
+        $this->family = $values['family'] ?? $this->family;
+
     }
 
     /**

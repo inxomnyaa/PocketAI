@@ -6,22 +6,25 @@ use xenialdan\PocketAI\component\BaseComponent;
 use xenialdan\PocketAI\entitytype\AIEntity;
 use xenialdan\PocketAI\entitytype\AIProjectile;
 
-class _ambient_sound_interval implements BaseComponent
+class _ambient_sound_interval extends BaseComponent
 {
     protected $name = "minecraft:ambient_sound_interval";
-    private $range = 16.0;
-    private $value = 8.0;
+    /** @var float $range Maximum time is seconds to randomly add to the ambient sound delay time. */
+    public $range = 16.0;
+    /** @var float $value Minimum time in seconds before the entity plays its ambient sound again */
+    public $value = 8.0;
+
 
     /**
      * Sets the entity's delay between playing its ambient sound.
      * _ambient_sound_interval constructor.
-     * @param float $range Maximum time is seconds to randomly add to the ambient sound delay time.
-     * @param float $value Minimum time in seconds before the entity plays its ambient sound again
+     * @param array $values
      */
-    public function __construct(float $range, float $value)
+    public function __construct(array $values = [])
     {
-        $this->range = $range;
-        $this->value = $value;
+        $this->range = $values['range'] ?? $this->range;
+        $this->value = $values['value'] ?? $this->value;
+
     }
 
     /**

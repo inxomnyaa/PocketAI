@@ -6,14 +6,19 @@ use xenialdan\PocketAI\component\BaseComponent;
 use xenialdan\PocketAI\entitytype\AIEntity;
 use xenialdan\PocketAI\entitytype\AIProjectile;
 
-class _slime_float implements BaseComponent
+class _slime_float extends BaseComponent
 {
     protected $name = "minecraft:behavior.slime_float";
-    private $priority;
 
-    public function __construct($priority)
+
+    /**
+     * Can only be used by Slimes and Magma Cubes. Controls their ability to float in water / lava.
+     * _slime_float constructor.
+     * @param array $values
+     */
+    public function __construct(array $values = [])
     {
-        $this->priority = $priority;
+
     }
 
     /**

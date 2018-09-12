@@ -6,14 +6,19 @@ use xenialdan\PocketAI\component\BaseComponent;
 use xenialdan\PocketAI\entitytype\AIEntity;
 use xenialdan\PocketAI\entitytype\AIProjectile;
 
-class _silverfish_merge_with_stone implements BaseComponent
+class _silverfish_merge_with_stone extends BaseComponent
 {
     protected $name = "minecraft:behavior.silverfish_merge_with_stone";
-    private $priority;
 
-    public function __construct($priority)
+
+    /**
+     * Allows the mob to go into stone blocks like Silverfish do. Currently it can only be used by Silverfish.
+     * _silverfish_merge_with_stone constructor.
+     * @param array $values
+     */
+    public function __construct(array $values = [])
     {
-        $this->priority = $priority;
+
     }
 
     /**

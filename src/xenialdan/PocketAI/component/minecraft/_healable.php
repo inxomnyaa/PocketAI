@@ -6,14 +6,37 @@ use xenialdan\PocketAI\component\BaseComponent;
 use xenialdan\PocketAI\entitytype\AIEntity;
 use xenialdan\PocketAI\entitytype\AIProjectile;
 
-class _healable implements BaseComponent
+class _healable extends BaseComponent
 {
     protected $name = "minecraft:healable";
-    private $items;
+    /** @var array $items The list of items that can be used to heal this entity
+     * ;Parameters
+     *
+     * : { */
+            public $items;
+            /** @var string (Minecraft Filter) $filters The list of conditions for this trigger */
+            public $filters;
+            /** @var bool $force_use Determines if item can be used regardless of entity being full health */
+            public $force_use = false;
+            /** @var float $heal_amount The amount of health this entity gains when fed this item */
+            public $heal_amount = 1.0;
+            /** @var string $item Name of the item this entity likes and can be used to heal this entity */
+            public $item;
+            
 
-    public function __construct($items)
+    /**
+     * Defines the interactions with this entity for healing it.
+     * _healable constructor.
+     * @param array $values
+     */
+    public function __construct(array $values = [])
     {
-        $this->items = $items;
+        $this->items = $values['items'] ?? $this->items;
+        $this->filters = $values['filters'] ?? $this->filters;
+        $this->force_use = $values['force_use'] ?? $this->force_use;
+        $this->heal_amount = $values['heal_amount'] ?? $this->heal_amount;
+        $this->item = $values['item'] ?? $this->item;
+
     }
 
     /**

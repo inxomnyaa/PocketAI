@@ -6,14 +6,19 @@ use xenialdan\PocketAI\component\BaseComponent;
 use xenialdan\PocketAI\entitytype\AIEntity;
 use xenialdan\PocketAI\entitytype\AIProjectile;
 
-class _look_at_target implements BaseComponent
+class _look_at_target extends BaseComponent
 {
     protected $name = "minecraft:behavior.look_at_target";
-    private $priority;
 
-    public function __construct($priority)
+
+    /**
+     * Allows the mob to look at the entity they are targetting.
+     * _look_at_target constructor.
+     * @param array $values
+     */
+    public function __construct(array $values = [])
     {
-        $this->priority = $priority;
+
     }
 
     /**

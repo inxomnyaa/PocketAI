@@ -6,14 +6,19 @@ use xenialdan\PocketAI\component\BaseComponent;
 use xenialdan\PocketAI\entitytype\AIEntity;
 use xenialdan\PocketAI\entitytype\AIProjectile;
 
-class _enderman_take_block implements BaseComponent
+class _enderman_take_block extends BaseComponent
 {
     protected $name = "minecraft:behavior.enderman_take_block";
-    private $priority;
 
-    public function __construct($priority)
+
+    /**
+     * Allows the enderman to take a block and carry it around. Can only be used by Endermen.
+     * _enderman_take_block constructor.
+     * @param array $values
+     */
+    public function __construct(array $values = [])
     {
-        $this->priority = $priority;
+
     }
 
     /**

@@ -6,17 +6,19 @@ use xenialdan\PocketAI\component\BaseComponent;
 use xenialdan\PocketAI\entitytype\AIEntity;
 use xenialdan\PocketAI\entitytype\AIProjectile;
 
-class _hurt_when_wet implements BaseComponent
+class _hurt_when_wet extends BaseComponent
 {
     protected $name = "minecraft:hurt_when_wet";
-    private $value = true;
+
 
     /**
      * Sets that this entity will take damage when it is wet.
      * _hurt_when_wet constructor.
+     * @param array $values
      */
-    public function __construct()
+    public function __construct(array $values = [])
     {
+
     }
 
     /**

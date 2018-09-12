@@ -6,14 +6,19 @@ use xenialdan\PocketAI\component\BaseComponent;
 use xenialdan\PocketAI\entitytype\AIEntity;
 use xenialdan\PocketAI\entitytype\AIProjectile;
 
-class _squid_move_away_from_ground implements BaseComponent
+class _squid_move_away_from_ground extends BaseComponent
 {
     protected $name = "minecraft:behavior.squid_move_away_from_ground";
-    private $priority;
 
-    public function __construct($priority)
+
+    /**
+     * Allows the squid to move away from ground blocks and back to water. Can only be used by the Squid.
+     * _squid_move_away_from_ground constructor.
+     * @param array $values
+     */
+    public function __construct(array $values = [])
     {
-        $this->priority = $priority;
+
     }
 
     /**

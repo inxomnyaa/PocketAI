@@ -6,12 +6,17 @@ use xenialdan\PocketAI\component\BaseComponent;
 use xenialdan\PocketAI\entitytype\AIEntity;
 use xenialdan\PocketAI\entitytype\AIProjectile;
 
-class _static implements BaseComponent
+class _static extends BaseComponent
 {
     protected $name = "minecraft:jump.static";
 
 
-    public function __construct()
+    /**
+     * Gives the entity the ability to jump.
+     * _static constructor.
+     * @param array $values
+     */
+    public function __construct(array $values = [])
     {
 
     }

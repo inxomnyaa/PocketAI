@@ -6,17 +6,17 @@ use xenialdan\PocketAI\component\BaseComponent;
 use xenialdan\PocketAI\entitytype\AIEntity;
 use xenialdan\PocketAI\entitytype\AIProjectile;
 
-class _is_baby implements BaseComponent
+class _is_baby extends BaseComponent
 {
     protected $name = "minecraft:is_baby";
-    private $value = true;
 
 
     /**
      * Sets that this entity is a baby.
      * _is_baby constructor.
+     * @param array $values
      */
-    public function __construct()
+    public function __construct(array $values = [])
     {
 
     }

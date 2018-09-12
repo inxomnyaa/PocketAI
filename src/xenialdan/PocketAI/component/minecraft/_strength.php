@@ -6,22 +6,25 @@ use xenialdan\PocketAI\component\BaseComponent;
 use xenialdan\PocketAI\entitytype\AIEntity;
 use xenialdan\PocketAI\entitytype\AIProjectile;
 
-class _strength implements BaseComponent
+class _strength extends BaseComponent
 {
     protected $name = "minecraft:strength";
-    private $max = 5;
-    private $min = 1;
+    /** @var int $max The maximum strength of this entity */
+    public $max = 5;
+    /** @var int $value The initial value of the strength */
+    public $value = 1;
+
 
     /**
      * Defines the entity's strength to carry items.
      * _strength constructor.
-     * @param int $max The maximum strength of this entity
-     * @param int $min The initial value of the strength
+     * @param array $values
      */
-    public function __construct(int $max, int $min)
+    public function __construct(array $values = [])
     {
-        $this->max = $max;
-        $this->min = $min;
+        $this->max = $values['max'] ?? $this->max;
+        $this->value = $values['value'] ?? $this->value;
+
     }
 
     /**

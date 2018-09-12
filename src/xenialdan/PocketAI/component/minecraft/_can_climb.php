@@ -6,16 +6,17 @@ use xenialdan\PocketAI\component\BaseComponent;
 use xenialdan\PocketAI\entitytype\AIEntity;
 use xenialdan\PocketAI\entitytype\AIProjectile;
 
-class _can_climb implements BaseComponent
+class _can_climb extends BaseComponent
 {
     protected $name = "minecraft:can_climb";
-    private $value = true;
+
 
     /**
      * Allows this entity to climb up ladders.
      * _can_climb constructor.
+     * @param array $values
      */
-    public function __construct()
+    public function __construct(array $values = [])
     {
 
     }

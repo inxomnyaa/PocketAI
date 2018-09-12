@@ -6,14 +6,19 @@ use xenialdan\PocketAI\component\BaseComponent;
 use xenialdan\PocketAI\entitytype\AIEntity;
 use xenialdan\PocketAI\entitytype\AIProjectile;
 
-class _wither_random_attack_pos_goal implements BaseComponent
+class _wither_random_attack_pos_goal extends BaseComponent
 {
     protected $name = "minecraft:behavior.wither_random_attack_pos_goal";
-    private $priority;
 
-    public function __construct($priority)
+
+    /**
+     * Allows the wither to launch random attacks. Can only be used by the Wither Boss.
+     * _wither_random_attack_pos_goal constructor.
+     * @param array $values
+     */
+    public function __construct(array $values = [])
     {
-        $this->priority = $priority;
+
     }
 
     /**

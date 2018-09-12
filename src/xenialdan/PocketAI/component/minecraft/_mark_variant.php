@@ -6,19 +6,22 @@ use xenialdan\PocketAI\component\BaseComponent;
 use xenialdan\PocketAI\entitytype\AIEntity;
 use xenialdan\PocketAI\entitytype\AIProjectile;
 
-class _mark_variant implements BaseComponent
+class _mark_variant extends BaseComponent
 {
     protected $name = "minecraft:mark_variant";
-    private $value = 0;
+    /** @var int $value The ID of the variant. By convention, 0 is the ID of the base entity */
+    public $value;
+
 
     /**
      * Additional variant value. Can be used to further differentiate variants.
      * _mark_variant constructor.
-     * @param int $value The ID of the variant. By convention, 0 is the ID of the base entity
+     * @param array $values
      */
-    public function __construct(int $value)
+    public function __construct(array $values = [])
     {
-        $this->value = $value;
+        $this->value = $values['value'] ?? $this->value;
+
     }
 
     /**
