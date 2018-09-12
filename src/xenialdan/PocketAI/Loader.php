@@ -100,9 +100,11 @@ class Loader extends PluginBase
             var_dump("============ COMPONENTS ============");
             foreach ($behaviour["minecraft:entity"]["components"] ?? [] as $component_name => $component_data) {
                 var_dump($component_name);
+                var_dump($component_data);
                 $c = "xenialdan\\PocketAI\\component\\" . preg_replace('/(\\\\(?!.*\\\\.*))/', '\\_', str_replace(":", "\\", join("\\", explode(".", $component_name))));
-                var_dump($c);
-                if (class_exists($c)) var_dump(new $c($component_name, $component_data));
+                if (class_exists($c)){
+                    var_dump(new $c(is_array($component_data)?$component_data:[$component_data]));
+                }
             }
         }
     }

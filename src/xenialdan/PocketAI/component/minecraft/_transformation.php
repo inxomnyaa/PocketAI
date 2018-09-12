@@ -12,34 +12,34 @@ class _transformation extends BaseComponent
     /** @var mixed (JSON Object) $add List of components to add to the entity after the transformation
      * ;Parameters
      *
-     * : { */
-            public $add;
-            /** @var array $component_groups Names of component groups to add */
-            public $component_groups;
-            /** @var string $begin_transform_sound Sound to play when the transformation starts */
-            public $begin_transform_sound;
-            /** @var mixed (JSON Object) $delay Defines the properties of the delay for the transformation
-             * ;Parameters
-             *
-             * : { */
-            public $delay;
-            /** @var float $block_assist_chance Chance that the entity will look for nearby blocks that can speed up the transformation. Value must be between 0.0 and 1.0 */
-            public $block_assist_chance = 0.0;
-            /** @var float $block_chance Chance that, once a block is found, will help speed up the transformation */
-            public $block_chance = 0.0;
-            /** @var int $block_max Maximum number of blocks the entity will look for to aid in the transformation. If not defined or set to 0, it will be set to the block radius */
-            public $block_max;
-            /** @var int $block_radius Distance in Blocks that the entity will search for blocks that can help the transformation */
-            public $block_radius;
-            /** @var array $block_types List of blocks that can help the transformation of this entity */
-            public $block_types;
-            /** @var float $value Time in seconds before the entity transforms */
-            public $value = 0.0;
-            /** @var string $into Entity Definition that this entity will transform into */
-            public $into;
-            /** @var string $transformation_sound Sound to play when the entity is done transforming */
-            public $transformation_sound;
-            
+     */
+    public $add;
+    /** @var array $component_groups Names of component groups to add */
+    public $component_groups;
+    /** @var string $begin_transform_sound Sound to play when the transformation starts */
+    public $begin_transform_sound;
+    /** @var mixed (JSON Object) $delay Defines the properties of the delay for the transformation
+     * ;Parameters
+     *
+     */
+    public $delay;
+    /** @var float $block_assist_chance Chance that the entity will look for nearby blocks that can speed up the transformation. Value must be between 0.0 and 1.0 */
+    public $block_assist_chance = 0.0;
+    /** @var float $block_chance Chance that, once a block is found, will help speed up the transformation */
+    public $block_chance = 0.0;
+    /** @var int $block_max Maximum number of blocks the entity will look for to aid in the transformation. If not defined or set to 0, it will be set to the block radius */
+    public $block_max;
+    /** @var int $block_radius Distance in Blocks that the entity will search for blocks that can help the transformation */
+    public $block_radius;
+    /** @var array $block_types List of blocks that can help the transformation of this entity */
+    public $block_types;
+    /** @var float $value Time in seconds before the entity transforms */
+    public $value = 0.0;
+    /** @var string $into Entity Definition that this entity will transform into */
+    public $into;
+    /** @var string $transformation_sound Sound to play when the entity is done transforming */
+    public $transformation_sound;
+
 
     /**
      * Defines an entity's transformation from the current definition into another

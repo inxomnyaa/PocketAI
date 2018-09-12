@@ -14,27 +14,27 @@ class _nearest_attackable_target extends BaseComponent
     /** @var mixed (JSON Object) $entity_types List of entity types that this mob considers valid targets
      * ;Parameters
      *
-     * : { */
-            public $entity_types;
-            /** @var string (Minecraft Filter) $filters Conditions that make this entry in the list valid */
-            public $filters;
-            /** @var float $max_dist Maximum distance this mob can be away to be a valid choice */
-            public $max_dist = 16;
-            /** @var bool $must_see If true, only entities in this mob's viewing range can be selected as targets */
-            public $must_see = false;
-            /** @var float $sprint_speed_multiplier Multiplier for the running speed. A value of 1.0 means the speed is unchanged */
-            public $sprint_speed_multiplier = 1.0;
-            /** @var float $walk_speed_multiplier Multiplier for the walking speed. A value of 1.0 means the speed is unchanged */
-            public $walk_speed_multiplier = 1.0;
-            /** @var bool $must_reach If true, only entities that this mob can path to can be selected as targets */
-            public $must_reach = false;
-            /** @var float $must_see_forget_duration Determines the amount of time in seconds that this mob will look for a target before forgetting about it and looking for a new one when the target isn't visible any more */
-            public $must_see_forget_duration = 3.0;
-            /** @var bool $reselect_targets If true, the target will change to the current closest entity whenever a different entity is closer */
-            public $reselect_targets = false;
-            /** @var float $within_radius Distance in blocks that the target can be within to launch an attack */
-            public $within_radius = 0.0;
-            
+     */
+    public $entity_types;
+    /** @var string (Minecraft Filter) $filters Conditions that make this entry in the list valid */
+    public $filters;
+    /** @var float $max_dist Maximum distance this mob can be away to be a valid choice */
+    public $max_dist = 16;
+    /** @var bool $must_see If true, only entities in this mob's viewing range can be selected as targets */
+    public $must_see = false;
+    /** @var float $sprint_speed_multiplier Multiplier for the running speed. A value of 1.0 means the speed is unchanged */
+    public $sprint_speed_multiplier = 1.0;
+    /** @var float $walk_speed_multiplier Multiplier for the walking speed. A value of 1.0 means the speed is unchanged */
+    public $walk_speed_multiplier = 1.0;
+    /** @var bool $must_reach If true, only entities that this mob can path to can be selected as targets */
+    public $must_reach = false;
+    /** @var float $must_see_forget_duration Determines the amount of time in seconds that this mob will look for a target before forgetting about it and looking for a new one when the target isn't visible any more */
+    public $must_see_forget_duration = 3.0;
+    /** @var bool $reselect_targets If true, the target will change to the current closest entity whenever a different entity is closer */
+    public $reselect_targets = false;
+    /** @var float $within_radius Distance in blocks that the target can be within to launch an attack */
+    public $within_radius = 0.0;
+
 
     /**
      * Allows the mob to check for and pursue the nearest valid target.

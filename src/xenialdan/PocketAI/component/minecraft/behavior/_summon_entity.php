@@ -12,52 +12,52 @@ class _summon_entity extends BaseComponent
     /** @var array $summon_choices List of spells for the mob to use to summon entities. Each spell has the following parameters:
      * ;Parameters of each spell
      *
-     * : { */
-            public $summon_choices;
-            /** @var float $cast_duration Time in seconds the spell casting will take */
-            public $cast_duration = Total delay of the steps;
-            /** @var float $cooldown_time Time in seconds the mob has to wait before using the spell again */
-            public $cooldown_time = 0.0;
-            /** @var string (Minecraft Filter) $filters */
-            public $filters;
-            /** @var float $max_activation_range Upper bound of the activation distance in blocks for this spell */
-            public $max_activation_range = -1.0;
-            /** @var float $min_activation_range Lower bound of the activation distance in blocks for this spell */
-            public $min_activation_range = 1.0;
-            /** @var int $particle_color The color of the particles for this spell */
-            public $particle_color;
-            /** @var array $sequence List of steps for the spell. Each step has the following parameters:
-             * ;Parameters of each step
-             *
-             * : { */
-            public $sequence;
-            /** @var float $base_delay Amount of time in seconds to wait before this step starts */
-            public $base_delay = 0.0;
-            /** @var float $delay_per_summon Amount of time in seconds before each entity is summoned in this step */
-            public $delay_per_summon = 0.0;
-            /** @var float $entity_lifespan Amount of time in seconds that the spawned entity will be alive for. A value of -1.0 means it will remain alive for as long as it can */
-            public $entity_lifespan = -1.0;
-            /** @var string $entity_type The entity type of the entities we will spawn in this step */
-            public $entity_type;
-            /** @var int $num_entities_spawned Number of entities that will be spawned in this step */
-            public $num_entities_spawned = 1;
-            /** @var string $shape The base shape of this step. Valid values are circle and line */
-            public $shape = "line";
-            /** @var float $size The base size of the entity */
-            public $size = 1.0;
-            /** @var string $sound_event The sound event to play for this step */
-            public $sound_event;
-            /** @var int $summon_cap Maximum number of summoned entities at any given time */
-            public $summon_cap;
-            /** @var float $summon_cap_radius */
-            public $summon_cap_radius = 0.0;
-            /** @var string $target The target of the spell. This is where the spell will start (line will start here, circle will be centered here) */
-            public $target = "self";
-            /** @var string $start_sound_event The sound event to play when using this spell */
-            public $start_sound_event;
-            /** @var float $weight The weight of this spell. Controls how likely the mob is to choose this spell when casting one */
-            public $weight = 0.0;
-            
+     */
+    public $summon_choices;
+    /** @var float $cast_duration Time in seconds the spell casting will take */
+    public $cast_duration;
+    /** @var float $cooldown_time Time in seconds the mob has to wait before using the spell again */
+    public $cooldown_time = 0.0;
+    /** @var string (Minecraft Filter) $filters */
+    public $filters;
+    /** @var float $max_activation_range Upper bound of the activation distance in blocks for this spell */
+    public $max_activation_range = -1.0;
+    /** @var float $min_activation_range Lower bound of the activation distance in blocks for this spell */
+    public $min_activation_range = 1.0;
+    /** @var int $particle_color The color of the particles for this spell */
+    public $particle_color;
+    /** @var array $sequence List of steps for the spell. Each step has the following parameters:
+     * ;Parameters of each step
+     *
+     */
+    public $sequence;
+    /** @var float $base_delay Amount of time in seconds to wait before this step starts */
+    public $base_delay = 0.0;
+    /** @var float $delay_per_summon Amount of time in seconds before each entity is summoned in this step */
+    public $delay_per_summon = 0.0;
+    /** @var float $entity_lifespan Amount of time in seconds that the spawned entity will be alive for. A value of -1.0 means it will remain alive for as long as it can */
+    public $entity_lifespan = -1.0;
+    /** @var string $entity_type The entity type of the entities we will spawn in this step */
+    public $entity_type;
+    /** @var int $num_entities_spawned Number of entities that will be spawned in this step */
+    public $num_entities_spawned = 1;
+    /** @var string $shape The base shape of this step. Valid values are circle and line */
+    public $shape = "line";
+    /** @var float $size The base size of the entity */
+    public $size = 1.0;
+    /** @var string $sound_event The sound event to play for this step */
+    public $sound_event;
+    /** @var int $summon_cap Maximum number of summoned entities at any given time */
+    public $summon_cap;
+    /** @var float $summon_cap_radius */
+    public $summon_cap_radius = 0.0;
+    /** @var string $target The target of the spell. This is where the spell will start (line will start here, circle will be centered here) */
+    public $target = "self";
+    /** @var string $start_sound_event The sound event to play when using this spell */
+    public $start_sound_event;
+    /** @var float $weight The weight of this spell. Controls how likely the mob is to choose this spell when casting one */
+    public $weight = 0.0;
+
 
     /**
      * Allows the mob to attack the player by summoning other entities.

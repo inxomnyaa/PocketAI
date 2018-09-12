@@ -13,25 +13,9 @@ class _has_damage extends BaseComponent
     /** @var string $subject (Optional) The subject of this filter test. */
     public $subject = "self";
     /** @var string $value (Required) The Damage type to test
-     * : { */
-            public $value;
-            /** @var mixed $ }
-             * ;Examples
-             *
-             * : Full..
-             *
-             * : { "test": "has_damage", "subject": "self", "operator": "equals", "value": "fatal" }
-             *
-             * : Short (using Defaults)..
-             *
-             * : { "test": "has_damage", "value": "fatal" */
-            public $ = }
+     */
+    public $value;
 
-;
-/** @var mixed $Any damage which kills the subject */
-public
-$Any damage which kills the subject;
-            
 
     /**
      * Returns true when the subject entity receives the named damage type.
@@ -39,13 +23,11 @@ $Any damage which kills the subject;
      * @param array $values
      */
     public function __construct(array $values = [])
-{
-    $this->operator = $values['operator'] ?? $this->operator;
-    $this->subject = $values['subject'] ?? $this->subject;
-    $this->value = $values['value'] ?? $this->value;
-    $this-> = $values[''] ?? $this->;
-    $this->Any damage which kills the subject = $values['Any damage which kills the subject'] ?? $this->Any damage which kills the subject;
-            
+    {
+        $this->operator = $values['operator'] ?? $this->operator;
+        $this->subject = $values['subject'] ?? $this->subject;
+        $this->value = $values['value'] ?? $this->value;
+
     }
 
     /**
@@ -53,16 +35,16 @@ $Any damage which kills the subject;
      * @param AIEntity|AIProjectile $entity
      */
     public function apply($entity): void
-{
-    // TODO: Implement apply() method.
-}
+    {
+        // TODO: Implement apply() method.
+    }
 
     /**
      * Removes the changes from the mob
      * @param AIEntity|AIProjectile $entity
      */
     public function remove($entity): void
-{
-    // TODO: Implement remove() method.
-}
+    {
+        // TODO: Implement remove() method.
+    }
 }

@@ -12,21 +12,21 @@ class _avoid_mob_type extends BaseComponent
     /** @var mixed (JSON Object) $entity_types List of entity types this mob avoids.
      * ;Parameters
      *
-     * : { */
-            public $entity_types;
-            /** @var string (Minecraft Filter) $filters Conditions that make this entry in the list valid */
-            public $filters;
-            /** @var float $max_dist Maximum distance to look for an entity */
-            public $max_dist = 0.0;
-            /** @var bool $must_see If true, the mob has to be visible to be a valid choice */
-            public $must_see = false;
-            /** @var float $sprint_speed_multiplier Multiplier for running speed. 1.0 means keep the regular speed, while higher numbers make the running speed faster */
-            public $sprint_speed_multiplier = 1.0;
-            /** @var float $walk_speed_multiplier Multiplier for walking speed. 1.0 means keep the regular speed, while higher numbers make the walking speed faster */
-            public $walk_speed_multiplier = 1.0;
-            /** @var float $probability_per_strength Determines how likely it is that this entity will stop avoiding another entity based on that entity's strength */
-            public $probability_per_strength = 1.0;
-            
+     */
+    public $entity_types;
+    /** @var string (Minecraft Filter) $filters Conditions that make this entry in the list valid */
+    public $filters;
+    /** @var float $max_dist Maximum distance to look for an entity */
+    public $max_dist = 0.0;
+    /** @var bool $must_see If true, the mob has to be visible to be a valid choice */
+    public $must_see = false;
+    /** @var float $sprint_speed_multiplier Multiplier for running speed. 1.0 means keep the regular speed, while higher numbers make the running speed faster */
+    public $sprint_speed_multiplier = 1.0;
+    /** @var float $walk_speed_multiplier Multiplier for walking speed. 1.0 means keep the regular speed, while higher numbers make the walking speed faster */
+    public $walk_speed_multiplier = 1.0;
+    /** @var float $probability_per_strength Determines how likely it is that this entity will stop avoiding another entity based on that entity's strength */
+    public $probability_per_strength = 1.0;
+
 
     /**
      * Allows this entity to avoid certain mob types.

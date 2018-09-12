@@ -18,13 +18,13 @@ class _nameable extends BaseComponent
     /** @var mixed (JSON Object) $name_actions Describes the special names for this entity and the events to call when the entity acquires those names
      * ;Parameters
      *
-     * : { */
-            public $name_actions;
-            /** @var string $name_filter List of special names that will cause the events defined in 'on_named' to fire */
-            public $name_filter;
-            /** @var string $on_named Event to be called when this entity acquires the name specified in 'name_filter' */
-            public $on_named;
-            
+     */
+    public $name_actions;
+    /** @var string $name_filter List of special names that will cause the events defined in 'on_named' to fire */
+    public $name_filter;
+    /** @var string $on_named Event to be called when this entity acquires the name specified in 'name_filter' */
+    public $on_named;
+
 
     /**
      * Allows this entity to be named (e.g. using a name tag)

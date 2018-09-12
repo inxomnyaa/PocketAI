@@ -10,19 +10,19 @@ class _send_event extends BaseComponent
 {
     protected $name = "minecraft:behavior.send_event";
     /** @var float $cast_duration Time in seconds for the entire event sending process */
-    public $cast_duration = Total delay of the steps;
-            /** @var array $sequence List of events to send
-             * ;Parameters of each event
-             *
-             * : { */
-            public $sequence;
-            /** @var float $base_delay Amount of time in seconds before starting this step */
-            public $base_delay = 0.0;
-            /** @var string $event The event to send to the entity */
-            public $event;
-            /** @var string $sound_event The sound event to play when this step happens */
-            public $sound_event;
-            
+    public $cast_duration;
+    /** @var array $sequence List of events to send
+     * ;Parameters of each event
+     *
+     */
+    public $sequence;
+    /** @var float $base_delay Amount of time in seconds before starting this step */
+    public $base_delay = 0.0;
+    /** @var string $event The event to send to the entity */
+    public $event;
+    /** @var string $sound_event The sound event to play when this step happens */
+    public $sound_event;
+
 
     /**
      * Allows the mob to send an event to another mob.

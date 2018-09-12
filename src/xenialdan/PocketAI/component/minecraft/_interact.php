@@ -12,34 +12,34 @@ class _interact extends BaseComponent
     /** @var mixed (JSON Object) $add_items Loot table with items to add to the player's inventory upon successful interaction
      * ;Parameters
      *
-     * : { */
-            public $add_items;
-            /** @var string $table File path, relative to the Behavior Pack's path, to the loot table file */
-            public $table;
-            /** @var float $cooldown Time in seconds before this entity can be interacted with again */
-            public $cooldown = 0.0;
-            /** @var int $hurt_item The amount of damage the item will take when used to interact with this entity. A value of 0 means the item won't lose durability */
-            public $hurt_item;
-            /** @var string $interact_text Text to show when the player is able to interact in this way with this entity when playing with Touch-screen controls */
-            public $interact_text;
-            /** @var string $on_interact Event to fire when the interaction occurs */
-            public $on_interact;
-            /** @var string $play_sounds List of sounds to play when the interaction occurs */
-            public $play_sounds;
-            /** @var string $spawn_entities List of entities to spawn when the interaction occurs */
-            public $spawn_entities;
-            /** @var mixed (JSON Object) $spawn_items Loot table with items to drop on the ground upon successful interaction
-             * ;Parameters
-             *
-             * : { */
-            public $spawn_items;
-            /** @var bool $swing If true, the player will do the 'swing' animation when interacting with this entity */
-            public $swing = false;
-            /** @var string $transform_to_item The item used will transform to this item upon successful interaction. Format: itemName:auxValue */
-            public $transform_to_item;
-            /** @var bool $use_item If true, the interaction will use an item */
-            public $use_item = false;
-            
+     */
+    public $add_items;
+    /** @var string $table File path, relative to the Behavior Pack's path, to the loot table file */
+    public $table;
+    /** @var float $cooldown Time in seconds before this entity can be interacted with again */
+    public $cooldown = 0.0;
+    /** @var int $hurt_item The amount of damage the item will take when used to interact with this entity. A value of 0 means the item won't lose durability */
+    public $hurt_item;
+    /** @var string $interact_text Text to show when the player is able to interact in this way with this entity when playing with Touch-screen controls */
+    public $interact_text;
+    /** @var string $on_interact Event to fire when the interaction occurs */
+    public $on_interact;
+    /** @var string $play_sounds List of sounds to play when the interaction occurs */
+    public $play_sounds;
+    /** @var string $spawn_entities List of entities to spawn when the interaction occurs */
+    public $spawn_entities;
+    /** @var mixed (JSON Object) $spawn_items Loot table with items to drop on the ground upon successful interaction
+     * ;Parameters
+     *
+     */
+    public $spawn_items;
+    /** @var bool $swing If true, the player will do the 'swing' animation when interacting with this entity */
+    public $swing = false;
+    /** @var string $transform_to_item The item used will transform to this item upon successful interaction. Format: itemName:auxValue */
+    public $transform_to_item;
+    /** @var bool $use_item If true, the interaction will use an item */
+    public $use_item = false;
+
 
     /**
      * Defines interactions with this entity.

@@ -12,19 +12,19 @@ class _defend_village_target extends BaseComponent
     /** @var mixed (JSON Object) $entity_types List of entity types this mob considers a threat to the village
      * ;Parameters
      *
-     * : { */
-            public $entity_types;
-            /** @var string (Minecraft Filter) $filters Conditions that make this entry in the list valid */
-            public $filters;
-            /** @var float $max_dist Maximum distance this mob can be away to be a valid choice */
-            public $max_dist = 16;
-            /** @var bool $must_see If true, the mob has to be visible to be a valid choice */
-            public $must_see = false;
-            /** @var float $sprint_speed_multiplier Multiplier for the running speed. A value of 1.0 means the speed is unchanged */
-            public $sprint_speed_multiplier = 1.0;
-            /** @var float $walk_speed_multiplier Multiplier for the walking speed. A value of 1.0 means the speed is unchanged */
-            public $walk_speed_multiplier = 1.0;
-            
+     */
+    public $entity_types;
+    /** @var string (Minecraft Filter) $filters Conditions that make this entry in the list valid */
+    public $filters;
+    /** @var float $max_dist Maximum distance this mob can be away to be a valid choice */
+    public $max_dist = 16;
+    /** @var bool $must_see If true, the mob has to be visible to be a valid choice */
+    public $must_see = false;
+    /** @var float $sprint_speed_multiplier Multiplier for the running speed. A value of 1.0 means the speed is unchanged */
+    public $sprint_speed_multiplier = 1.0;
+    /** @var float $walk_speed_multiplier Multiplier for the walking speed. A value of 1.0 means the speed is unchanged */
+    public $walk_speed_multiplier = 1.0;
+
 
     /**
      * Allows the mob to stay in the village and fight mobs hostile to the villagers.

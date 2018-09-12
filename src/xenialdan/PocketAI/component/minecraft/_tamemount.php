@@ -14,28 +14,28 @@ class _tamemount extends BaseComponent
     /** @var mixed (JSON Object) $autoRejectItems The list of items that, if carried while interacting with the entity, will anger it
      * ;Parameters
      *
-     * : { */
-            public $autoRejectItems;
-            /** @var string $item Name of the item this entity likes and can be used to increase this entity's temper */
-            public $item;
-            /** @var mixed (JSON Object) $feedItems The list of items that can be used to increase the entity's temper and speed up the taming process
-             * ;Parameters
-             *
-             * : { */
-            public $feedItems;
-            /** @var float $temperMod The amount of temper this entity gains when fed this item */
-            public $temperMod = 0.0;
-            /** @var string $feed_text The text that shows in the feeding interact button */
-            public $feed_text;
-            /** @var int $maxTemper The maximum value for the entity's random starting temper */
-            public $maxTemper = 100;
-            /** @var int $minTemper The minimum value for the entity's random starting temper */
-            public $minTemper;
-            /** @var string $ride_text The text that shows in the riding interact button */
-            public $ride_text;
-            /** @var string $tame_event Event that triggers when the entity becomes tamed */
-            public $tame_event;
-            
+     */
+    public $autoRejectItems;
+    /** @var string $item Name of the item this entity likes and can be used to increase this entity's temper */
+    public $item;
+    /** @var mixed (JSON Object) $feedItems The list of items that can be used to increase the entity's temper and speed up the taming process
+     * ;Parameters
+     *
+     */
+    public $feedItems;
+    /** @var float $temperMod The amount of temper this entity gains when fed this item */
+    public $temperMod = 0.0;
+    /** @var string $feed_text The text that shows in the feeding interact button */
+    public $feed_text;
+    /** @var int $maxTemper The maximum value for the entity's random starting temper */
+    public $maxTemper = 100;
+    /** @var int $minTemper The minimum value for the entity's random starting temper */
+    public $minTemper;
+    /** @var string $ride_text The text that shows in the riding interact button */
+    public $ride_text;
+    /** @var string $tame_event Event that triggers when the entity becomes tamed */
+    public $tame_event;
+
 
     /**
      * Allows the Entity to be tamed by mounting it.

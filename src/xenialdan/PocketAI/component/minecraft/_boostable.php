@@ -12,19 +12,19 @@ class _boostable extends BaseComponent
     /** @var array $boost_items List of items that can be used to boost while riding this entity. Each item has the following properties:
      * ;Parameters
      *
-     * : { */
-            public $boost_items;
-            /** @var int $damage This is the damage that the item will take each time it is used */
-            public $damage = 1;
-            /** @var string $item Name of the item that can be used to boost */
-            public $item;
-            /** @var string $replaceItem The item used to boost will become this item once it is used up */
-            public $replaceItem;
-            /** @var int $duration Time in seconds for the boost */
-            public $duration = 3;
-            /** @var float $speed_multiplier Factor by which the entity's normal speed increases. E.g. 2.0 means go twice as fast */
-            public $speed_multiplier = 1.0;
-            
+     */
+    public $boost_items;
+    /** @var int $damage This is the damage that the item will take each time it is used */
+    public $damage = 1;
+    /** @var string $item Name of the item that can be used to boost */
+    public $item;
+    /** @var string $replaceItem The item used to boost will become this item once it is used up */
+    public $replaceItem;
+    /** @var int $duration Time in seconds for the boost */
+    public $duration = 3;
+    /** @var float $speed_multiplier Factor by which the entity's normal speed increases. E.g. 2.0 means go twice as fast */
+    public $speed_multiplier = 1.0;
+
 
     /**
      * Defines the conditions and behavior of a rideable entity's boost
