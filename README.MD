@@ -1,5 +1,8 @@
 # PocketAI
 ##### PocketMine-MP A\* Mob-AI plugin with addon support
+
+# WARNING! YOU SHOULD NOT FORK THIS REPOSITORY! Changes done can damage your system! Warning will be removed when its stable enough to run outside of a container!
+
 PocketAI was written with the intention to load Minecraft Pocket/Bedrock/Unified Edition addons in PocketMine-MP servers and adapting the client entity behaviour to server entities.
 
 Addons are behaviour changing "scripts" introduced into the XBL-Edition of the game.
