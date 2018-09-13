@@ -5,6 +5,7 @@ namespace xenialdan\PocketAI\component\minecraft;
 use xenialdan\PocketAI\component\BaseComponent;
 use xenialdan\PocketAI\entitytype\AIEntity;
 use xenialdan\PocketAI\entitytype\AIProjectile;
+use xenialdan\PocketAI\LootGenerator;
 
 class _loot extends BaseComponent
 {
@@ -30,7 +31,7 @@ class _loot extends BaseComponent
      */
     public function apply($entity): void
     {
-        // TODO: Implement apply() method.
+        $entity->setLootGenerator(new LootGenerator($this->table, $entity));
     }
 
     /**
@@ -39,6 +40,6 @@ class _loot extends BaseComponent
      */
     public function remove($entity): void
     {
-        // TODO: Implement remove() method.
+        $entity->setLootGenerator(new LootGenerator("empty", $entity));
     }
 }

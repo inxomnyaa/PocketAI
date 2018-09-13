@@ -27,7 +27,7 @@ class _is_tamed extends BaseComponent
      */
     public function apply($entity): void
     {
-        // TODO: Implement apply() method.
+        $entity->setGenericFlag(AIEntity::DATA_FLAG_TAMED, true);
     }
 
     /**
@@ -36,6 +36,6 @@ class _is_tamed extends BaseComponent
      */
     public function remove($entity): void
     {
-        // TODO: Implement remove() method.
+        $entity->setGenericFlag(AIEntity::DATA_FLAG_TAMED, false);
     }
 }

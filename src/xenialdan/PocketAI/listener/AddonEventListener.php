@@ -55,11 +55,11 @@ class AddonEventListener implements Listener
     public function onAddonEvent(AddonEvent $event)
     {
         $entityProperties = $event->getEntity()->getEntityProperties();
-        $behaviours = $entityProperties->getBehaviours();
-        if (isset($behaviours["minecraft:entity"]["events"][$event->getEvent()])) {
-            $entityProperties->applyEvent($behaviours["minecraft:entity"]["events"][$event->getEvent()]);
+        $events = $entityProperties->getBehaviourEvents();
+        if (isset($events[$event->getEvent()])) {
+            $entityProperties->applyEvent($events[$event->getEvent()]);
         } else {
-            $this->owner->getLogger()->alert("An AddonEvent was called, but no such definition was found: " . $event->getEvent());
+            $this->owner->getLogger()->alert("An AddonEvent was called, but no such definition was found: " . $event->getEvent() . " in " . $entityProperties->getBehaviourName());
         }
     }
 }

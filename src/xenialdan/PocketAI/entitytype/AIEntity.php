@@ -27,7 +27,7 @@ abstract class AIEntity extends Living
     public $seatCount = 0;
     /** @var array */
     public $seats = [];
-    /** @var AIEntityInventory */
+    /** @var AIEntityInventory|null */
     public $inventory;
 
     public $width = 0.0;

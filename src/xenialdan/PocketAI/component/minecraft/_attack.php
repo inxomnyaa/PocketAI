@@ -9,6 +9,7 @@ use xenialdan\PocketAI\entitytype\AIProjectile;
 class _attack extends BaseComponent
 {
     protected $name = "minecraft:attack";
+    //TODO: attack damage (can be range!), effects
 
 
     /**

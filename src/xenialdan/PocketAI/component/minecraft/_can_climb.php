@@ -27,7 +27,7 @@ class _can_climb extends BaseComponent
      */
     public function apply($entity): void
     {
-        // TODO: Implement apply() method.
+        $entity->setCanClimb(true);
     }
 
     /**
@@ -36,6 +36,6 @@ class _can_climb extends BaseComponent
      */
     public function remove($entity): void
     {
-        // TODO: Implement remove() method.
+        $entity->setCanClimb(false);
     }
 }

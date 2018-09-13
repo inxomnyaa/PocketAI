@@ -9,6 +9,8 @@ use xenialdan\PocketAI\entitytype\AIProjectile;
 class _rideable extends BaseComponent
 {
     protected $name = "minecraft:rideable";
+    //TODO set rideable
+    //TODO optional: seat_count, seats
 
 
     /**

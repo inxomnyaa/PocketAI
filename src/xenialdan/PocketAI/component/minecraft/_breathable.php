@@ -54,7 +54,8 @@ class _breathable extends BaseComponent
      */
     public function apply($entity): void
     {
-        // TODO: Implement apply() method.
+        $entity->setMaxAirSupplyTicks($this->totalSupply);
+        //TODO other variables
     }
 
     /**
@@ -63,6 +64,8 @@ class _breathable extends BaseComponent
      */
     public function remove($entity): void
     {
-        // TODO: Implement remove() method.
+        $c = new self;
+        $entity->setMaxAirSupplyTicks($c->totalSupply);//set to default
+        //TODO other variables
     }
 }

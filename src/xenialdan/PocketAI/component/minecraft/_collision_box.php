@@ -33,7 +33,8 @@ class _collision_box extends BaseComponent
      */
     public function apply($entity): void
     {
-        // TODO: Implement apply() method.
+        $entity->setWidth($this->width);
+        $entity->setHeight($this->height);
     }
 
     /**
@@ -42,6 +43,8 @@ class _collision_box extends BaseComponent
      */
     public function remove($entity): void
     {
-        // TODO: Implement remove() method.
+        $c = new self;
+        $entity->setWidth($c->width);
+        $entity->setHeight($c->height);
     }
 }

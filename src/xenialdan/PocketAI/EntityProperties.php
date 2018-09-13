@@ -4,13 +4,18 @@ namespace xenialdan\PocketAI;
 
 use pocketmine\inventory\InventoryHolder;
 use pocketmine\plugin\PluginException;
+use xenialdan\PocketAI\component\BaseComponent;
+use xenialdan\PocketAI\component\ComponentGroup;
 use xenialdan\PocketAI\entitytype\AIEntity;
 use xenialdan\PocketAI\entitytype\AIProjectile;
 use xenialdan\PocketAI\inventory\AIEntityInventory;
 
 class EntityProperties
 {
-    private $behaviour = "empty";
+    /** @var \SplQueue|null */
+    private $behaviour;
+    /** @var string */
+    private $behaviourName = "empty";
     /** @var null|AIEntity|AIProjectile|InventoryHolder */
     private $entity;
     private $behaviourFile = [];
@@ -33,10 +38,24 @@ class EntityProperties
             throw new PluginException("Can not initialize EntityProperties for class of type: " . get_class($entity));
         }
 
-        if (!array_key_exists($behaviour, Loader::$behaviours)) throw new \InvalidArgumentException("Entity behaviour/properties file: " . $behaviour . " not found for entity of type " . $entity->getName());
-        $this->behaviour = Loader::$behaviours[$behaviour];
+        if (!array_key_exists($behaviour, Loader::$components)) throw new \InvalidArgumentException("Entity behaviour/properties file: " . $behaviour . " not found for entity of type " . $entity->getName());
+        $this->behaviour = Loader::$components[$behaviour];
+        $this->behaviourName = $behaviour;
         $this->behaviourFile = Loader::$behaviourJson[$behaviour];
         $this->entity = $entity;
+
+        /** @var BaseComponent $component */
+        foreach ($this->behaviour as $component){
+            $component->apply($this->entity);
+        }
+    }
+
+    /**
+     * @return string
+     */
+    public function getBehaviourName(): string
+    {
+        return $this->behaviourName;
     }
 
     /**
@@ -44,30 +63,32 @@ class EntityProperties
      */
     public function getBehaviours(): array
     {
-        return $this->behaviourFile;
+        return iterator_to_array($this->behaviour);
     }
 
     public function getBehaviourComponentGroups()
     {
-        return $this->behaviourFile["minecraft:entity"]["component_groups"];
+        var_dump("============ BEHAVIOUR COMPONENT GROUPS ============");
+        return Loader::$component_groups[$this->getBehaviourName()];
     }
 
-    public function getBehaviourComponentGroup(string $component_group_name)
+    public function getBehaviourComponentGroup(string $component_group_name) : ?ComponentGroup
     {
+        //TODO search for actual name like "minecraft:clock_time"
         return $this->getBehaviourComponentGroups()[$component_group_name] ?? null;
     }
 
     public function getBehaviourComponents()
     {
         var_dump("============ BEHAVIOUR COMPONENTS ============");
-        var_dump(array_keys($this->behaviourFile["minecraft:entity"]["components"]));
-        return $this->behaviourFile["minecraft:entity"]["components"];
+        var_dump(iterator_to_array(Loader::$components[$this->getBehaviourName()]));
+        return Loader::$components[$this->getBehaviourName()];
     }
 
     //TODO use SplQueue?
     public function getBehaviourEvents()
     {
-        return $this->behaviourFile["minecraft:entity"]["events"];
+        return Loader::$events[$this->getBehaviourName()];
     }
 
     public function getActiveComponentGroups()
@@ -85,8 +106,9 @@ class EntityProperties
             $this->componentGroups[$component_group_name] = $component_group;
             var_dump("============ ADDED COMPONENT GROUP ============");
             var_dump($component_group_name);
-            foreach ($component_group as $component_name => $component_data) {
-                $this->applyComponent($component_name, $component_data);
+            /** @var BaseComponent $component */
+            foreach ($component_group as $component) {
+                $component->apply($this->entity);
             }
         }
         $this->getActiveComponentGroups();//TODO remove, only var dumps debug
@@ -146,142 +168,6 @@ class EntityProperties
     }
 
     /* "API"-alike part */
-
-    public function applyComponent(string $component_name, array $component_data)
-    {//TODO add reversing removeComponent function
-        var_dump("============ APPLY COMPONENT ============");
-        var_dump($component_name);
-        $this->setComponent($component_name, $component_data);
-        switch ($component_name) {
-            case "minecraft:loot":
-                {
-                    var_dump("============ SET LOOT TABLE ============");
-                    if (isset($component_data["table"])) $this->entity->setLootGenerator(new LootGenerator($component_data["table"], $this->entity));
-                    var_dump($component_data["table"]);
-                    break;
-                }
-            case "minecraft:collision_box":
-                {
-                    var_dump("============ SET AABB ============");
-                    $this->entity->setWidth(floatval($component_data["width"]));
-                    $this->entity->setHeight(floatval($component_data["height"]));
-                    var_dump($this->entity->getBoundingBox());
-                    break;
-                }
-            case "minecraft:scale":
-                {
-                    var_dump("============ SET SCALE ============");
-                    $this->entity->setScale(floatval($component_data["value"]));
-                    var_dump($this->entity->getScale());
-                    break;
-                }
-            case "minecraft:is_baby":
-                {
-                    var_dump("============ SET BABY ============");
-                    $this->entity->setGenericFlag(AIEntity::DATA_FLAG_BABY, true);//TODO set false on removal
-                    break;
-                }
-            case "minecraft:is_tamed":
-                {
-                    var_dump("============ SET IS_TAMED ============");//TODO set false on removal
-                    $this->entity->setGenericFlag(AIEntity::DATA_FLAG_TAMED, true);
-                    break;
-                }
-            case "minecraft:can_climb":
-                {
-                    var_dump("============ SET CAN CLIMB ============");
-                    $this->entity->setCanClimb(true);
-                    break;
-                }
-            case "minecraft:breathable":
-                {//TODO add other breathable tags -> see documentation
-                    var_dump("============ SET BREATHABLE ============");
-                    if (isset($component_data["totalSupply"])) $this->entity->setMaxAirSupplyTicks(intval($component_data["totalSupply"]));
-                    if (isset($component_data["breathesWater"]) && $component_data["breathesWater"] == true) {
-                        $this->entity->setMaxAirSupplyTicks(10000);//todo
-                    }
-                    var_dump($this->entity->getMaxAirSupplyTicks());
-                    break;
-                }
-            case "minecraft:health":
-                {
-                    var_dump("============ SET HEALTH ============");
-                    if (isset($component_data["max"])) $this->entity->setMaxHealth(intval($component_data["max"]));
-                    if (isset($component_data["value"]) && $this->entity->ticksLived < 1) {
-                        if (is_array($component_data["value"])) {
-                            $this->entity->setHealth(floatval(mt_rand(($component_data["value"]["range_min"] ?? 1) * 10, ($component_data["value"]["range_max"] ?? 1) * 10) / 10));
-                        } else {
-                            $this->entity->setHealth(floatval($component_data["value"]));
-                        }
-                    }
-                    var_dump($this->entity->getHealth());
-                    break;
-                }
-            case "minecraft:horse.jump_strength":
-                {
-                    var_dump("============ SET HORSE JUMP STRENGTH ============");
-                    if (isset($component_data["max"])) $this->entity->getAttributeMap()->getAttribute(Loader::HORSE_JUMP_POWER)->setMaxValue(floatval($component_data["max"]));
-                    if (isset($component_data["value"]) && $this->entity->ticksLived < 1) {
-                        if (is_array($component_data["value"])) {
-                            $this->entity->getAttributeMap()->getAttribute(Loader::HORSE_JUMP_POWER)->setValue(floatval(mt_rand(($component_data["value"]["range_min"] ?? 1) * 10, ($component_data["value"]["range_max"] ?? 1) * 10) / 10));
-                        } else {
-                            $this->entity->getAttributeMap()->getAttribute(Loader::HORSE_JUMP_POWER)->setValue(floatval($component_data["value"]));
-                        }
-                    }
-                    var_dump($this->entity->getAttributeMap()->getAttribute(Loader::HORSE_JUMP_POWER)->getValue());
-                    break;
-                }
-            case "minecraft:movement":
-                {
-                    var_dump("============ SET MOVEMENT - AKA SPEED ============");
-                    if (isset($component_data["value"]) && $this->entity->ticksLived < 1) {
-                        if (is_array($component_data["value"])) {
-                            $this->entity->setDefaultSpeed(floatval(mt_rand(($component_data["value"]["range_min"] ?? 1) * 10, ($component_data["value"]["range_max"] ?? 1) * 10) / 10));
-                        } else {
-                            $this->entity->setDefaultSpeed(floatval($component_data["value"]));
-                        }
-                    }
-                    var_dump($this->entity->getDefaultSpeed());
-                    break;
-                }
-            case "minecraft:attack":
-                {
-                    if ($this->entity->ticksLived < 1) {
-                        var_dump("============ SET ATTACK ============");
-                        $this->entity->setDefaultAttackDamage(intval($component_data["damage"]));
-                    }
-                    var_dump($this->entity->getDefaultAttackDamage());
-                    break;
-                }
-            case "minecraft:rideable":
-                {
-                    var_dump("============ SET RIDEABLE ============");
-                    if (isset($component_data["seat_count"])) $this->entity->setSeatCount(intval($component_data["seat_count"]));
-                    if (isset($component_data["seats"])) $this->entity->setSeats([$component_data["seats"]]); //TODO validate seatcount === count of "seats"
-                    var_dump($this->entity->getSeatCount());
-                    var_dump($this->entity->getSeats());
-                    break;
-                }
-            case "minecraft:inventory":
-                {
-                    var_dump("============ SET INVENTORY ============");
-                    var_dump($component_data);
-                    if (isset($component_data["container_type"])) {
-                        try {
-                            $this->entity->setInventory(new AIEntityInventory($this->entity, [], null, null, $component_data["container_type"]));
-                        } catch (\Exception $e) {
-                        }
-                    }
-                    var_dump($this->entity->getInventory()->getName());
-                    break;
-                }
-            default:
-                {
-                    var_dump("============ TRIED TO APPLY UNIMPLEMENTED COMPONENT ============");
-                    var_dump($component_name);
-                }
-        }
-    }
 
     public function applyEvent($behaviourEvent_data)
     {

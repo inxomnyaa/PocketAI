@@ -7,7 +7,6 @@ use pocketmine\entity\Entity;
 use pocketmine\item\ItemFactory;
 use pocketmine\level\Level;
 use pocketmine\math\Vector3;
-use pocketmine\nbt\NBT;
 use pocketmine\network\mcpe\protocol\SetEntityLinkPacket;
 use pocketmine\network\mcpe\protocol\types\EntityLink;
 use pocketmine\Player;
@@ -16,6 +15,7 @@ use pocketmine\resourcepacks\ZippedResourcePack;
 use pocketmine\Server;
 use xenialdan\PocketAI\command\KillentityCommand;
 use xenialdan\PocketAI\command\SummonCommand;
+use xenialdan\PocketAI\component\ComponentGroup;
 use xenialdan\PocketAI\entity\Cow;
 use xenialdan\PocketAI\entity\FishingHook;
 use xenialdan\PocketAI\entitytype\AIEntity;
@@ -30,12 +30,18 @@ class Loader extends PluginBase
     const HORSE_JUMP_POWER = 11;
     /** @var Loader */
     private static $instance = null;
+
+    public static $behaviourJson = [];
+    /** @var array[\SplQueue] */
+    public static $components;
+    /** @var array[\SplQueue[ComponentGroup]] */
+    public static $component_groups;
+    /** @var array[\SplQueue] */
+    public static $events;
+    public static $loottables = [];
+
     public static $links = [];
     public static $hooks = [];
-    public static $behaviourJson = [];
-    /** @var array \SplQueue */
-    public static $behaviours;
-    public static $loottables = [];
 
     /**
      * Returns an instance of the plugin
@@ -79,7 +85,7 @@ class Loader extends PluginBase
             }
         }
 
-        $this->preloadBehaviours(self::$behaviourJson);
+        $this->preloadJson(self::$behaviourJson);
         $this->registerEntities();
         $this->registerItems();
         $this->getServer()->getPluginManager()->registerEvents(new EventListener($this), $this);
@@ -92,33 +98,56 @@ class Loader extends PluginBase
 
     private function debug()
     {
-        var_dump(array_keys(self::$behaviours));
         $e = new Cow($this->getServer()->getDefaultLevel(), Cow::createBaseNBT($this->getServer()->getDefaultLevel()->getSpawnLocation()->asVector3()));
-        var_dump($e);
+        var_dump(">==========< getBehaviourName >==========<");
+        var_dump($e->entityProperties->getBehaviourName());
+        var_dump(">==========< getBehaviourEvents >==========<");
+        var_dump($e->entityProperties->getBehaviourEvents());
+        var_dump(">==========< getBehaviourComponents >==========<");
+        var_dump($e->entityProperties->getBehaviourComponents());
+        var_dump(">==========< getBehaviourComponentGroups >==========<");
+        var_dump($e->entityProperties->getBehaviourComponentGroups());
+        var_dump(">==========< getBehaviours >==========<");
+        var_dump($e->entityProperties->getBehaviours());
     }
 
-    private function preloadBehaviours(array $behaviours)
+    private function preloadJson(array $behaviourJsonFiles)
     {
         try {
-            foreach ($behaviours as $filename => $behaviour) {
-
-                self::$behaviours[$filename] = new \SplQueue();
+            foreach ($behaviourJsonFiles as $filename => $behaviour) {
                 if (version_compare($behaviour["minecraft:entity"]["format_version"] ?? "1.2.0", "1.2.0") !== 0) {
-                    throw new \InvalidArgumentException("The Entity behaviour/properties file: " . $behaviour . " has an unsupported format_version and will not be used");
+                    throw new \InvalidArgumentException("The Entity behaviour/properties file: " . $filename . " has an unsupported format_version and will not be used");
                     continue;
                 }
 
+                //Components
+                self::$components[$filename] = new \SplQueue();
                 foreach ($behaviour["minecraft:entity"]["components"] ?? [] as $component_name => $component_data) {
                     $c = "xenialdan\\PocketAI\\component\\" . preg_replace('/(\\\\(?!.*\\\\.*))/', '\\_', str_replace(":", "\\", join("\\", explode(".", $component_name))));
                     if (class_exists($c)) {
-                        self::$behaviours[$filename]->enqueue(new $c(is_array($component_data) ? $component_data : [$component_data]));
+                        self::$components[$filename]->push(new $c(is_array($component_data) ? $component_data : [$component_data]));
                     }
                 }
+                //Component groups
+                self::$component_groups[$filename] = new \SplQueue();
+                foreach ($behaviour["minecraft:entity"]["component_groups"] ?? [] as $component_group_name => $component_group_data) {
+                    $groups = [];
+                    foreach ($component_group_data ?? [] as $component_name => $component_data) {
+                        $c = "xenialdan\\PocketAI\\component\\" . preg_replace('/(\\\\(?!.*\\\\.*))/', '\\_', str_replace(":", "\\", join("\\", explode(".", $component_name))));
+                        if (class_exists($c)) {
+                            $groups[] = new $c(is_array($component_data) ? $component_data : [$component_data]);
+                        }
+                    }
+                    self::$component_groups[$filename]->push(new ComponentGroup($component_group_name, $groups));
+                }
+                //Events
+                self::$events[$filename] = new \SplQueue();
+                self::$events[$filename] = $behaviour["minecraft:entity"]["events"] ?? [];
             }
         } catch (\Exception $e) {
-            $this->getLogger()->warning("An exception has occurred whilest preloading the behaviours: " . $e);
+            $this->getLogger()->alert("An exception has occurred whilest preloading the behaviours: " . $e);
         } finally {
-            $this->getLogger()->notice("Behaviours successfully pre-loaded and cached! Size: " . sizeof(self::$behaviours));
+            $this->getLogger()->notice("Behaviours successfully pre-loaded and cached! Sizes (should match!): Components: " . sizeof(self::$components) . " Component groups: " . sizeof(self::$component_groups) . " Events: " . sizeof(self::$events));
         }
     }
 

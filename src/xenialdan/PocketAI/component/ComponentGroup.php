@@ -23,6 +23,7 @@ class ComponentGroup
     public function __construct(string $name, array $components = [])
     {
         $this->name = $name;
+        $this->components = new Components();
         foreach ($components as $component)
             $this->addComponent($component);
     }

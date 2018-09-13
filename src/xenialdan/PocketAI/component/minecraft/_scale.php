@@ -30,7 +30,7 @@ class _scale extends BaseComponent
      */
     public function apply($entity): void
     {
-        // TODO: Implement apply() method.
+        $entity->setScale($this->value);
     }
 
     /**
@@ -39,6 +39,7 @@ class _scale extends BaseComponent
      */
     public function remove($entity): void
     {
-        // TODO: Implement remove() method.
+        $c = new self;
+        $entity->setScale($c->value);
     }
 }

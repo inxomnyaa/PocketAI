@@ -1,7 +1,7 @@
 ---
 name: PocketAI
 author: XenialDan
-version: 0.9.2
+version: 0.10.0
 main: xenialdan\PocketAI\Loader
 api: [4.0.0+dev]
 # Changes:
@@ -9,4 +9,6 @@ api: [4.0.0+dev]
 # 0.8.0: Added component classes
 # 0.9.0: Fixed component classes & added missing classes
 # 0.9.2: Added debugging tests
+# 0.10.0: Start using pre-cached components
+# 0.10.1: Use BaseComponent->apply(Entity)
 ...

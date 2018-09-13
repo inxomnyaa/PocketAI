@@ -5,6 +5,7 @@ namespace xenialdan\PocketAI\component\minecraft;
 use xenialdan\PocketAI\component\BaseComponent;
 use xenialdan\PocketAI\entitytype\AIEntity;
 use xenialdan\PocketAI\entitytype\AIProjectile;
+use xenialdan\PocketAI\inventory\AIEntityInventory;
 
 class _inventory extends BaseComponent
 {
@@ -48,7 +49,13 @@ class _inventory extends BaseComponent
      */
     public function apply($entity): void
     {
-        // TODO: Implement apply() method.
+        // TODO: Extend apply() method.
+        try {
+            if($this->container_type !== "none")
+                $entity->setInventory(new AIEntityInventory($entity, [], $this->inventory_size, null, $this->container_type));
+        } catch (\Exception $e) {
+            //TODO
+        }
     }
 
     /**
@@ -57,6 +64,7 @@ class _inventory extends BaseComponent
      */
     public function remove($entity): void
     {
-        // TODO: Implement remove() method.
+        // TODO: Extend remove() method.
+        $entity->setInventory(null);
     }
 }
