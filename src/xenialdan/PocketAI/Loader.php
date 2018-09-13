@@ -7,6 +7,7 @@ use pocketmine\entity\Entity;
 use pocketmine\item\ItemFactory;
 use pocketmine\level\Level;
 use pocketmine\math\Vector3;
+use pocketmine\nbt\NBT;
 use pocketmine\network\mcpe\protocol\SetEntityLinkPacket;
 use pocketmine\network\mcpe\protocol\types\EntityLink;
 use pocketmine\Player;
@@ -32,7 +33,7 @@ class Loader extends PluginBase
     public static $links = [];
     public static $hooks = [];
     public static $behaviourJson = [];
-    /** @var \SplQueue */
+    /** @var array \SplQueue */
     public static $behaviours;
     public static $loottables = [];
 
@@ -85,23 +86,39 @@ class Loader extends PluginBase
         $this->getServer()->getPluginManager()->registerEvents(new InventoryEventListener($this), $this);
         $this->getServer()->getPluginManager()->registerEvents(new RidableEventListener($this), $this);
         $this->getServer()->getPluginManager()->registerEvents(new AddonEventListener($this), $this);
+
+        $this->debug();
+    }
+
+    private function debug()
+    {
+        var_dump(array_keys(self::$behaviours));
+        $e = new Cow($this->getServer()->getDefaultLevel(), Cow::createBaseNBT($this->getServer()->getDefaultLevel()->getSpawnLocation()->asVector3()));
+        var_dump($e);
     }
 
     private function preloadBehaviours(array $behaviours)
     {
-        foreach ($behaviours as $behaviour) {
+        try {
+            foreach ($behaviours as $filename => $behaviour) {
 
-            if (version_compare($behaviour["minecraft:entity"]["format_version"] ?? "1.2.0", "1.2.0") !== 0) {
-                throw new \InvalidArgumentException("The Entity behaviour/properties file: " . $behaviour . " has an unsupported format_version and will not be used");
-                continue;
-            }
+                self::$behaviours[$filename] = new \SplQueue();
+                if (version_compare($behaviour["minecraft:entity"]["format_version"] ?? "1.2.0", "1.2.0") !== 0) {
+                    throw new \InvalidArgumentException("The Entity behaviour/properties file: " . $behaviour . " has an unsupported format_version and will not be used");
+                    continue;
+                }
 
-            foreach ($behaviour["minecraft:entity"]["components"] ?? [] as $component_name => $component_data) {
-                $c = "xenialdan\\PocketAI\\component\\" . preg_replace('/(\\\\(?!.*\\\\.*))/', '\\_', str_replace(":", "\\", join("\\", explode(".", $component_name))));
-                if (class_exists($c)){
-                    new $c(is_array($component_data)?$component_data:[$component_data]);
+                foreach ($behaviour["minecraft:entity"]["components"] ?? [] as $component_name => $component_data) {
+                    $c = "xenialdan\\PocketAI\\component\\" . preg_replace('/(\\\\(?!.*\\\\.*))/', '\\_', str_replace(":", "\\", join("\\", explode(".", $component_name))));
+                    if (class_exists($c)) {
+                        self::$behaviours[$filename]->enqueue(new $c(is_array($component_data) ? $component_data : [$component_data]));
+                    }
                 }
             }
+        } catch (\Exception $e) {
+            $this->getLogger()->warning("An exception has occurred whilest preloading the behaviours: " . $e);
+        } finally {
+            $this->getLogger()->notice("Behaviours successfully pre-loaded and cached! Size: " . sizeof(self::$behaviours));
         }
     }
 

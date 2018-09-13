@@ -32,13 +32,10 @@ class EntityProperties
         if (!$entity instanceof AIEntity && !$entity instanceof AIProjectile) {
             throw new PluginException("Can not initialize EntityProperties for class of type: " . get_class($entity));
         }
-        $behaviour = str_replace(".json", "", $behaviour);
-        if (!array_key_exists($behaviour, Loader::$behaviourJson)) throw new \InvalidArgumentException("Entity behaviour/properties file: " . $behaviour . " not found for entity of type " . $entity->getName());
-        $this->behaviour = $behaviour;
-        $this->behaviourFile = Loader::$behaviourJson[$this->behaviour];
-        if (version_compare($this->behaviourFile["minecraft:entity"]["format_version"] ?? "1.2.0", "1.2.0") !== 0) {
-            throw new \InvalidArgumentException("The Entity behaviour/properties file: " . $behaviour . " has an unsupported format_version and will not be used");
-        }
+
+        if (!array_key_exists($behaviour, Loader::$behaviours)) throw new \InvalidArgumentException("Entity behaviour/properties file: " . $behaviour . " not found for entity of type " . $entity->getName());
+        $this->behaviour = Loader::$behaviours[$behaviour];
+        $this->behaviourFile = Loader::$behaviourJson[$behaviour];
         $this->entity = $entity;
     }
 
