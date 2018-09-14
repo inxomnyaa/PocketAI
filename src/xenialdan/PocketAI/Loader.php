@@ -110,6 +110,8 @@ class Loader extends PluginBase
         var_dump($e->entityProperties->findComponent("minecraft:identifier"));
         var_dump(">==========< findComponentGroup >==========<");
         var_dump($e->entityProperties->findComponentGroup("minecraft:cow_adult"));
+        var_dump(">==========< getActiveComponentGroups >==========<");
+        var_dump($e->entityProperties->getActiveComponentGroups());
         $e->kill();
     }
 
