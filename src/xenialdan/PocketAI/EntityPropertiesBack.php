@@ -26,7 +26,7 @@ class EntityPropertiesBack
      */
     public function __construct(string $behaviour, $entity)
     {
-        if (is_null($entity)){
+        if (is_null($entity)) {
             throw new PluginException("Can not initialize EntityProperties because no / an invalid null entity was given");
         }
         if (!$entity instanceof AIEntity && !$entity instanceof AIProjectile) {

@@ -45,12 +45,13 @@ abstract class AIEntity extends Living implements InventoryHolder
     }
 
     /* AI */
-    public function entityBaseTick(int $tickDiff = 1) : bool{
+    public function entityBaseTick(int $tickDiff = 1): bool
+    {
         Timings::$timerLivingEntityBaseTick->startTiming();
 
         $hasUpdate = parent::entityBaseTick($tickDiff);
 
-        if($this->isAlive()){
+        if ($this->isAlive()) {
             $this->getLevel()->addParticle(new RedstoneParticle($this->asVector3()));
             /* behaviour checks */
         }
@@ -59,6 +60,7 @@ abstract class AIEntity extends Living implements InventoryHolder
 
         return $hasUpdate;
     }
+
     /* END AI */
 
 

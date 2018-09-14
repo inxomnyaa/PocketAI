@@ -5,7 +5,6 @@ namespace xenialdan\PocketAI;
 use pocketmine\entity\Attribute;
 use pocketmine\entity\Entity;
 use pocketmine\item\ItemFactory;
-use pocketmine\level\Level;
 use pocketmine\math\Vector3;
 use pocketmine\network\mcpe\protocol\SetEntityLinkPacket;
 use pocketmine\network\mcpe\protocol\types\EntityLink;
@@ -107,8 +106,10 @@ class Loader extends PluginBase
         var_dump($e->entityProperties->getComponents());
         var_dump(">==========< getComponentGroups >==========<");
         var_dump($e->entityProperties->getComponentGroups());
+        var_dump(">==========< findComponent >==========<");
+        var_dump($e->entityProperties->findComponent("minecraft:identifier"));
         var_dump(">==========< findComponentGroup >==========<");
-        var_dump($e->entityProperties->findComponentGroup("minecraft:entity_spawned"));
+        var_dump($e->entityProperties->findComponentGroup("minecraft:cow_adult"));
         $e->kill();
     }
 
@@ -158,7 +159,7 @@ class Loader extends PluginBase
         $this->getLogger()->notice("Registered AI for: Guardian");
         Entity::registerEntity(ElderGuardian::class, true, ["pocketai:elder_guardian", "minecraft:elder_guardian"]);
         $this->getLogger()->notice("Registered AI for: ElderGuardian");*/
-        Entity::registerEntity(Cow::class, true, ["pocketai:cow", "minecraft:cow"]);
+        Entity::registerEntity(Cow::class, true, ["pocketai:cow", "minecraft:cow"]);//TODO use _identifier
         $this->getLogger()->notice("Registered AI for: Cow");
         /*Entity::registerEntity(Horse::class, true, ["pocketai:horse", "minecraft:horse"]);
         $this->getLogger()->notice("Registered AI for: Horse");
@@ -278,10 +279,9 @@ class Loader extends PluginBase
 
     /**
      * @param EntityLink $link
-     * @param Level|null $level
      * @return null|Entity
      */
-    public static function getEntityLinkMainEntity(EntityLink $link, Level $level = null): ?Entity
+    public static function getEntityLinkMainEntity(EntityLink $link): ?Entity
     {
         return Server::getInstance()->findEntity($link->fromEntityUniqueId);
     }

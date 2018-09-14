@@ -6,6 +6,8 @@ use pocketmine\inventory\InventoryHolder;
 use pocketmine\plugin\PluginException;
 use xenialdan\PocketAI\component\BaseComponent;
 use xenialdan\PocketAI\component\ComponentGroup;
+use xenialdan\PocketAI\component\ComponentGroups;
+use xenialdan\PocketAI\component\Components;
 use xenialdan\PocketAI\entitytype\AIEntity;
 use xenialdan\PocketAI\entitytype\AIProjectile;
 
@@ -13,10 +15,12 @@ class EntityProperties
 {
     /** @var string */
     private $behaviourName = "empty";
-    /** @var \SplQueue|null */
+    /** @var Components */
     private $components;
-    /** @var \SplQueue */
+    /** @var ComponentGroups */
     public $componentGroups;
+    /** @var ComponentGroups */
+    public $activeComponentGroups;
     /** @var null|AIEntity|AIProjectile|InventoryHolder */
     private $entity;
 
@@ -38,6 +42,7 @@ class EntityProperties
         $this->behaviourName = $behaviourName;
         $this->components = Loader::$components[$this->behaviourName];
         $this->componentGroups = Loader::$component_groups[$this->behaviourName];
+        $this->activeComponentGroups = new ComponentGroups();
         $this->entity = $entity;
     }
 
@@ -70,7 +75,17 @@ class EntityProperties
      */
     public function getComponents(): array
     {
-        return array_flip(iterator_to_array($this->components));
+        return iterator_to_array($this->components);
+    }
+
+    public function findComponent(string $name): ?BaseComponent
+    {
+        $map = array_values(array_filter($this->getComponents(), function ($v) use ($name) {
+            /** @var BaseComponent $v */
+            return $v->getName() === $name;
+        }));
+        if (!empty($map)) return $map[0];
+        return null;
     }
 
     /**
@@ -78,16 +93,57 @@ class EntityProperties
      */
     public function getComponentGroups(): array
     {
-        return array_flip(iterator_to_array($this->componentGroups));
+        return iterator_to_array($this->componentGroups);
     }
 
-    public function findComponentGroup(string $group): ?ComponentGroup
-    {//TODO
-        $map = array_filter($this->componentGroups, function ($v) use ($group) {
+    public function findComponentGroup(string $name): ComponentGroup
+    {
+        $map = array_values(array_filter($this->getComponentGroups(), function ($v) use ($name) {
             /** @var ComponentGroup $v */
-            return $v->name === $group;
+            return $v->name === $name;
+        }));
+        if (!empty($map)) return $map[0];
+        else throw new PluginException("ComponentGroup with name $name not found!");
+    }
+
+    /**
+     * @param string $name
+     * @return array [position => group]
+     */
+    public function findActiveComponentGroups(string $name): array
+    {
+        $map = array_filter($this->getActiveComponentGroups(), function ($v) use ($name) {
+            /** @var ComponentGroup $v */
+            return $v->name === $name;
         });
-        if (empty($map)) return null; else return $map[0];
+        if (!empty($map)) return $map;
+        else throw new PluginException("Active ComponentGroup with name $name not found!");
+    }
+
+    public function getActiveComponentGroups()
+    {
+        return iterator_to_array($this->activeComponentGroups);
+    }
+
+    public function activateComponentGroup(string $name)
+    {
+        var_dump("Active groups before activateComponentGroup: " . $this->activeComponentGroups->count());
+        /** @var ComponentGroup|null $componentgroup */
+        $componentgroup = $this->findComponentGroup($name);
+        $componentgroup->apply($this->entity);
+        $this->activeComponentGroups->push($componentgroup);
+        var_dump("Active groups after activateComponentGroup: " . $this->activeComponentGroups->count());
+    }
+
+    public function deactivateComponentGroup(string $name)
+    {
+        var_dump("Active groups before deactivateComponentGroup: " . $this->activeComponentGroups->count());
+        /** @var ComponentGroup|null $componentGroup */
+        foreach ($this->findActiveComponentGroups($name) as $index => $componentGroup) {
+            $componentGroup->remove($this->entity);
+            $this->activeComponentGroups->offsetUnset($index);
+        }
+        var_dump("Active groups after deactivateComponentGroup: " . $this->activeComponentGroups->count());
     }
 
     //TODO use SplQueue? TODO Move to Loader?
@@ -96,7 +152,7 @@ class EntityProperties
         return Loader::$events[$this->getBehaviourName()] ?? [];
     }
 
-    public function getEvent(string $event): array
+    public function getEventData(string $event): array
     {
         $data = $this->getEvents()[$event] ?? [];
         if (empty($data)) Loader::getInstance()->getLogger()->alert("An AddonEvent was called, but no such definition was found: " . $event . " in " . $this->getBehaviourName());

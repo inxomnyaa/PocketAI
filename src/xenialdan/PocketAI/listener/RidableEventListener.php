@@ -168,7 +168,7 @@ class RidableEventListener implements Listener
 
         $target->move(-($target->x - $packet->position->x), -($target->y - $packet->position->y), -($target->z - $packet->position->z));
         //$target->setRotation($packet->yaw, $packet->pitch);//TODO CRITICAL FIND CORRECT VALUES
-        $target->onGround = (bool) ($packet->flags & MoveEntityAbsolutePacket::FLAG_GROUND);//TODO CRITICAL CORRECT FLAG CHECK
+        $target->onGround = (bool)($packet->flags & MoveEntityAbsolutePacket::FLAG_GROUND);//TODO CRITICAL CORRECT FLAG CHECK
         return true;
     }
 
@@ -199,9 +199,9 @@ class RidableEventListener implements Listener
         /** @var EntityLink $link */
         $link = Loader::getLink($player);
         /** @var AIEntity $entity */
-        $entity = Loader::getEntityLinkMainEntity($link, $player->getLevel());
+        $entity = Loader::getEntityLinkMainEntity($link);
         $originalVelocity = $entity->jumpVelocity;
-        $entity->jumpVelocity = $originalVelocity * ($packet->jumpStrength/100);
+        $entity->jumpVelocity = $originalVelocity * ($packet->jumpStrength / 100);
         $entity->jump();
         var_dump($entity->jumpVelocity);
         $entity->jumpVelocity = $originalVelocity;

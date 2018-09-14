@@ -1,7 +1,7 @@
 ---
 name: PocketAI
 author: XenialDan
-version: 0.10.2
+version: 0.10.3
 main: xenialdan\PocketAI\Loader
 api: [4.0.0+dev]
 # Changes:
@@ -12,4 +12,5 @@ api: [4.0.0+dev]
 # 0.10.0: Start using pre-cached components
 # 0.10.1: Use BaseComponent->apply(Entity)
 # 0.10.2: Clean up Events & EntityProperties
+# 0.10.3: Add back active component groups
 ...

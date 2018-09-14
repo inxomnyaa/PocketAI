@@ -6,8 +6,8 @@ use pocketmine\event\Cancellable;
 use pocketmine\event\plugin\PluginEvent;
 use pocketmine\plugin\Plugin;
 use xenialdan\PocketAI\API;
-use xenialdan\PocketAI\component\ComponentGroup;
 use xenialdan\PocketAI\entitytype\AIEntity;
+use xenialdan\PocketAI\Loader;
 
 class AddonEvent extends PluginEvent implements Cancellable
 {
@@ -69,8 +69,6 @@ class AddonEvent extends PluginEvent implements Cancellable
     public function execute($data): void
     {
         foreach ($data as $function => $function_properties) {
-            var_dump("============ EVENT ============");
-            var_dump($function);
             switch ($function) {
                 case "randomize":
                     {
@@ -86,14 +84,11 @@ class AddonEvent extends PluginEvent implements Cancellable
                 case "add":
                     {
                         foreach ($function_properties as $function_property => $function_property_data) {
-                            var_dump($function_property);
                             switch ($function_property) {
                                 case "component_groups":
                                     {
                                         foreach ($function_property_data as $group) {
-                                            /** @var ComponentGroup|null $componentgroup */
-                                            $componentgroup = $this->getEntity()->getEntityProperties()->findComponentGroup($group);
-                                            if (!is_null($componentgroup)) $componentgroup->apply($this->entity);
+                                            $this->getEntity()->getEntityProperties()->activateComponentGroup($group);
                                         }
                                         break;
                                     }
@@ -108,20 +103,17 @@ class AddonEvent extends PluginEvent implements Cancellable
                 case "remove":
                     {
                         foreach ($function_properties as $function_property => $function_property_data) {
-                            var_dump($function_property);
                             switch ($function_property) {
                                 case "component_groups":
                                     {
                                         foreach ($function_property_data as $group) {
-                                            /** @var ComponentGroup|null $componentgroup */
-                                            $componentgroup = $this->getEntity()->getEntityProperties()->findComponentGroup($group);
-                                            if (!is_null($componentgroup)) $componentgroup->remove($this->entity);
+                                            $this->getEntity()->getEntityProperties()->deactivateComponentGroup($group);
                                         }
                                         break;
                                     }
                                 default:
                                     {
-                                        $this->entity->getLevel()->getServer()->getLogger()->notice("Function \"" . $function_property . "\" for remove component events is not coded into the plugin yet");
+                                        Loader::getInstance()->getLogger()->notice("Function \"" . $function_property . "\" for remove component events is not coded into the plugin yet");
                                     }
                             }
                         }
@@ -134,7 +126,7 @@ class AddonEvent extends PluginEvent implements Cancellable
                     }
                 default:
                     {
-                        $this->entity->getLevel()->getServer()->getLogger()->notice("Function \"" . $function . "\" for behaviour events is not coded into the plugin yet");
+                        Loader::getInstance()->getLogger()->notice("Function \"" . $function . "\" for behaviour events is not coded into the plugin yet");
                     }
             }
         }

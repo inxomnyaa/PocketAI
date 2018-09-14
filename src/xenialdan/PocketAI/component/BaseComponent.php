@@ -9,6 +9,7 @@ use xenialdan\PocketAI\entitytype\AIProjectile;
 
 abstract class BaseComponent
 {
+    protected $name;
 
     /**
      * BaseComponent constructor.
@@ -27,4 +28,9 @@ abstract class BaseComponent
      * @param AIEntity|AIProjectile $entity
      */
     public abstract function remove($entity): void;
+
+    public function getName(): string
+    {
+        return $this->name;
+    }
 }

@@ -51,7 +51,7 @@ class _inventory extends BaseComponent
     {
         // TODO: Extend apply() method.
         try {
-            if($this->container_type !== "none")
+            if ($this->container_type !== "none")
                 $entity->setInventory(new AIEntityInventory($entity, [], $this->inventory_size, null, $this->container_type));
         } catch (\Exception $e) {
             //TODO

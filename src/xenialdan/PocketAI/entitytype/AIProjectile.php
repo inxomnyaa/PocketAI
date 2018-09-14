@@ -41,26 +41,6 @@ abstract class AIProjectile extends Projectile
         $this->setLootGenerator(new LootGenerator());
     }
 
-    /* AI */
-
-    public function entityBaseTick(int $tickDiff = 1): bool
-    {
-        if (!$this->closed) {
-            return false;
-        }
-
-        $hasUpdate = parent::entityBaseTick($tickDiff);
-
-        if ($this->isAlive()) {
-            /* behaviour checks */
-
-        }
-
-        return $hasUpdate;
-    }
-
-    /* END AI */
-
 
     public function setWidth(float $width)
     {

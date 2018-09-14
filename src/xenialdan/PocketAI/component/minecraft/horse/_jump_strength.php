@@ -36,7 +36,7 @@ class _jump_strength extends BaseComponent
     public function apply($entity): void
     {
         $attr = $entity->getAttributeMap()->getAttribute(Loader::HORSE_JUMP_POWER);
-        if(is_null($attr)) return;
+        if (is_null($attr)) return;
         $entity->getAttributeMap()->getAttribute(Loader::HORSE_JUMP_POWER)->setMaxValue($this->max);
         if (is_array($this->value)) {
             $entity->getAttributeMap()->getAttribute(Loader::HORSE_JUMP_POWER)->setValue(floatval(mt_rand(($this->value["range_min"] ?? 1) * 10, ($this->value["range_max"] ?? 1) * 10) / 10));//TODO random range function
