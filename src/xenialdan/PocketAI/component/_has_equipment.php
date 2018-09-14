@@ -2,9 +2,6 @@
 
 namespace xenialdan\PocketAI\component;
 
-use xenialdan\PocketAI\entitytype\AIEntity;
-use xenialdan\PocketAI\entitytype\AIProjectile;
-
 class _has_equipment extends BaseTest
 {
     protected $name = "has_equipment";
@@ -29,26 +26,6 @@ class _has_equipment extends BaseTest
         $this->operator = $values['operator'] ?? $this->operator;
         $this->subject = $values['subject'] ?? $this->subject;
         $this->value = $values['value'] ?? $this->value;
-
-    }
-
-    /**
-     * Applies the changes to the mob
-     * @param AIEntity|AIProjectile $entity
-     */
-    public
-    function apply($entity): void
-    {
-        // TODO: Implement apply() method.
-    }
-
-    /**
-     * Removes the changes from the mob
-     * @param AIEntity|AIProjectile $entity
-     */
-    public function remove($entity): void
-    {
-        // TODO: Implement remove() method.
 
     }
 
