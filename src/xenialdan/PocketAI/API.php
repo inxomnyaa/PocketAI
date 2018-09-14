@@ -7,6 +7,8 @@ use pocketmine\event\entity\EntityDamageByChildEntityEvent;
 use pocketmine\event\entity\EntityDamageByEntityEvent;
 use pocketmine\event\entity\EntityDamageEvent;
 use pocketmine\level\Level;
+use pocketmine\math\AxisAlignedBB;
+use pocketmine\math\Vector3;
 use pocketmine\Player;
 use pocketmine\plugin\PluginException;
 use xenialdan\PocketAI\entitytype\AIEntity;
@@ -110,6 +112,27 @@ class API
 
         }
         return true;
+    }
+
+    public static function getMinAABB(AxisAlignedBB $aabb):Vector3{
+        return new Vector3($aabb->minX, $aabb->minY, $aabb->minZ);
+    }
+
+    public static function getMaxAABB(AxisAlignedBB $aabb):Vector3{
+        return new Vector3($aabb->maxX, $aabb->maxY, $aabb->maxZ);
+    }
+
+    public static function getAABBCorners(AxisAlignedBB $aabb):array {
+        return [
+            new Vector3($aabb->minX, $aabb->minY, $aabb->minZ),
+            new Vector3($aabb->minX, $aabb->minY, $aabb->maxZ),
+            new Vector3($aabb->minX, $aabb->maxY, $aabb->minZ),
+            new Vector3($aabb->minX, $aabb->maxY, $aabb->maxZ),
+            new Vector3($aabb->maxX, $aabb->minY, $aabb->minZ),
+            new Vector3($aabb->maxX, $aabb->minY, $aabb->maxZ),
+            new Vector3($aabb->maxX, $aabb->maxY, $aabb->minZ),
+            new Vector3($aabb->maxX, $aabb->maxY, $aabb->maxZ),
+        ];
     }
 
     /**

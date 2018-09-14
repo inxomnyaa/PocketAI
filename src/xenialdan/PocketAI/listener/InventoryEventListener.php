@@ -10,6 +10,7 @@ use pocketmine\network\mcpe\protocol\InteractPacket;
 use pocketmine\network\mcpe\protocol\InventoryTransactionPacket;
 use pocketmine\Player;
 use pocketmine\plugin\Plugin;
+use xenialdan\PocketAI\component\minecraft\_interact;
 use xenialdan\PocketAI\entitytype\AIEntity;
 
 /**
@@ -78,6 +79,8 @@ class InventoryEventListener implements Listener
                 if (is_null($target)) {
                     return false;
                 }
+                print_r($packet);
+                print_r($target->getId());
                 if (!$target instanceof AIEntity) return false;
                 return $this->onHover($target, $player);
                 break;
@@ -152,9 +155,16 @@ class InventoryEventListener implements Listener
         return false;
     }
 
-    private function onHover(Entity $target, Player $player)
+    private function onHover(AIEntity $target, Player $player)
     {//TODO move to AIEntity for better handling
-        $player->getDataPropertyManager()->setString(Entity::DATA_INTERACTIVE_TAG, $player->getInventory()->getItemInHand()->__toString()); //TODO getAction/getActionName
-        return true;
+        /** @var _interact $component */
+        $component = $target->getEntityProperties()->findComponent("minecraft:interact");
+        if(!is_null($component)){
+            print_r($component);
+            $player->sendTip($component->interact_text??"");//TODO remove debug
+            $player->getDataPropertyManager()->setString(Entity::DATA_INTERACTIVE_TAG, $component->interact_text??"");
+            return true;
+        }
+        return false;
     }
 }

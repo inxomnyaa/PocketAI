@@ -15,6 +15,8 @@ use pocketmine\Server;
 use xenialdan\PocketAI\command\KillentityCommand;
 use xenialdan\PocketAI\command\SummonCommand;
 use xenialdan\PocketAI\component\ComponentGroup;
+use xenialdan\PocketAI\component\ComponentGroups;
+use xenialdan\PocketAI\component\Components;
 use xenialdan\PocketAI\entity\Cow;
 use xenialdan\PocketAI\entity\FishingHook;
 use xenialdan\PocketAI\entitytype\AIEntity;
@@ -31,11 +33,11 @@ class Loader extends PluginBase
     private static $instance = null;
 
     public static $behaviourJson = [];
-    /** @var array[\SplQueue] */
+    /** @var array[Components] */
     public static $components;
-    /** @var array[\SplQueue[ComponentGroup]] */
+    /** @var array[ComponentGroups] */
     public static $component_groups;
-    /** @var array[\SplQueue] */
+    /** @var array[] */
     public static $events;
     public static $loottables = [];
 
@@ -98,20 +100,22 @@ class Loader extends PluginBase
     private function debug()
     {
         $e = new Cow($this->getServer()->getDefaultLevel(), Cow::createBaseNBT($this->getServer()->getDefaultLevel()->getSpawnLocation()->asVector3()));
-        var_dump(">==========< getBehaviourName >==========<");
-        var_dump($e->entityProperties->getBehaviourName());
-        var_dump(">==========< getEvents >==========<");
-        var_dump($e->entityProperties->getEvents());
-        var_dump(">==========< getComponents >==========<");
-        var_dump($e->entityProperties->getComponents());
-        var_dump(">==========< getComponentGroups >==========<");
-        var_dump($e->entityProperties->getComponentGroups());
-        var_dump(">==========< findComponent >==========<");
-        var_dump($e->entityProperties->findComponent("minecraft:identifier"));
-        var_dump(">==========< findComponentGroup >==========<");
-        var_dump($e->entityProperties->findComponentGroup("minecraft:cow_adult"));
-        var_dump(">==========< getActiveComponentGroups >==========<");
-        var_dump($e->entityProperties->getActiveComponentGroups());
+        $this->getLogger()->debug(">==========< getBehaviourName >==========<");
+        $this->getLogger()->debug(print_r($e->entityProperties->getBehaviourName(), true));
+        $this->getLogger()->debug(">==========< getEvents >==========<");
+        $this->getLogger()->debug(print_r($e->entityProperties->getEvents(), true));
+        $this->getLogger()->debug(">==========< getComponents >==========<");
+        $this->getLogger()->debug(print_r($e->entityProperties->getComponents(), true));
+        $this->getLogger()->debug(">==========< getComponentGroups >==========<");
+        $this->getLogger()->debug(print_r($e->entityProperties->getComponentGroups(), true));
+        $this->getLogger()->debug(">==========< findComponent >==========<");
+        $this->getLogger()->debug(print_r($e->entityProperties->findComponent("minecraft:identifier"), true));
+        $this->getLogger()->debug(">==========< findComponentGroup >==========<");
+        $this->getLogger()->debug(print_r($e->entityProperties->findComponentGroup("minecraft:cow_adult"), true));
+        $this->getLogger()->debug(">==========< getActiveComponentGroups >==========<");
+        $this->getLogger()->debug(print_r($e->entityProperties->getActiveComponentGroups(), true));
+        $this->getLogger()->debug(">==========< Cow! >==========<");
+        $this->getLogger()->debug(print_r($e, true));
         $e->kill();
     }
 
@@ -125,7 +129,7 @@ class Loader extends PluginBase
                 }
 
                 //Components
-                self::$components[$filename] = new \SplQueue();
+                self::$components[$filename] = new Components();
                 foreach ($behaviour["minecraft:entity"]["components"] ?? [] as $component_name => $component_data) {
                     $c = "xenialdan\\PocketAI\\component\\" . preg_replace('/(\\\\(?!.*\\\\.*))/', '\\_', str_replace(":", "\\", join("\\", explode(".", $component_name))));
                     if (class_exists($c)) {
@@ -133,19 +137,45 @@ class Loader extends PluginBase
                     }
                 }
                 //Component groups
-                self::$component_groups[$filename] = new \SplQueue();
+                self::$component_groups[$filename] = new ComponentGroups();
                 foreach ($behaviour["minecraft:entity"]["component_groups"] ?? [] as $component_group_name => $component_group_data) {
                     $groups = [];
+                    /**
+                     * @var string $component_name
+                     * @var array $component_data
+                     */
                     foreach ($component_group_data ?? [] as $component_name => $component_data) {
                         $c = "xenialdan\\PocketAI\\component\\" . preg_replace('/(\\\\(?!.*\\\\.*))/', '\\_', str_replace(":", "\\", join("\\", explode(".", $component_name))));
                         if (class_exists($c)) {
-                            $groups[] = new $c(is_array($component_data) ? $component_data : [$component_data]);
+
+                            //Multi-definition for component, i.e. in minecraft:interact - so, add the component several times
+                            if (count($component_data) > 0 && $component_data ===
+                                array_filter($component_data,
+                                    function ($key) {
+                                        return is_int($key);
+                                    },
+                                ARRAY_FILTER_USE_KEY
+                                )
+                            ) {
+                                $this->getLogger()->notice("MULTIPLE!");
+                                foreach ($component_data as $component_datum) {
+                                    print_r($component_datum);
+                                    if($component_name == "minecraft:environment_sensor")//This is due to a probable Mojang-Json-Coding issue in dolphin.json. Investigating.
+                                        $groups[] = new $c(["on_environment" => $component_datum]);
+                                    else
+                                        $groups[] = new $c($component_datum);
+                                    print_r($groups[count($groups) - 1]);
+                                }
+                            } else {
+                                $this->getLogger()->notice("SINGLE!");
+                                $groups[] = new $c($component_data);
+                                print_r($groups[count($groups) - 1]);
+                            }
                         }
                     }
                     self::$component_groups[$filename]->push(new ComponentGroup($component_group_name, $groups));
                 }
                 //Events
-                self::$events[$filename] = new \SplQueue();
                 self::$events[$filename] = $behaviour["minecraft:entity"]["events"] ?? [];
             }
         } catch (\Exception $e) {
@@ -157,20 +187,8 @@ class Loader extends PluginBase
 
     public function registerEntities()
     {
-        /*Entity::registerEntity(Guardian::class, true, ["pocketai:guardian", "minecraft:guardian"]);
-        $this->getLogger()->notice("Registered AI for: Guardian");
-        Entity::registerEntity(ElderGuardian::class, true, ["pocketai:elder_guardian", "minecraft:elder_guardian"]);
-        $this->getLogger()->notice("Registered AI for: ElderGuardian");*/
         Entity::registerEntity(Cow::class, true, ["pocketai:cow", "minecraft:cow"]);//TODO use _identifier
         $this->getLogger()->notice("Registered AI for: Cow");
-        /*Entity::registerEntity(Horse::class, true, ["pocketai:horse", "minecraft:horse"]);
-        $this->getLogger()->notice("Registered AI for: Horse");
-        Entity::registerEntity(Squid::class, true, ["pocketai:squid", "minecraft:squid"]);
-        $this->getLogger()->notice("Registered AI for: Squid");
-        Entity::registerEntity(Wolf::class, true, ["pocketai:wolf", "minecraft:wolf"]);
-        $this->getLogger()->notice("Registered AI for: Wolf");
-        Entity::registerEntity(FishingHook::class, true, ["pocketai:fishing_hook", "minecraft:fishing_hook"]);
-        $this->getLogger()->notice("Registered AI for: FishingHook");*/
     }
 
     public function registerItems()

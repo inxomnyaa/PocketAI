@@ -71,34 +71,58 @@ class EntityProperties
     }
 
     /**
+     * @return Components
+     */
+    public function getComponents() :Components
+    {
+        return $this->components;
+    }
+
+    /**
      * @return array[\SplQueue]
      */
-    public function getComponents(): array
+    public function getComponentsArray(): array
     {
         return iterator_to_array($this->components);
     }
 
     public function findComponent(string $name): ?BaseComponent
     {
-        $map = array_values(array_filter($this->getComponents(), function ($v) use ($name) {
+        $map = array_values(array_filter($this->getComponentsArray(), function ($v) use ($name) {
             /** @var BaseComponent $v */
             return $v->getName() === $name;
         }));
         if (!empty($map)) return $map[0];
+        else foreach ($this->getActiveComponentGroups() as $componentGroup) {
+            /** @var ComponentGroup $componentGroup */
+            $map = array_values(array_filter($componentGroup->getComponentsArray(), function ($v) use ($name) {
+                /** @var BaseComponent $v */
+                return $v->getName() === $name;
+            }));
+            if (!empty($map)) return $map[0];
+        }
         return null;
     }
 
     /**
      * @return array[ComponentGroup]
      */
-    public function getComponentGroups(): array
+    public function getComponentGroupsArray(): array
     {
         return iterator_to_array($this->componentGroups);
     }
 
+    /**
+     * @return ComponentGroups
+     */
+    public function getComponentGroups():ComponentGroups
+    {
+        return $this->componentGroups;
+    }
+
     public function findComponentGroup(string $name): ComponentGroup
     {
-        $map = array_values(array_filter($this->getComponentGroups(), function ($v) use ($name) {
+        $map = array_values(array_filter($this->getComponentGroupsArray(), function ($v) use ($name) {
             /** @var ComponentGroup $v */
             return $v->name === $name;
         }));

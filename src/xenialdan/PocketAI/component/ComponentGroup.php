@@ -72,4 +72,28 @@ class ComponentGroup
             $current->remove($entity);
         }
     }
+
+    /**
+     * @return array
+     */
+    public function getComponentsArray(): array
+    {
+        return iterator_to_array($this->components);
+    }
+
+    /**
+     * @return Components
+     */
+    public function getComponents(): Components
+    {
+        return $this->components;
+    }
+
+    /**
+     * @return string
+     */
+    public function getName(): string
+    {
+        return $this->name;
+    }
 }

@@ -8,10 +8,13 @@ use pocketmine\block\Liquid;
 use pocketmine\entity\Attribute;
 use pocketmine\entity\Living;
 use pocketmine\inventory\InventoryHolder;
-use pocketmine\level\particle\RedstoneParticle;
+use pocketmine\level\particle\HappyVillagerParticle;
+use pocketmine\math\AxisAlignedBB;
 use pocketmine\math\Vector3;
 use pocketmine\nbt\tag\CompoundTag;
 use pocketmine\timings\Timings;
+use xenialdan\PocketAI\API;
+use xenialdan\PocketAI\component\ComponentGroup;
 use xenialdan\PocketAI\EntityProperties;
 use xenialdan\PocketAI\inventory\AIEntityInventory;
 use xenialdan\PocketAI\LootGenerator;
@@ -23,8 +26,6 @@ abstract class AIEntity extends Living implements InventoryHolder
     public $lootGenerator;
     /** @var EntityProperties */
     public $entityProperties;
-    /** @var float */
-    public $baseSpeed = 0.0;
     /** @var int */
     public $seatCount = 0;
     /** @var array */
@@ -52,7 +53,9 @@ abstract class AIEntity extends Living implements InventoryHolder
         $hasUpdate = parent::entityBaseTick($tickDiff);
 
         if ($this->isAlive()) {
-            $this->getLevel()->addParticle(new RedstoneParticle($this->asVector3()));
+            foreach (API::getAABBCorners($this->getBoundingBox()) as $corner){
+                $this->getLevel()->addParticle(new HappyVillagerParticle($corner));
+            }
             /* behaviour checks */
         }
 
@@ -68,6 +71,7 @@ abstract class AIEntity extends Living implements InventoryHolder
     {
         $this->width = $width;
         $this->propertyManager->setFloat(self::DATA_BOUNDING_BOX_WIDTH, $width);
+        $this->recalculateBoundingBox();
     }
 
     /**
@@ -81,7 +85,17 @@ abstract class AIEntity extends Living implements InventoryHolder
     public function setHeight(float $height)
     {
         $this->height = $height;
+        $this->eyeHeight = $this->height / 2 + 0.1;
         $this->propertyManager->setFloat(self::DATA_BOUNDING_BOX_HEIGHT, $height);
+        $this->recalculateBoundingBox();
+    }
+
+    /** Overwriting due to float imprecision */
+    protected function recalculateBoundingBox(): void
+    {
+        $this->boundingBox = (new AxisAlignedBB($this->getX(), $this->getY(), $this->getZ(),$this->getX(), $this->getY(), $this->getZ()))
+            ->expand($this->width / 2, $this->height / 2, $this->width / 2)
+            ->offset(0, $this->height / 2, 0);
     }
 
     /**
@@ -214,8 +228,9 @@ abstract class AIEntity extends Living implements InventoryHolder
     {//TODO properly fix
         $nbt = parent::saveNBT();
         $activeComponents = new CompoundTag("components");
-        foreach ($this->getEntityProperties()->getActiveComponentGroups() as $activeComponentGroupName => $activeComponentGroupValue) {
-            $activeComponents->setByte($activeComponentGroupName, 1);
+        /** @var ComponentGroup $activeComponentGroup */
+        foreach ($this->getEntityProperties()->getActiveComponentGroups() as $activeComponentGroup) {
+            $activeComponents->setByte($activeComponentGroup->getName(), 1);
         }
         $nbt->setTag($activeComponents);
         return $nbt;
