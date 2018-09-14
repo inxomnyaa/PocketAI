@@ -100,5 +100,6 @@ class EntityProperties
     {
         $data = $this->getEvents()[$event] ?? [];
         if (empty($data)) Loader::getInstance()->getLogger()->alert("An AddonEvent was called, but no such definition was found: " . $event . " in " . $this->getBehaviourName());
+        return $data;
     }
 }

@@ -46,7 +46,7 @@ class AddonEventListener implements Listener
      */
     public function entitySpawned(EntitySpawnEvent $event)
     {
-        if (($entity = $event->getEntity()) instanceof AIEntity) {
+        if (($entity = $event->getEntity()) instanceof AIEntity && $entity->ticksLived <= 1) {
             /** @var AIEntity $entity */
             $this->owner->getServer()->getPluginManager()->callEvent($ev = new AddonEvent($this->owner, $entity, "minecraft:entity_spawned"));
         }
