@@ -2,10 +2,7 @@
 
 namespace xenialdan\PocketAI\component;
 
-use xenialdan\PocketAI\entitytype\AIEntity;
-use xenialdan\PocketAI\entitytype\AIProjectile;
-
-class _moon_intensity extends BaseComponent
+class _moon_intensity extends BaseTest
 {
     protected $name = "moon_intensity";
     /** @var string $operator (Optional) The comparison to apply with 'value'. */
@@ -29,21 +26,9 @@ class _moon_intensity extends BaseComponent
 
     }
 
-    /**
-     * Applies the changes to the mob
-     * @param AIEntity|AIProjectile $entity
-     */
-    public function apply($entity): void
+    public function test(): bool
     {
-        // TODO: Implement apply() method.
-    }
-
-    /**
-     * Removes the changes from the mob
-     * @param AIEntity|AIProjectile $entity
-     */
-    public function remove($entity): void
-    {
-        // TODO: Implement remove() method.
+        // TODO: Implement test() method.
+        return false;
     }
 }

@@ -22,7 +22,7 @@ class _interact extends BaseComponent
     public $hurt_item;
     /** @var string $interact_text Text to show when the player is able to interact in this way with this entity when playing with Touch-screen controls */
     public $interact_text;
-    /** @var string $on_interact Event to fire when the interaction occurs */
+    /** @var mixed $on_interact Event to fire when the interaction occurs */
     public $on_interact;
     /** @var string $play_sounds List of sounds to play when the interaction occurs */
     public $play_sounds;

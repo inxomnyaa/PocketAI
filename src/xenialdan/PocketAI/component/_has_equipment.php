@@ -5,21 +5,17 @@ namespace xenialdan\PocketAI\component;
 use xenialdan\PocketAI\entitytype\AIEntity;
 use xenialdan\PocketAI\entitytype\AIProjectile;
 
-class _has_equipment extends BaseComponent
+class _has_equipment extends BaseTest
 {
     protected $name = "has_equipment";
-    /** @var string $domain (Optional) The equipment location to test
-     */
+    /** @var string $domain (Optional) The equipment location to test */
     public $domain = "any";
     /** @var string $operator (Optional) The comparison to apply with 'value'. */
-    public
-        $operator = "equals";
+    public $operator = "equals";
     /** @var string $subject (Optional) The subject of this filter test. */
-    public
-        $subject = "self";
+    public $subject = "self";
     /** @var string $value (Required) The item name to look for */
-    public
-        $value;
+    public $value;
 
 
     /**
@@ -27,8 +23,7 @@ class _has_equipment extends BaseComponent
      * _has_equipment constructor.
      * @param array $values
      */
-    public
-    function __construct(array $values = [])
+    public function __construct(array $values = [])
     {
         $this->domain = $values['domain'] ?? $this->domain;
         $this->operator = $values['operator'] ?? $this->operator;
@@ -51,9 +46,15 @@ class _has_equipment extends BaseComponent
      * Removes the changes from the mob
      * @param AIEntity|AIProjectile $entity
      */
-    public
-    function remove($entity): void
+    public function remove($entity): void
     {
         // TODO: Implement remove() method.
+
+    }
+
+    public function test(): bool
+    {
+        // TODO: Implement test() method.
+        return false;
     }
 }

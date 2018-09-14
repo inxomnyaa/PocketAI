@@ -80,8 +80,6 @@ class InventoryEventListener implements Listener
                 if (is_null($target)) {
                     return false;
                 }
-                print_r($packet);
-                print_r($target->getId());
                 if (!$target instanceof AIEntity) return false;
                 return $this->onHover($target, $player);
                 break;
@@ -135,12 +133,34 @@ class InventoryEventListener implements Listener
         return false;
     }
 
-    private function onSneakRightClick(Entity $target, Player $player)
+    private function onSneakRightClick(AIEntity $target, Player $player)
     {//TODO move to AIEntity for better handling
-        if ($target instanceof AIEntity) {
-            if ($target instanceof InventoryHolder/* && $target instanceof Tamable && $target->isTamed()*/) {
-                return $this->onInventoryOpen($target, $player);
+        /** @var Components $components */
+        $components = $target->getEntityProperties()->findComponents("minecraft:interact");
+        if($components->count() > 0){
+            /** @var _interact $component */
+            foreach ($components as $component){//TODO filter & condition checks
+                $player->sendTip(print_r($component,true));//TODO remove debug
+                if(is_array($component->on_interact)){
+                    foreach ($component->on_interact as $key => $value){
+                        if($key === "filters"){//TODO move filter checks to seperate class
+                            foreach ($value as $k => $v){
+                                if($k === "all_of"){
+                                    foreach ($v as $testdata){
+                                        $class = "xenialdan\\PocketAI\\component\\_" . array_slice($testdata, array_search("test", $testdata), 1)[0];
+                                        unset($testdata[array_search("test", $testdata)]);
+                                        if(class_exists($class)){
+                                            $testclass = new $class($testdata);
+                                            print_r($testclass);
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
             }
+            return true;
         }
         return false;
     }

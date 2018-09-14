@@ -5,7 +5,7 @@ namespace xenialdan\PocketAI\component;
 use xenialdan\PocketAI\entitytype\AIEntity;
 use xenialdan\PocketAI\entitytype\AIProjectile;
 
-class _is_difficulty extends BaseComponent
+class _is_difficulty extends BaseTest
 {
     protected $name = "is_difficulty";
     /** @var string $operator (Optional) The comparison to apply with 'value'. */
@@ -50,5 +50,12 @@ class _is_difficulty extends BaseComponent
     function remove($entity): void
     {
         // TODO: Implement remove() method.
+
+    }
+
+    public function test(): bool
+    {
+        // TODO: Implement test() method.
+        return false;
     }
 }

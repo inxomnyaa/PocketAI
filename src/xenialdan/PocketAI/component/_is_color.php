@@ -5,7 +5,7 @@ namespace xenialdan\PocketAI\component;
 use xenialdan\PocketAI\entitytype\AIEntity;
 use xenialdan\PocketAI\entitytype\AIProjectile;
 
-class _is_color extends BaseComponent
+class _is_color extends BaseTest
 {
     protected $name = "is_color";
     /** @var string $operator (Optional) The comparison to apply with 'value'. */
@@ -50,5 +50,12 @@ class _is_color extends BaseComponent
     function remove($entity): void
     {
         // TODO: Implement remove() method.
+
+    }
+
+    public function test(): bool
+    {
+        // TODO: Implement test() method.
+        return false;
     }
 }
