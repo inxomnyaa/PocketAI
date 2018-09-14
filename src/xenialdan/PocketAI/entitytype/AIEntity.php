@@ -7,14 +7,16 @@ namespace xenialdan\PocketAI\entitytype;
 use pocketmine\block\Liquid;
 use pocketmine\entity\Attribute;
 use pocketmine\entity\Living;
+use pocketmine\inventory\InventoryHolder;
 use pocketmine\level\particle\RedstoneParticle;
 use pocketmine\math\Vector3;
 use pocketmine\nbt\tag\CompoundTag;
+use pocketmine\timings\Timings;
 use xenialdan\PocketAI\EntityProperties;
 use xenialdan\PocketAI\inventory\AIEntityInventory;
 use xenialdan\PocketAI\LootGenerator;
 
-abstract class AIEntity extends Living
+abstract class AIEntity extends Living implements InventoryHolder
 {
 
     /** @var LootGenerator */
@@ -43,25 +45,20 @@ abstract class AIEntity extends Living
     }
 
     /* AI */
-
-    public function entityBaseTick(int $tickDiff = 1): bool
-    {
-        $this->getLevel()->addParticle(new RedstoneParticle($this->asVector3()));
-
-        if (!$this->closed) {
-            return false;
-        }
+    public function entityBaseTick(int $tickDiff = 1) : bool{
+        Timings::$timerLivingEntityBaseTick->startTiming();
 
         $hasUpdate = parent::entityBaseTick($tickDiff);
 
-        if ($this->isAlive()) {
+        if($this->isAlive()){
+            $this->getLevel()->addParticle(new RedstoneParticle($this->asVector3()));
             /* behaviour checks */
-
         }
+
+        Timings::$timerLivingEntityBaseTick->stopTiming();
 
         return $hasUpdate;
     }
-
     /* END AI */
 
 
@@ -190,9 +187,9 @@ abstract class AIEntity extends Living
     }
 
     /**
-     * @return AIEntityInventory
+     * @return AIEntityInventory|null
      */
-    public function getInventory(): AIEntityInventory
+    public function getInventory(): ?AIEntityInventory
     {
         return $this->inventory;
     }
@@ -210,15 +207,6 @@ abstract class AIEntity extends Living
         $drops = $this->getLootGenerator()->getRandomLoot();
         return $drops;
     }
-
-    /*public function getAdditionalSpawnData()
-    {//TODO properly fix
-        $activeComponents = $this->namedtag->getCompoundTag("components") ?? [];
-        /** @var ByteTag $activeComponent * /
-        foreach ($activeComponents as $activeComponent) {
-            if ($activeComponent->getValue() !== 0) $this->getEntityProperties()->addActiveComponentGroup($activeComponent->getName());
-        }
-    }*/
 
     public function saveNBT(): CompoundTag
     {//TODO properly fix
@@ -285,6 +273,8 @@ abstract class AIEntity extends Living
      */
     public function setEntityProperties(EntityProperties $entityProperties)
     {
+        //TODO remove current properties
         $this->entityProperties = $entityProperties;
+        $this->entityProperties->applyComponents();
     }
 }

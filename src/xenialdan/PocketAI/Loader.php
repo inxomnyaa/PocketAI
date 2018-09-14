@@ -101,14 +101,15 @@ class Loader extends PluginBase
         $e = new Cow($this->getServer()->getDefaultLevel(), Cow::createBaseNBT($this->getServer()->getDefaultLevel()->getSpawnLocation()->asVector3()));
         var_dump(">==========< getBehaviourName >==========<");
         var_dump($e->entityProperties->getBehaviourName());
-        var_dump(">==========< getBehaviourEvents >==========<");
-        var_dump($e->entityProperties->getBehaviourEvents());
-        var_dump(">==========< getBehaviourComponents >==========<");
-        var_dump($e->entityProperties->getBehaviourComponents());
-        var_dump(">==========< getBehaviourComponentGroups >==========<");
-        var_dump($e->entityProperties->getBehaviourComponentGroups());
-        var_dump(">==========< getBehaviours >==========<");
-        var_dump($e->entityProperties->getBehaviours());
+        var_dump(">==========< getEvents >==========<");
+        var_dump($e->entityProperties->getEvents());
+        var_dump(">==========< getComponents >==========<");
+        var_dump($e->entityProperties->getComponents());
+        var_dump(">==========< getComponentGroups >==========<");
+        var_dump($e->entityProperties->getComponentGroups());
+        var_dump(">==========< findComponentGroup >==========<");
+        var_dump($e->entityProperties->findComponentGroup("minecraft:entity_spawned"));
+        $e->kill();
     }
 
     private function preloadJson(array $behaviourJsonFiles)
@@ -116,7 +117,7 @@ class Loader extends PluginBase
         try {
             foreach ($behaviourJsonFiles as $filename => $behaviour) {
                 if (version_compare($behaviour["minecraft:entity"]["format_version"] ?? "1.2.0", "1.2.0") !== 0) {
-                    throw new \InvalidArgumentException("The Entity behaviour/properties file: " . $filename . " has an unsupported format_version and will not be used");
+                    $this->getLogger()->notice("The Entity behaviour/properties file: " . $filename . " has an unsupported format_version and will not be used");
                     continue;
                 }
 

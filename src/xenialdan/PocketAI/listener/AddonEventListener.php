@@ -54,12 +54,7 @@ class AddonEventListener implements Listener
 
     public function onAddonEvent(AddonEvent $event)
     {
-        $entityProperties = $event->getEntity()->getEntityProperties();
-        $events = $entityProperties->getBehaviourEvents();
-        if (isset($events[$event->getEvent()])) {
-            $entityProperties->applyEvent($events[$event->getEvent()]);
-        } else {
-            $this->owner->getLogger()->alert("An AddonEvent was called, but no such definition was found: " . $event->getEvent() . " in " . $entityProperties->getBehaviourName());
-        }
+        $data = $event->getEntity()->getEntityProperties()->getEvent($event->getEvent());
+        $event->execute($data);
     }
 }

@@ -37,8 +37,8 @@ class Cow extends AIEntity
 
     protected function initEntity(CompoundTag $nbt): void
     {
-        $this->setEntityProperties(new EntityProperties("entities/cow", $this));
         parent::initEntity($nbt);
+        $this->setEntityProperties(new EntityProperties("entities/cow", $this));
     }
 
     public function getName(): string
