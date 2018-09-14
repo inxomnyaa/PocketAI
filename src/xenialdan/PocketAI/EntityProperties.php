@@ -120,13 +120,13 @@ class EntityProperties
         return $this->componentGroups;
     }
 
-    public function findComponentGroup(string $name): ComponentGroup
+    public function findComponentGroup(string $name): ComponentGroup //TODO this might return multiple components with the same name!
     {
         $map = array_values(array_filter($this->getComponentGroupsArray(), function ($v) use ($name) {
             /** @var ComponentGroup $v */
             return $v->name === $name;
         }));
-        if (!empty($map)) return $map[0];
+        if (!empty($map)) return $map[0];//TODO multi-support for minecraft:interact, environment_sensor and damage_sensor!
         else throw new PluginException("ComponentGroup with name $name not found!");
     }
 
@@ -134,7 +134,7 @@ class EntityProperties
      * @param string $name
      * @return array [position => group]
      */
-    public function findActiveComponentGroups(string $name): array
+    public function findActiveComponentGroups(string $name): array //TODO this might return multiple groups!
     {
         $map = array_filter($this->getActiveComponentGroups(), function ($v) use ($name) {
             /** @var ComponentGroup $v */
