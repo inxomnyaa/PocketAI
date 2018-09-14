@@ -86,22 +86,25 @@ class EntityProperties
         return iterator_to_array($this->components);
     }
 
-    public function findComponent(string $name): ?BaseComponent
+    public function findComponents(string $name): Components
     {
-        $map = array_values(array_filter($this->getComponentsArray(), function ($v) use ($name) {
+        $c = new Components();
+        $map = array_filter($this->getComponentsArray(), function ($v) use ($name) {
             /** @var BaseComponent $v */
             return $v->getName() === $name;
-        }));
-        if (!empty($map)) return $map[0];
-        else foreach ($this->getActiveComponentGroups() as $componentGroup) {
+        });
+        foreach ($this->getActiveComponentGroups() as $componentGroup) {
             /** @var ComponentGroup $componentGroup */
-            $map = array_values(array_filter($componentGroup->getComponentsArray(), function ($v) use ($name) {
+            $map = array_merge(array_filter($componentGroup->getComponentsArray(), function ($v) use ($name) {//TODO check if array_merge removes components
                 /** @var BaseComponent $v */
                 return $v->getName() === $name;
-            }));
-            if (!empty($map)) return $map[0];
+            }), $map);
         }
-        return null;
+        foreach ($map as $value){
+            $c->push($value);
+        }
+        if ($c->count() === 0) Loader::getInstance()->getLogger()->debug("No Component with name $name found");
+        return $c;
     }
 
     /**
@@ -120,21 +123,32 @@ class EntityProperties
         return $this->componentGroups;
     }
 
-    public function findComponentGroup(string $name): ComponentGroup //TODO this might return multiple components with the same name!
+    /**
+     * This might return multiple components with the same name due to multi-support for minecraft:interact, environment_sensor and damage_sensor!
+     * @param string $name
+     * @return ComponentGroups
+     */
+    public function findComponentGroups(string $name): ComponentGroups
     {
-        $map = array_values(array_filter($this->getComponentGroupsArray(), function ($v) use ($name) {
+        $map = array_filter($this->getComponentGroupsArray(), function ($v) use ($name) {
             /** @var ComponentGroup $v */
             return $v->name === $name;
-        }));
-        if (!empty($map)) return $map[0];//TODO multi-support for minecraft:interact, environment_sensor and damage_sensor!
-        else throw new PluginException("ComponentGroup with name $name not found!");
+        });
+        $cg = new ComponentGroups();
+        if (empty($map)) Loader::getInstance()->getLogger()->debug("No ComponentGroup with name $name found");
+        else{
+            foreach ($map as $value){
+                $cg->push($value);
+            }
+        }
+        return $cg;
     }
 
     /**
      * @param string $name
-     * @return array [position => group]
+     * @return array [position => group] this might return multiple groups!
      */
-    public function findActiveComponentGroups(string $name): array //TODO this might return multiple groups!
+    public function findActiveComponentGroups(string $name): array
     {
         $map = array_filter($this->getActiveComponentGroups(), function ($v) use ($name) {
             /** @var ComponentGroup $v */
@@ -144,6 +158,9 @@ class EntityProperties
         else throw new PluginException("Active ComponentGroup with name $name not found!");
     }
 
+    /**
+     * @return array
+     */
     public function getActiveComponentGroups()
     {
         return iterator_to_array($this->activeComponentGroups);
@@ -152,17 +169,18 @@ class EntityProperties
     public function activateComponentGroup(string $name)
     {
         var_dump("Active groups before activateComponentGroup: " . $this->activeComponentGroups->count());
-        /** @var ComponentGroup|null $componentgroup */
-        $componentgroup = $this->findComponentGroup($name);
-        $componentgroup->apply($this->entity);
-        $this->activeComponentGroups->push($componentgroup);
+        /** @var ComponentGroups $componentgroup */
+        foreach ($this->findComponentGroups($name) as $componentGroup) {
+            $componentGroup->apply($this->entity);
+            $this->activeComponentGroups->push($componentGroup);
+        }
         var_dump("Active groups after activateComponentGroup: " . $this->activeComponentGroups->count());
     }
 
     public function deactivateComponentGroup(string $name)
     {
         var_dump("Active groups before deactivateComponentGroup: " . $this->activeComponentGroups->count());
-        /** @var ComponentGroup|null $componentGroup */
+        /** @var array[ComponentGroup] $componentGroup */
         foreach ($this->findActiveComponentGroups($name) as $index => $componentGroup) {
             $componentGroup->remove($this->entity);
             $this->activeComponentGroups->offsetUnset($index);

@@ -108,10 +108,12 @@ class Loader extends PluginBase
         $this->getLogger()->debug(print_r($e->entityProperties->getComponents(), true));
         $this->getLogger()->debug(">==========< getComponentGroups >==========<");
         $this->getLogger()->debug(print_r($e->entityProperties->getComponentGroups(), true));
-        $this->getLogger()->debug(">==========< findComponent >==========<");
-        $this->getLogger()->debug(print_r($e->entityProperties->findComponent("minecraft:identifier"), true));
-        $this->getLogger()->debug(">==========< findComponentGroup >==========<");
-        $this->getLogger()->debug(print_r($e->entityProperties->findComponentGroup("minecraft:cow_adult"), true));
+        $this->getLogger()->debug(">==========< findComponents >==========<");
+        $this->getLogger()->debug(print_r($e->entityProperties->findComponents("minecraft:identifier"), true));
+        $this->getLogger()->debug(">==========< findComponents more than 1 entry >==========<");
+        $this->getLogger()->debug(print_r($e->entityProperties->findComponents("minecraft:behavior.follow_parent"), true));
+        $this->getLogger()->debug(">==========< findComponentGroups >==========<");
+        $this->getLogger()->debug(print_r($e->entityProperties->findComponentGroups("minecraft:cow_adult"), true));
         $this->getLogger()->debug(">==========< getActiveComponentGroups >==========<");
         $this->getLogger()->debug(print_r($e->entityProperties->getActiveComponentGroups(), true));
         $this->getLogger()->debug(">==========< Cow! >==========<");

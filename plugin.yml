@@ -13,5 +13,5 @@ api: [4.0.0+dev]
 # 0.10.1: Use BaseComponent->apply(Entity)
 # 0.10.2: Clean up Events & EntityProperties
 # 0.10.3: Add back active component groups
-# 0.11.0: Extend components
+# 0.11.0: Extend components & multi-components support
 ...
