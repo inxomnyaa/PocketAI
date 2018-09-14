@@ -24,7 +24,6 @@ class _rail_sensor extends BaseComponent
     /** @var bool $tick_command_block_on_deactivate If false, command blocks will stop ticking when passing over a deactivated rail */
     public $tick_command_block_on_deactivate = false;
 
-
     /**
      * Defines the behavior of the entity when the rail gets activated or deactivated.
      * _rail_sensor constructor.

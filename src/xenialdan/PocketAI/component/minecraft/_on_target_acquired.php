@@ -16,7 +16,6 @@ class _on_target_acquired extends BaseComponent
     /** @var string $target The target of the event */
     public $target = "self";
 
-
     /**
      * Adds a trigger to call when this entity finds a target.
      * _on_target_acquired constructor.

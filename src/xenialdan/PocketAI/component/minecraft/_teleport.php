@@ -10,7 +10,6 @@ class _teleport extends BaseComponent
 {
     protected $name = "minecraft:teleport";
 
-
     /**
      * Defines an entity's teleporting behavior.
      * _teleport constructor.

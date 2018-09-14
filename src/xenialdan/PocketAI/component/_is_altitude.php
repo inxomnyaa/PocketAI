@@ -2,6 +2,8 @@
 
 namespace xenialdan\PocketAI\component;
 
+use pocketmine\entity\Entity;
+
 class _is_altitude extends BaseTest
 {
     protected $name = "is_altitude";
@@ -11,7 +13,6 @@ class _is_altitude extends BaseTest
     public $subject = "self";
     /** @var int $value (Required) The altitude value to compare with */
     public $value;
-
 
     /**
      * Tests the current altitude against a provided value. 0= bedrock elevation.
@@ -26,7 +27,7 @@ class _is_altitude extends BaseTest
 
     }
 
-    public function test(): bool
+    public function test(Entity $self, Entity $other): bool
     {
         // TODO: Implement test() method.
         return false;

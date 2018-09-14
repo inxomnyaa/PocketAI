@@ -10,7 +10,6 @@ class _slime_float extends BaseComponent
 {
     protected $name = "minecraft:behavior.slime_float";
 
-
     /**
      * Can only be used by Slimes and Magma Cubes. Controls their ability to float in water / lava.
      * _slime_float constructor.

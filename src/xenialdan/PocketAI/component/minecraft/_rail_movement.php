@@ -12,7 +12,6 @@ class _rail_movement extends BaseComponent
     /** @var float $max_speed Maximum speed that this entity will move at when on the rail */
     public $max_speed = 0.4;
 
-
     /**
      * Defines the entity's movement on the rails. An entity with this component is only allowed to move on the rail.
      * _rail_movement constructor.

@@ -12,7 +12,6 @@ class _walk_animation_speed extends BaseComponent
     /** @var float $value The higher the number, the faster the animation for walking plays. A value of 1.0 means normal speed, while 2.0 means twice as fast */
     public $value = 1.0;
 
-
     /**
      * Sets the speed multiplier for this entity's walk animation speed.
      * _walk_animation_speed constructor.

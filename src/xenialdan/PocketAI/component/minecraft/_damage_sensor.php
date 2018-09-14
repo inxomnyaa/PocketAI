@@ -16,7 +16,6 @@ class _damage_sensor extends BaseComponent
     /** @var array $on_damage List of triggers with the events to call when taking this specific kind of damage. Allows specifying filters for entity definitions and events */
     public $on_damage;
 
-
     /**
      * Defines what events to call when this entity is damaged by specific entities or items. Can be either an array or a single instance.
      * _damage_sensor constructor.

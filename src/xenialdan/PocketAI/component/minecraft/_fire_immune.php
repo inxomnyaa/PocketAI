@@ -10,7 +10,6 @@ class _fire_immune extends BaseComponent
 {
     protected $name = "minecraft:fire_immune";
 
-
     /**
      * Sets that this entity doesn't take damage from fire.
      * _fire_immune constructor.

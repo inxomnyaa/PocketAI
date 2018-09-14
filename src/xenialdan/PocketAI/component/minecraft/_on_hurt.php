@@ -16,7 +16,6 @@ class _on_hurt extends BaseComponent
     /** @var string $target The target of the event */
     public $target = "self";
 
-
     /**
      * Adds a trigger to call when this entity takes damage.
      * _on_hurt constructor.

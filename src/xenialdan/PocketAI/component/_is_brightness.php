@@ -2,6 +2,8 @@
 
 namespace xenialdan\PocketAI\component;
 
+use pocketmine\entity\Entity;
+
 class _is_brightness extends BaseTest
 {
     protected $name = "is_brightness";
@@ -11,7 +13,6 @@ class _is_brightness extends BaseTest
     public $subject = "self";
     /** @var float $value (Required) The brightness value to compare with. */
     public $value;
-
 
     /**
      * Tests the current brightness against a provided value in the range (0.0f, 1.0f).
@@ -26,7 +27,7 @@ class _is_brightness extends BaseTest
 
     }
 
-    public function test(): bool
+    public function test(Entity $self, Entity $other): bool
     {
         // TODO: Implement test() method.
         return false;

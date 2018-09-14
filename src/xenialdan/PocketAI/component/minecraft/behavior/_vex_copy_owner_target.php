@@ -25,7 +25,6 @@ class _vex_copy_owner_target extends BaseComponent
     /** @var float $walk_speed_multiplier Multiplier for the walking speed. A value of 1.0 means the speed is unchanged */
     public $walk_speed_multiplier = 1.0;
 
-
     /**
      * Allows the mob to target the same entity its owner is targeting.
      * _vex_copy_owner_target constructor.

@@ -10,7 +10,6 @@ class _slime_attack extends BaseComponent
 {
     protected $name = "minecraft:behavior.slime_attack";
 
-
     /**
      * Can only be used by Slimes and Magma Cubes. Allows the mob to use a melee attack like the slime's.
      * _slime_attack constructor.

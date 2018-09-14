@@ -2,6 +2,8 @@
 
 namespace xenialdan\PocketAI\component;
 
+use pocketmine\entity\Entity;
+
 class _is_biome extends BaseTest
 {
     protected $name = "is_biome";
@@ -11,7 +13,6 @@ class _is_biome extends BaseTest
     public $subject = "self";
     /** @var string $value (Required) The Biome type to test */
     public $value;
-
 
     /**
      * Tests whether the Subject is currently in the named biome.
@@ -26,7 +27,7 @@ class _is_biome extends BaseTest
 
     }
 
-    public function test(): bool
+    public function test(Entity $self, Entity $other): bool
     {
         // TODO: Implement test() method.
         return false;

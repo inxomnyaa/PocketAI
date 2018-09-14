@@ -10,7 +10,6 @@ class _squid_dive extends BaseComponent
 {
     protected $name = "minecraft:behavior.squid_dive";
 
-
     /**
      * Allows the squid to dive down in water. Can only be used by the Squid.
      * _squid_dive constructor.

@@ -10,7 +10,6 @@ class _floats_in_liquid extends BaseComponent
 {
     protected $name = "minecraft:floats_in_liquid";
 
-
     /**
      * Sets that this entity can float in liquid blocks.
      * _floats_in_liquid constructor.

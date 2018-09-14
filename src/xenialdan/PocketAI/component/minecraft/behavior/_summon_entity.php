@@ -58,7 +58,6 @@ class _summon_entity extends BaseComponent
     /** @var float $weight The weight of this spell. Controls how likely the mob is to choose this spell when casting one */
     public $weight = 0.0;
 
-
     /**
      * Allows the mob to attack the player by summoning other entities.
      * _summon_entity constructor.

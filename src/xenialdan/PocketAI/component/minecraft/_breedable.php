@@ -44,7 +44,6 @@ class _breedable extends BaseComponent
     /** @var bool $requireTame If true, the entities need to be tamed first before they can breed. */
     public $requireTame = true;
 
-
     /**
      * Defines the way an entity can get into the 'love' state.
      * _breedable constructor.

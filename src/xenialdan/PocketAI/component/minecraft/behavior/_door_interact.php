@@ -10,7 +10,6 @@ class _door_interact extends BaseComponent
 {
     protected $name = "minecraft:behavior.door_interact";
 
-
     /**
      * Allows the mob to open and close doors.
      * _door_interact constructor.

@@ -18,7 +18,6 @@ class _angry extends BaseComponent
     /** @var int $duration The amount of time in seconds that the entity will be angry */
     public $duration = 25;
 
-
     /**
      * Defines the entity's 'angry' state using a timer.
      * _angry constructor.

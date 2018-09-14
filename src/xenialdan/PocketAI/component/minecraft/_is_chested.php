@@ -10,7 +10,6 @@ class _is_chested extends BaseComponent
 {
     protected $name = "minecraft:is_chested";
 
-
     /**
      * Sets that this entity is currently carrying a chest.
      * _is_chested constructor.

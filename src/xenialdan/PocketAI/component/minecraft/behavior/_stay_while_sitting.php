@@ -10,7 +10,6 @@ class _stay_while_sitting extends BaseComponent
 {
     protected $name = "minecraft:behavior.stay_while_sitting";
 
-
     /**
      * Allows the mob to stay put while it is in a sitting state instead of doing something else.
      * _stay_while_sitting constructor.

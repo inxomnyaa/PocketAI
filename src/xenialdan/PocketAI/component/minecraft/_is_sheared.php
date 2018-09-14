@@ -10,7 +10,6 @@ class _is_sheared extends BaseComponent
 {
     protected $name = "minecraft:is_sheared";
 
-
     /**
      * Sets that this entity is currently sheared.
      * _is_sheared constructor.

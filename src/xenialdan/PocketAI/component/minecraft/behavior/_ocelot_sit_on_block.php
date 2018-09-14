@@ -12,7 +12,6 @@ class _ocelot_sit_on_block extends BaseComponent
     /** @var float $speed_multiplier Movement speed multiplier of the mob when using this AI Goal */
     public $speed_multiplier = 1.0;
 
-
     /**
      * Allows to mob to be able to sit in place like the ocelot.
      * _ocelot_sit_on_block constructor.

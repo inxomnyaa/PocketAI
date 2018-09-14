@@ -25,7 +25,6 @@ class _nameable extends BaseComponent
     /** @var string $on_named Event to be called when this entity acquires the name specified in 'name_filter' */
     public $on_named;
 
-
     /**
      * Allows this entity to be named (e.g. using a name tag)
      * _nameable constructor.

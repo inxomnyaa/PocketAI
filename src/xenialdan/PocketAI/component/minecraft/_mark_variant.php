@@ -12,7 +12,6 @@ class _mark_variant extends BaseComponent
     /** @var int $value The ID of the variant. By convention, 0 is the ID of the base entity */
     public $value;
 
-
     /**
      * Additional variant value. Can be used to further differentiate variants.
      * _mark_variant constructor.

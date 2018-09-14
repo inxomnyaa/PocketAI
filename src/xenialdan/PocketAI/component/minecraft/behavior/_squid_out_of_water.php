@@ -10,7 +10,6 @@ class _squid_out_of_water extends BaseComponent
 {
     protected $name = "minecraft:behavior.squid_out_of_water";
 
-
     /**
      * Allows the squid to stick to the ground when outside water. Can only be used by the Squid.
      * _squid_out_of_water constructor.

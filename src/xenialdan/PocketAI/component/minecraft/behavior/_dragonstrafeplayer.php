@@ -10,7 +10,6 @@ class _dragonstrafeplayer extends BaseComponent
 {
     protected $name = "minecraft:behavior.dragonstrafeplayer";
 
-
     /**
      * Allows the dragon to fly around looking for a player and shoot fireballs at them. Can only be used by the Ender Dragon.
      * _dragonstrafeplayer constructor.

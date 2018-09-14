@@ -10,7 +10,6 @@ class _enderman_take_block extends BaseComponent
 {
     protected $name = "minecraft:behavior.enderman_take_block";
 
-
     /**
      * Allows the enderman to take a block and carry it around. Can only be used by Endermen.
      * _enderman_take_block constructor.

@@ -22,7 +22,6 @@ class _float extends BaseComponent
     /** @var bool $can_pass_doors Whether a path can be created through a door */
     public $can_pass_doors = true;
 
-
     /**
      * Allows this entity to generate paths by flying around the air like the regular Ghast.
      * _float constructor.

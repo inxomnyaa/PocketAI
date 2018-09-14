@@ -12,7 +12,6 @@ class _sway extends BaseComponent
     /** @var float $max_turn The maximum number in degrees the mob can turn per tick. */
     public $max_turn = 30.0;
 
-
     /**
      * This move control causes the mob to sway side to side giving the impression it is swimming.
      * _sway constructor.

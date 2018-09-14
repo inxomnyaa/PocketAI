@@ -10,7 +10,6 @@ class _is_shaking extends BaseComponent
 {
     protected $name = "minecraft:is_shaking";
 
-
     /**
      * Sets that this entity is currently shaking.
      * _is_shaking constructor.

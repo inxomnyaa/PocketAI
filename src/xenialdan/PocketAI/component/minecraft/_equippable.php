@@ -27,7 +27,6 @@ class _equippable extends BaseComponent
     /** @var int $slot The slot number of this slot */
     public $slot;
 
-
     /**
      * Defines an entity's behavior for having items equipped to it
      * _equippable constructor.

@@ -10,7 +10,6 @@ class _guardian_attack extends BaseComponent
 {
     protected $name = "minecraft:behavior.guardian_attack";
 
-
     /**
      * Allows the guardian to use its laser beam attack. Can only be used by Guardians and Elder Guardians.
      * _guardian_attack constructor.

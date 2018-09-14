@@ -10,7 +10,6 @@ class _beg extends BaseComponent
 {
     protected $name = "minecraft:behavior.beg";
 
-
     /**
      * Allows this mob to look at and follow the player that holds food they like.
      * _beg constructor.

@@ -16,7 +16,6 @@ class _mount_pathing extends BaseComponent
     /** @var bool $track_target If true, this mob will chase after the target as long as it's a valid target */
     public $track_target = false;
 
-
     /**
      * Allows the mob to move around on its own while mounted seeking a target to attack.
      * _mount_pathing constructor.

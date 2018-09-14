@@ -12,7 +12,6 @@ class _equipment extends BaseComponent
     /** @var string $table The path to the equipment table, relative to the Behavior Pack's root */
     public $table;
 
-
     /**
      * Sets the Equipment table to use for this Entity.
      * _equipment constructor.

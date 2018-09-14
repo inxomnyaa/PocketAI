@@ -14,7 +14,6 @@ class _panic extends BaseComponent
     /** @var float $speed_multiplier Movement speed multiplier of the mob when using this AI Goal */
     public $speed_multiplier = 1.0;
 
-
     /**
      * Allows the mob to enter the panic state and run around in panic.
      * _panic constructor.

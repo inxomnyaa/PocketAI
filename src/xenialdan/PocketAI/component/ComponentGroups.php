@@ -1,8 +1,6 @@
 <?php
 
-
 namespace xenialdan\PocketAI\component;
-
 
 class ComponentGroups extends \SplDoublyLinkedList
 {

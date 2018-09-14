@@ -10,7 +10,6 @@ class _timer extends BaseComponent
 {
     protected $name = "minecraft:timer";
 
-
     /**
      * Adds a timer after which an event will fire.
      * _timer constructor.

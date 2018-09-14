@@ -2,6 +2,8 @@
 
 namespace xenialdan\PocketAI\component;
 
+use pocketmine\entity\Entity;
+
 class _in_water extends BaseTest
 {
     protected $name = "in_water";
@@ -11,7 +13,6 @@ class _in_water extends BaseTest
     public $subject = "self";
     /** @var bool $value (Optional) true or false. */
     public $value = true;
-
 
     /**
      * Returns true when the subject entity is in water.
@@ -26,7 +27,7 @@ class _in_water extends BaseTest
 
     }
 
-    public function test(): bool
+    public function test(Entity $self, Entity $other): bool
     {
         // TODO: Implement test() method.
         return false;

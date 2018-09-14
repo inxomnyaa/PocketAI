@@ -12,7 +12,6 @@ class _harvest_farm_block extends BaseComponent
     /** @var float $speed_multiplier Movement speed multiplier of the mob when using this AI Goal */
     public $speed_multiplier = 1.0;
 
-
     /**
      * Allows the villager to harvest nearby farms. Can only be used by Villagers.
      * _harvest_farm_block constructor.

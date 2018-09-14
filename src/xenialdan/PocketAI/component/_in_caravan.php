@@ -2,6 +2,8 @@
 
 namespace xenialdan\PocketAI\component;
 
+use pocketmine\entity\Entity;
+
 class _in_caravan extends BaseTest
 {
     protected $name = "in_caravan";
@@ -11,7 +13,6 @@ class _in_caravan extends BaseTest
     public $subject = "self";
     /** @var bool $value (Optional) true or false. */
     public $value = true;
-
 
     /**
      * Returns true if the subject entity is in a caravan.
@@ -26,7 +27,7 @@ class _in_caravan extends BaseTest
 
     }
 
-    public function test(): bool
+    public function test(Entity $self, Entity $other): bool
     {
         // TODO: Implement test() method.
         return false;

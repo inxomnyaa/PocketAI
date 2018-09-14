@@ -27,7 +27,6 @@ class _avoid_mob_type extends BaseComponent
     /** @var float $probability_per_strength Determines how likely it is that this entity will stop avoiding another entity based on that entity's strength */
     public $probability_per_strength = 1.0;
 
-
     /**
      * Allows this entity to avoid certain mob types.
      * _avoid_mob_type constructor.

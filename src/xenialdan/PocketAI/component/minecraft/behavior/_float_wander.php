@@ -10,7 +10,6 @@ class _float_wander extends BaseComponent
 {
     protected $name = "minecraft:behavior.float_wander";
 
-
     /**
      * Allows the mob to float around like the Ghast.
      * _float_wander constructor.

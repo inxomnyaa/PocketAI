@@ -12,7 +12,6 @@ class _move_towards_restriction extends BaseComponent
     /** @var float $speed_multiplier Movement speed multiplier of the mob when using this AI Goal */
     public $speed_multiplier = 1.0;
 
-
     /**
      * Allows mob to move towards a defined area that the mob should be restricted to.
      * _move_towards_restriction constructor.

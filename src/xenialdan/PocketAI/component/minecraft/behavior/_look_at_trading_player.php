@@ -10,7 +10,6 @@ class _look_at_trading_player extends BaseComponent
 {
     protected $name = "minecraft:behavior.look_at_trading_player";
 
-
     /**
      * Allows the mob to look at the player they are trading with.
      * _look_at_trading_player constructor.

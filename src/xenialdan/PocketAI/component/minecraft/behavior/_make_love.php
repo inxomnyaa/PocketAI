@@ -10,7 +10,6 @@ class _make_love extends BaseComponent
 {
     protected $name = "minecraft:behavior.make_love";
 
-
     /**
      * Allows the villager to look for a mate to spawn other villagers with. Can only be used by Villagers.
      * _make_love constructor.

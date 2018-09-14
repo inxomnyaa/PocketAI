@@ -14,7 +14,6 @@ class _leap_at_target extends BaseComponent
     /** @var float $yd The height in blocks the mob jumps when leaping at its target */
     public $yd = 0.0;
 
-
     /**
      * Allows monsters to jump at and attack their target. Can only be used by hostile mobs.
      * _leap_at_target constructor.

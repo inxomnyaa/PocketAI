@@ -10,7 +10,6 @@ class _is_tamed extends BaseComponent
 {
     protected $name = "minecraft:is_tamed";
 
-
     /**
      * Sets that this entity is currently tamed.
      * _is_tamed constructor.

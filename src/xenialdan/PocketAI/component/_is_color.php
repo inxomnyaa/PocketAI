@@ -2,6 +2,8 @@
 
 namespace xenialdan\PocketAI\component;
 
+use pocketmine\entity\Entity;
+
 class _is_color extends BaseTest
 {
     protected $name = "is_color";
@@ -11,7 +13,6 @@ class _is_color extends BaseTest
     public $subject = "self";
     /** @var string $value (Required) The Palette Color to test */
     public $value;
-
 
     /**
      * Returns true if the subject entity is the named color.
@@ -24,10 +25,9 @@ class _is_color extends BaseTest
         $this->subject = $values['subject'] ?? $this->subject;
         $this->value = $values['value'] ?? $this->value;
 
-
     }
 
-    public function test(): bool
+    public function test(Entity $self, Entity $other): bool
     {
         // TODO: Implement test() method.
         return false;

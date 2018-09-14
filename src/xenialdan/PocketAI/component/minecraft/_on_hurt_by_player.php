@@ -16,7 +16,6 @@ class _on_hurt_by_player extends BaseComponent
     /** @var string $target The target of the event */
     public $target = "self";
 
-
     /**
      * Adds a trigger to call when this entity is attacked by the player.
      * _on_hurt_by_player constructor.

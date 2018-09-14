@@ -12,7 +12,6 @@ class _play extends BaseComponent
     /** @var float $speed_multiplier Movement speed multiplier of the mob when using this AI Goal */
     public $speed_multiplier = 1.0;
 
-
     /**
      * Allows the mob to play with other baby villagers. This can only be used by Villagers.
      * _play constructor.

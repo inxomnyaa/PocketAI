@@ -2,6 +2,8 @@
 
 namespace xenialdan\PocketAI\component;
 
+use pocketmine\entity\Entity;
+
 class _is_immobile extends BaseTest
 {
     protected $name = "is_immobile";
@@ -11,7 +13,6 @@ class _is_immobile extends BaseTest
     public $subject = "self";
     /** @var bool $value (Optional) true or false. */
     public $value = true;
-
 
     /**
      * Returns true if the subject entity is immobile. An entity is immobile if it lacks AI goals, has just changed dimensions or if it is a mob and has no health.
@@ -26,7 +27,7 @@ class _is_immobile extends BaseTest
 
     }
 
-    public function test(): bool
+    public function test(Entity $self, Entity $other): bool
     {
         // TODO: Implement test() method.
         return false;

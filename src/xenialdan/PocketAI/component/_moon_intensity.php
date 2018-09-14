@@ -2,6 +2,8 @@
 
 namespace xenialdan\PocketAI\component;
 
+use pocketmine\entity\Entity;
+
 class _moon_intensity extends BaseTest
 {
     protected $name = "moon_intensity";
@@ -11,7 +13,6 @@ class _moon_intensity extends BaseTest
     public $subject = "self";
     /** @var float $value (Required) A floating point value. */
     public $value;
-
 
     /**
      * Compares the current moon intensity with a float value in the range (0.0, 1.0)
@@ -26,7 +27,7 @@ class _moon_intensity extends BaseTest
 
     }
 
-    public function test(): bool
+    public function test(Entity $self, Entity $other): bool
     {
         // TODO: Implement test() method.
         return false;

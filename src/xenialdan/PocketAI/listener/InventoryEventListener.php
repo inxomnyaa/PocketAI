@@ -10,6 +10,7 @@ use pocketmine\network\mcpe\protocol\InteractPacket;
 use pocketmine\network\mcpe\protocol\InventoryTransactionPacket;
 use pocketmine\Player;
 use pocketmine\plugin\Plugin;
+use xenialdan\PocketAI\component\BaseTest;
 use xenialdan\PocketAI\component\Components;
 use xenialdan\PocketAI\component\minecraft\_interact;
 use xenialdan\PocketAI\entitytype\AIEntity;
@@ -150,8 +151,10 @@ class InventoryEventListener implements Listener
                                         $class = "xenialdan\\PocketAI\\component\\_" . array_slice($testdata, array_search("test", $testdata), 1)[0];
                                         unset($testdata[array_search("test", $testdata)]);
                                         if(class_exists($class)){
+                                            /** @var BaseTest $testclass */
                                             $testclass = new $class($testdata);
                                             print_r($testclass);
+                                            $testclass->test($target, $player);
                                         }
                                     }
                                 }

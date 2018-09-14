@@ -11,7 +11,6 @@ class _attack extends BaseComponent
     protected $name = "minecraft:attack";
     //TODO: attack damage (can be range!), effects
 
-
     /**
      * Defines an entity's melee attack and any additional effects on it.
      * _attack constructor.

@@ -10,7 +10,6 @@ class _charge_attack extends BaseComponent
 {
     protected $name = "minecraft:behavior.charge_attack";
 
-
     /**
      * Allows the mob to attack its target by running at it.
      * _charge_attack constructor.

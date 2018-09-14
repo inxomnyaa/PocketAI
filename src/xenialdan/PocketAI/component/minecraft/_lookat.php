@@ -10,7 +10,6 @@ class _lookat extends BaseComponent
 {
     protected $name = "minecraft:lookat";
 
-
     /**
      * Defines the behavior when another entity looks at this entity.
      * _lookat constructor.

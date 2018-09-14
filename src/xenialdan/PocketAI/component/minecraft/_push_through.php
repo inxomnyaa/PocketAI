@@ -12,7 +12,6 @@ class _push_through extends BaseComponent
     /** @var float $value The value of the entity's push-through, in blocks */
     public $value = 0.0;
 
-
     /**
      * Sets the distance through which the entity can push through.
      * _push_through constructor.

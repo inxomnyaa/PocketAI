@@ -14,7 +14,6 @@ class _scale_by_age extends BaseComponent
     /** @var float $start_scale Initial scale of the newborn entity */
     public $start_scale = 1.0;
 
-
     /**
      * Defines the entity's size interpolation based on the entity's age.
      * _scale_by_age constructor.

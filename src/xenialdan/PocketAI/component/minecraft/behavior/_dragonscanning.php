@@ -10,7 +10,6 @@ class _dragonscanning extends BaseComponent
 {
     protected $name = "minecraft:behavior.dragonscanning";
 
-
     /**
      * Allows the dragon to look around for a player to attack while in perch mode. Can only be used by the Ender Dragon.
      * _dragonscanning constructor.

@@ -40,7 +40,6 @@ class _transformation extends BaseComponent
     /** @var string $transformation_sound Sound to play when the entity is done transforming */
     public $transformation_sound;
 
-
     /**
      * Defines an entity's transformation from the current definition into another
      * _transformation constructor.

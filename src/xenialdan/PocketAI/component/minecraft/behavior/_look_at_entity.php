@@ -10,7 +10,6 @@ class _look_at_entity extends BaseComponent
 {
     protected $name = "minecraft:behavior.look_at_entity";
 
-
     /**
      * Allows the mob to look at nearby entities.
      * _look_at_entity constructor.

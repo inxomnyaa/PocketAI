@@ -29,7 +29,6 @@ class _hurt_by_target extends BaseComponent
     /** @var bool $hurt_owner If true, the mob will hurt its owner and other mobs with the same owner as itself */
     public $hurt_owner = false;
 
-
     /**
      * Allows the mob to target another mob that hurts them.
      * _hurt_by_target constructor.

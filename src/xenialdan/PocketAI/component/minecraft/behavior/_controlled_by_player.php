@@ -10,7 +10,6 @@ class _controlled_by_player extends BaseComponent
 {
     protected $name = "minecraft:behavior.controlled_by_player";
 
-
     /**
      * Allows the mob to be controlled by the player.
      * _controlled_by_player constructor.

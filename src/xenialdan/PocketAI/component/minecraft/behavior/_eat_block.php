@@ -12,7 +12,6 @@ class _eat_block extends BaseComponent
     /** @var mixed (Trigger) $on_eat Trigger to fire when the mob eats a block of grass */
     public $on_eat;
 
-
     /**
      * Allows the mob to eat a block (for example, sheep eating grass).
      * _eat_block constructor.

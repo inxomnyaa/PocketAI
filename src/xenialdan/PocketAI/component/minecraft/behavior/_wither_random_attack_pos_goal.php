@@ -10,7 +10,6 @@ class _wither_random_attack_pos_goal extends BaseComponent
 {
     protected $name = "minecraft:behavior.wither_random_attack_pos_goal";
 
-
     /**
      * Allows the wither to launch random attacks. Can only be used by the Wither Boss.
      * _wither_random_attack_pos_goal constructor.

@@ -12,7 +12,6 @@ class _basic extends BaseComponent
     /** @var float $max_turn The maximum number in degrees the mob can turn per tick. */
     public $max_turn = 30.0;
 
-
     /**
      * This component accents the movement of an entity.
      * _basic constructor.

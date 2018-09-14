@@ -25,7 +25,6 @@ class _inventory extends BaseComponent
     /** @var bool $restrict_to_owner If true, the entity's inventory can only be accessed by its owner or itself */
     public $restrict_to_owner = false;
 
-
     /**
      * Defines this entity's inventory properties.
      * _inventory constructor.

@@ -10,7 +10,6 @@ class _squid_move_away_from_ground extends BaseComponent
 {
     protected $name = "minecraft:behavior.squid_move_away_from_ground";
 
-
     /**
      * Allows the squid to move away from ground blocks and back to water. Can only be used by the Squid.
      * _squid_move_away_from_ground constructor.

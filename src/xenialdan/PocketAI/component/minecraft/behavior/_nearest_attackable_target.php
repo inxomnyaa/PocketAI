@@ -35,7 +35,6 @@ class _nearest_attackable_target extends BaseComponent
     /** @var float $within_radius Distance in blocks that the target can be within to launch an attack */
     public $within_radius = 0.0;
 
-
     /**
      * Allows the mob to check for and pursue the nearest valid target.
      * _nearest_attackable_target constructor.

@@ -14,7 +14,6 @@ class _shooter extends BaseComponent
     /** @var string $def Entity definition to use as projectile for the ranged attack. The entity definition must have the projectile component to be able to be shot as a projectile */
     public $def;
 
-
     /**
      * Defines the entity's ranged attack behavior.
      * _shooter constructor.

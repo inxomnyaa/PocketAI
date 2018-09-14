@@ -16,7 +16,6 @@ class _ocelotattack extends BaseComponent
     /** @var float $walk_speed_multiplier Multiplier for the walking speed while using this attack */
     public $walk_speed_multiplier = 1.0;
 
-
     /**
      * Can only be used by the Ocelot. Allows it to perform the sneak and pounce attack.
      * _ocelotattack constructor.

@@ -15,7 +15,6 @@ class _health extends BaseComponent
     /** @var array|float $value Health or range of health */
     public $value;
 
-
     /**
      * Sets the width and height of the Entity's collision box.
      * _health constructor.

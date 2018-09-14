@@ -13,7 +13,6 @@ class _identifier extends BaseComponent
     /** @var string $id The identifier name */
     public $id;
 
-
     /**
      * Defines the identifier of the entity
      * _identifier constructor.

@@ -26,7 +26,6 @@ class _ranged_attack extends BaseComponent
     /** @var float $speed_multiplier Movement speed multiplier of the mob when using this AI Goal */
     public $speed_multiplier = 1.0;
 
-
     /**
      * Allows the mob to use ranged attacks like shooting arrows.
      * _ranged_attack constructor.

@@ -14,7 +14,6 @@ class _sittable extends BaseComponent
     /** @var string $stand_event Event to run when the entity exits the 'sit' state */
     public $stand_event;
 
-
     /**
      * Defines the entity's 'sit' state.
      * _sittable constructor.

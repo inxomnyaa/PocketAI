@@ -14,7 +14,6 @@ class _swell extends BaseComponent
     /** @var float $stop_distance This mob stops swelling when a target has moved away at least this many blocks */
     public $stop_distance = 2.0;
 
-
     /**
      * Allows the creeper to swell up when a player is nearby. It can only be used by Creepers.
      * _swell constructor.

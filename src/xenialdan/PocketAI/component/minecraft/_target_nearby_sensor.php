@@ -18,7 +18,6 @@ class _target_nearby_sensor extends BaseComponent
     /** @var float $outside_range Maximum distance in blocks that another entity will be considered in the 'outside' range */
     public $outside_range = 5.0;
 
-
     /**
      * Defines the entity's range within which it can see or sense other entities to target them.
      * _target_nearby_sensor constructor.

@@ -14,7 +14,6 @@ class _move_through_village extends BaseComponent
     /** @var float $speed_multiplier Movement speed multiplier of the mob when using this AI Goal */
     public $speed_multiplier = 1.0;
 
-
     /**
      * Allows mob to path through villages.
      * _move_through_village constructor.

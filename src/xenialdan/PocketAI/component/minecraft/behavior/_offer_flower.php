@@ -10,7 +10,6 @@ class _offer_flower extends BaseComponent
 {
     protected $name = "minecraft:behavior.offer_flower";
 
-
     /**
      * Allows the mob to offer the player a flower like the Iron Golem does.
      * _offer_flower constructor.

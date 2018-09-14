@@ -12,7 +12,6 @@ class _sound_volume extends BaseComponent
     /** @var float $value The value of the volume the entity uses for sound effects */
     public $value = 1.0;
 
-
     /**
      * Sets the entity's base volume for sound effects.
      * _sound_volume constructor.

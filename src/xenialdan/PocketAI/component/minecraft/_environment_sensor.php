@@ -12,7 +12,6 @@ class _environment_sensor extends BaseComponent
     /** @var array $on_environment The list of triggers that fire when the environment conditions match the given filter criteria. */
     public $on_environment;
 
-
     /**
      * Creates a trigger based on environment conditions.
      * _environment_sensor constructor.

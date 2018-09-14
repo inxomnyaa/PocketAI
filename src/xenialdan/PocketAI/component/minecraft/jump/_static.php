@@ -10,7 +10,6 @@ class _static extends BaseComponent
 {
     protected $name = "minecraft:jump.static";
 
-
     /**
      * Gives the entity the ability to jump.
      * _static constructor.

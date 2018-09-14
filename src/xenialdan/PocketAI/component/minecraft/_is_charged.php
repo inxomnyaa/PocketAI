@@ -10,7 +10,6 @@ class _is_charged extends BaseComponent
 {
     protected $name = "minecraft:is_charged";
 
-
     /**
      * Sets that this entity is charged.
      * _is_charged constructor.

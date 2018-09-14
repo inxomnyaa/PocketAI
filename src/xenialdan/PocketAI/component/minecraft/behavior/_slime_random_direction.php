@@ -10,7 +10,6 @@ class _slime_random_direction extends BaseComponent
 {
     protected $name = "minecraft:behavior.slime_random_direction";
 
-
     /**
      * Can only be used by Slimes and Magma Cubes. Allows the mob to move in random directions like a slime.
      * _slime_random_direction constructor.

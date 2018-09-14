@@ -10,7 +10,6 @@ class _is_baby extends BaseComponent
 {
     protected $name = "minecraft:is_baby";
 
-
     /**
      * Sets that this entity is a baby.
      * _is_baby constructor.

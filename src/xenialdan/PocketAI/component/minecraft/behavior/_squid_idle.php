@@ -10,7 +10,6 @@ class _squid_idle extends BaseComponent
 {
     protected $name = "minecraft:behavior.squid_idle";
 
-
     /**
      * Allows the squid to swim in place idly. Can only be used by the Squid.
      * _squid_idle constructor.

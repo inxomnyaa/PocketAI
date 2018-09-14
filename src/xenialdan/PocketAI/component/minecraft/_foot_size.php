@@ -12,7 +12,6 @@ class _foot_size extends BaseComponent
     /** @var float $value The value of the size of the entity's step */
     public $value = 0.5;
 
-
     /**
      * Sets the number of blocks the entity can step without jumping.
      * _foot_size constructor.

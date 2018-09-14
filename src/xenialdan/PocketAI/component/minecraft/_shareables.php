@@ -18,7 +18,6 @@ class _shareables extends BaseComponent
     /** @var int $want_amount Number of this item this entity wants to share */
     public $want_amount = -1;
 
-
     /**
      * Defines a list of items the mob wants to share. Each item must have the following parameters:
      * _shareables constructor.

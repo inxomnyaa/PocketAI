@@ -20,7 +20,6 @@ class _stomp_attack extends BaseComponent
     /** @var bool $track_target If true, this mob will chase after the target as long as it's a valid target */
     public $track_target = false;
 
-
     /**
      * Allows the mob to use the stomp attack.
      * _stomp_attack constructor.

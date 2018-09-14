@@ -16,7 +16,6 @@ class _jump_strength extends BaseComponent
     /** @var array|float $value Speed or range of speed */
     public $value;
 
-
     /**
      * Sets the width and height of the Entity's collision box.
      * _health constructor.

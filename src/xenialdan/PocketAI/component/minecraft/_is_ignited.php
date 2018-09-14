@@ -10,7 +10,6 @@ class _is_ignited extends BaseComponent
 {
     protected $name = "minecraft:is_ignited";
 
-
     /**
      * Sets that this entity is currently on fire.
      * _is_ignited constructor.

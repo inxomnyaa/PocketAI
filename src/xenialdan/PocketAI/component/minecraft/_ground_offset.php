@@ -12,7 +12,6 @@ class _ground_offset extends BaseComponent
     /** @var float $value The value of the entity's offset from the terrain, in blocks */
     public $value = 0.0;
 
-
     /**
      * Sets the offset from the ground that the entity is actually at.
      * _ground_offset constructor.

@@ -10,7 +10,6 @@ class _squid_flee extends BaseComponent
 {
     protected $name = "minecraft:behavior.squid_flee";
 
-
     /**
      * Allows the squid to swim away. Can only be used by the Squid.
      * _squid_flee constructor.

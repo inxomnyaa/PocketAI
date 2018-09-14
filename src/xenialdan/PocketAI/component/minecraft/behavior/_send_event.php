@@ -23,7 +23,6 @@ class _send_event extends BaseComponent
     /** @var string $sound_event The sound event to play when this step happens */
     public $sound_event;
 
-
     /**
      * Allows the mob to send an event to another mob.
      * _send_event constructor.

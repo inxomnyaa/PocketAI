@@ -10,7 +10,6 @@ class _break_door extends BaseComponent
 {
     protected $name = "minecraft:behavior.break_door";
 
-
     /**
      * Allows this mob to break doors.
      * _break_door constructor.

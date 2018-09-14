@@ -12,7 +12,6 @@ class _fly extends BaseComponent
     /** @var float $max_turn The maximum number in degrees the mob can turn per tick. */
     public $max_turn = 30.0;
 
-
     /**
      * This move control causes the mob to fly.
      * _fly constructor.

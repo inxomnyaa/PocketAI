@@ -2,6 +2,8 @@
 
 namespace xenialdan\PocketAI\component;
 
+use pocketmine\entity\Entity;
+
 class _is_game_rule extends BaseTest
 {
     protected $name = "is_game_rule";
@@ -13,7 +15,6 @@ class _is_game_rule extends BaseTest
     public $subject = "self";
     /** @var bool $value (Optional) true or false. */
     public $value = true;
-
 
     /**
      * Tests whether a named game rule is active.
@@ -29,7 +30,7 @@ class _is_game_rule extends BaseTest
 
     }
 
-    public function test(): bool
+    public function test(Entity $self, Entity $other): bool
     {
         // TODO: Implement test() method.
         return false;

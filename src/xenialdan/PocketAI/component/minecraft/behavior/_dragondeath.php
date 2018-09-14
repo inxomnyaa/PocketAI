@@ -10,7 +10,6 @@ class _dragondeath extends BaseComponent
 {
     protected $name = "minecraft:behavior.dragondeath";
 
-
     /**
      * Allows the dragon to go out with glory. This controls the Ender Dragon's death animation and can't be used by other mobs.
      * _dragondeath constructor.

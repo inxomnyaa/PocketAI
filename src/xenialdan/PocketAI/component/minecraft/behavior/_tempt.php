@@ -18,7 +18,6 @@ class _tempt extends BaseComponent
     /** @var float $within_radius Distance in blocks this mob can get tempted by a player holding an item they like */
     public $within_radius = 0.0;
 
-
     /**
      * Allows the mob to be tempted by food they like.
      * _tempt constructor.

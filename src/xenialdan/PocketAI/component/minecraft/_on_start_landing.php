@@ -16,7 +16,6 @@ class _on_start_landing extends BaseComponent
     /** @var string $target The target of the event */
     public $target = "self";
 
-
     /**
      * Only usable by the Ender Dragon. Adds a trigger to call when this entity lands.
      * _on_start_landing constructor.

@@ -16,7 +16,6 @@ class _on_friendly_anger extends BaseComponent
     /** @var string $target The target of the event */
     public $target = "self";
 
-
     /**
      * Adds a trigger that will run when a nearby entity of the same type as this entity becomes Angry.
      * _on_friendly_anger constructor.

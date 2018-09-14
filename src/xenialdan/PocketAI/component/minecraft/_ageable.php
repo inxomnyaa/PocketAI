@@ -16,7 +16,6 @@ class _ageable extends BaseComponent
     /** @var string $grow_up Event to run when this entity grows up */
     public $grow_up;
 
-
     /**
      * Adds a timer for the entity to grow up. It can be accelerated by giving the entity the items it likes as defined by feedItems.
      * _ageable constructor.

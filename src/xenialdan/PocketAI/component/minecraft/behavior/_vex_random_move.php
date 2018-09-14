@@ -10,7 +10,6 @@ class _vex_random_move extends BaseComponent
 {
     protected $name = "minecraft:behavior.vex_random_move";
 
-
     /**
      * Allows the mob to move around randomly like the Vex.
      * _vex_random_move constructor.

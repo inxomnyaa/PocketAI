@@ -40,7 +40,6 @@ class _interact extends BaseComponent
     /** @var bool $use_item If true, the interaction will use an item */
     public $use_item = false;
 
-
     /**
      * Defines interactions with this entity.
      * _interact constructor.

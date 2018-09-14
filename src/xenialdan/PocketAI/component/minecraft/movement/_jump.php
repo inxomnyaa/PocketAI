@@ -10,7 +10,6 @@ class _jump extends BaseComponent
 {
     protected $name = "minecraft:movement.jump";
 
-
     /**
      * Move control that causes the mob to jump as it moves with a specified delay between jumps.
      * _jump constructor.

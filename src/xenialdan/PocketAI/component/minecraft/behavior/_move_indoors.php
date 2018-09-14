@@ -12,7 +12,6 @@ class _move_indoors extends BaseComponent
     /** @var float $speed_multiplier Movement speed multiplier of the mob when using this AI Goal */
     public $speed_multiplier = 1.0;
 
-
     /**
      * Can only be used by Villagers. Allows them to seek shelter indoors.
      * _move_indoors constructor.

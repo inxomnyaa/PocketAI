@@ -12,7 +12,6 @@ class _rideable extends BaseComponent
     //TODO set rideable
     //TODO optional: seat_count, seats
 
-
     /**
      * Determines whether this entity can be ridden. Allows specifying the different seat positions and quantity.
      * _rideable constructor.

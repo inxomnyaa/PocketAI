@@ -16,7 +16,6 @@ class _on_ignite extends BaseComponent
     /** @var string $target The target of the event */
     public $target = "self";
 
-
     /**
      * Adds a trigger to call when this entity is set on fire.
      * _on_ignite constructor.

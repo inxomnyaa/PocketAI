@@ -12,7 +12,6 @@ class _default_look_angle extends BaseComponent
     /** @var float $value Angle in degrees */
     public $value = 0.0;
 
-
     /**
      * Sets this entity's default head rotation angle.
      * _default_look_angle constructor.

@@ -12,7 +12,6 @@ class _is_dyeable extends BaseComponent
     /** @var string $interact_text The text that will display when interacting with this entity with a dye when playing with Touch-screen controls */
     public $interact_text;
 
-
     /**
      * Allows dyes to be used on this entity to change its color.
      * _is_dyeable constructor.

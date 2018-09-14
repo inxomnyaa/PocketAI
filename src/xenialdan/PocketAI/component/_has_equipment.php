@@ -2,6 +2,8 @@
 
 namespace xenialdan\PocketAI\component;
 
+use pocketmine\entity\Entity;
+
 class _has_equipment extends BaseTest
 {
     protected $name = "has_equipment";
@@ -13,7 +15,6 @@ class _has_equipment extends BaseTest
     public $subject = "self";
     /** @var string $value (Required) The item name to look for */
     public $value;
-
 
     /**
      * Tests for the presence of a named item in the designated slot of the subject entity.
@@ -29,7 +30,7 @@ class _has_equipment extends BaseTest
 
     }
 
-    public function test(): bool
+    public function test(Entity $self, Entity $other): bool
     {
         // TODO: Implement test() method.
         return false;

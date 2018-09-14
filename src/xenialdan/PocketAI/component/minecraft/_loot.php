@@ -13,7 +13,6 @@ class _loot extends BaseComponent
     /** @var string $table The path to the loot table, relative to the Behavior Pack's root */
     public $table;
 
-
     /**
      * Sets the loot table for what items this entity drops upon death.
      * _loot constructor.

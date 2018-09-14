@@ -12,7 +12,6 @@ class _skip extends BaseComponent
     /** @var float $max_turn The maximum number in degrees the mob can turn per tick. */
     public $max_turn = 30.0;
 
-
     /**
      * This move control causes the mob to hop as it moves.
      * _skip constructor.

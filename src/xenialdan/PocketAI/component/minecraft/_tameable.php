@@ -16,7 +16,6 @@ class _tameable extends BaseComponent
     /** @var string $tame_event Event to run when this entity becomes tamed */
     public $tame_event;
 
-
     /**
      * Defines the rules for a mob to be tamed by the player.
      * _tameable constructor.

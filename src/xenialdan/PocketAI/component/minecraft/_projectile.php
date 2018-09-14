@@ -10,7 +10,6 @@ class _projectile extends BaseComponent
 {
     protected $name = "minecraft:projectile";
 
-
     /**
      * Allows the entity to be a thrown entity.
      * _projectile constructor.

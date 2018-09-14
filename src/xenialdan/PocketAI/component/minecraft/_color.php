@@ -12,7 +12,6 @@ class _color extends BaseComponent
     /** @var int $value The Palette Color value of the entity */
     public $value;
 
-
     /**
      * Defines the entity's color. Only works on vanilla entities that have predefined color values (sheep, llama, shulker).
      * _color constructor.

@@ -36,7 +36,6 @@ class _tamemount extends BaseComponent
     /** @var string $tame_event Event that triggers when the entity becomes tamed */
     public $tame_event;
 
-
     /**
      * Allows the Entity to be tamed by mounting it.
      * _tamemount constructor.

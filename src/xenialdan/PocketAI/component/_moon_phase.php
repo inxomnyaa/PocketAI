@@ -2,6 +2,8 @@
 
 namespace xenialdan\PocketAI\component;
 
+use pocketmine\entity\Entity;
+
 class _moon_phase extends BaseTest
 {
     protected $name = "moon_phase";
@@ -11,7 +13,6 @@ class _moon_phase extends BaseTest
     public $subject = "self";
     /** @var int $value (Required) An integer value. */
     public $value;
-
 
     /**
      * Compares the current moon phase with an integer value in the range (0, 7).
@@ -26,7 +27,7 @@ class _moon_phase extends BaseTest
 
     }
 
-    public function test(): bool
+    public function test(Entity $self, Entity $other): bool
     {
         // TODO: Implement test() method.
         return false;

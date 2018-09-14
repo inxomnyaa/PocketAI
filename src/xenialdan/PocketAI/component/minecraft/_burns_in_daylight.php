@@ -10,7 +10,6 @@ class _burns_in_daylight extends BaseComponent
 {
     protected $name = "minecraft:burns_in_daylight";
 
-
     /**
      * Sets that this entity burns if exposed to daylight.
      * _burns_in_daylight constructor.

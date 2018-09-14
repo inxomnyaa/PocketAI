@@ -14,7 +14,6 @@ class _strength extends BaseComponent
     /** @var int $value The initial value of the strength */
     public $value = 1;
 
-
     /**
      * Defines the entity's strength to carry items.
      * _strength constructor.

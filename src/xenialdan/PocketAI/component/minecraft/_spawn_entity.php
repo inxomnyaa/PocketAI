@@ -24,7 +24,6 @@ class _spawn_entity extends BaseComponent
     /** @var string $spawn_sound Name of the sound effect to play when the entity is spawned */
     public $spawn_sound = "plop";
 
-
     /**
      * Adds a timer after which this entity will spawn another entity or item (similar to vanilla's chicken's egg-laying behavior).
      * _spawn_entity constructor.

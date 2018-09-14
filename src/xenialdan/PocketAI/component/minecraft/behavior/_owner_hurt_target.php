@@ -25,7 +25,6 @@ class _owner_hurt_target extends BaseComponent
     /** @var float $walk_speed_multiplier Multiplier for the walking speed. A value of 1.0 means the speed is unchanged */
     public $walk_speed_multiplier = 1.0;
 
-
     /**
      * Allows the mob to target a mob that is hurt by their owner.
      * _owner_hurt_target constructor.

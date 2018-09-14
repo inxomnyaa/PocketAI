@@ -16,7 +16,6 @@ class _follow_mob extends BaseComponent
     /** @var float $stop_distance The distance in blocks this mob stops from the mob it is following */
     public $stop_distance = 2.0;
 
-
     /**
      * Allows the mob to follow other mobs.
      * _follow_mob constructor.

@@ -10,7 +10,6 @@ class _trade_with_player extends BaseComponent
 {
     protected $name = "minecraft:behavior.trade_with_player";
 
-
     /**
      * Allows the player to trade with this mob.
      * _trade_with_player constructor.

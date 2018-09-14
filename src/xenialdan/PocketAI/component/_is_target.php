@@ -2,6 +2,8 @@
 
 namespace xenialdan\PocketAI\component;
 
+use pocketmine\entity\Entity;
+
 class _is_target extends BaseTest
 {
     protected $name = "is_target";
@@ -11,7 +13,6 @@ class _is_target extends BaseTest
     public $subject = "self";
     /** @var bool $value (Optional) true or false. */
     public $value = true;
-
 
     /**
      * Returns true if the subject entity is the target of the calling entity.
@@ -26,7 +27,7 @@ class _is_target extends BaseTest
 
     }
 
-    public function test(): bool
+    public function test(Entity $self, Entity $other): bool
     {
         // TODO: Implement test() method.
         return false;

@@ -16,7 +16,6 @@ class _follow_owner extends BaseComponent
     /** @var float $stop_distance The distance in blocks this mob will stop from its owner while following it */
     public $stop_distance = 2.0;
 
-
     /**
      * Allows the mob to follow the player that owns them.
      * _follow_owner constructor.

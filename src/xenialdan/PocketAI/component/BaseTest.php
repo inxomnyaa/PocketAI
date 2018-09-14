@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace xenialdan\PocketAI\component;
 
+use pocketmine\entity\Entity;
+
 abstract class BaseTest
 {
     protected $name;
@@ -20,7 +22,7 @@ abstract class BaseTest
      */
     public abstract function __construct(array $values = []);
 
-    public abstract function test(): bool;
+    public abstract function test(Entity $self, Entity $other): bool;
 
     public function getName(): string
     {

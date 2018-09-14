@@ -10,7 +10,6 @@ class _restrict_open_door extends BaseComponent
 {
     protected $name = "minecraft:behavior.restrict_open_door";
 
-
     /**
      * Allows the mob to stay indoors during night time.
      * _restrict_open_door constructor.

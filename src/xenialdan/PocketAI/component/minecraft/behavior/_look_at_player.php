@@ -10,7 +10,6 @@ class _look_at_player extends BaseComponent
 {
     protected $name = "minecraft:behavior.look_at_player";
 
-
     /**
      * Allows the mob to look at the player when the player is nearby.
      * _look_at_player constructor.

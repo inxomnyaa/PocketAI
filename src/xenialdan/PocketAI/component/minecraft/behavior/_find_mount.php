@@ -20,7 +20,6 @@ class _find_mount extends BaseComponent
     /** @var float $within_radius Distance in blocks within which the mob will look for a mount */
     public $within_radius = 0.0;
 
-
     /**
      * Allows the mob to look around for another mob to ride atop it.
      * _find_mount constructor.

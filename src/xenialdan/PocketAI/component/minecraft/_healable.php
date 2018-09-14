@@ -23,7 +23,6 @@ class _healable extends BaseComponent
     /** @var string $item Name of the item this entity likes and can be used to heal this entity */
     public $item;
 
-
     /**
      * Defines the interactions with this entity for healing it.
      * _healable constructor.

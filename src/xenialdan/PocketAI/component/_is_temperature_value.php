@@ -2,6 +2,8 @@
 
 namespace xenialdan\PocketAI\component;
 
+use pocketmine\entity\Entity;
+
 class _is_temperature_value extends BaseTest
 {
     protected $name = "is_temperature_value";
@@ -11,7 +13,6 @@ class _is_temperature_value extends BaseTest
     public $subject = "self";
     /** @var float $value (Required) The Biome temperature value to compare with. */
     public $value;
-
 
     /**
      * Tests the current temperature against a provided value in the range (0.0, 1.0) where 0.0f is the coldest temp and 1.0f is the hottest.
@@ -26,7 +27,7 @@ class _is_temperature_value extends BaseTest
 
     }
 
-    public function test(): bool
+    public function test(Entity $self, Entity $other): bool
     {
         // TODO: Implement test() method.
         return false;

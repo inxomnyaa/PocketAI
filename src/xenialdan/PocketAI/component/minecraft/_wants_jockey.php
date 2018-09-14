@@ -10,7 +10,6 @@ class _wants_jockey extends BaseComponent
 {
     protected $name = "minecraft:wants_jockey";
 
-
     /**
      * Sets that this entity wants to become a jockey.
      * _wants_jockey constructor.

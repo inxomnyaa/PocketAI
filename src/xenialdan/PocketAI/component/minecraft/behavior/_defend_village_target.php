@@ -25,7 +25,6 @@ class _defend_village_target extends BaseComponent
     /** @var float $walk_speed_multiplier Multiplier for the walking speed. A value of 1.0 means the speed is unchanged */
     public $walk_speed_multiplier = 1.0;
 
-
     /**
      * Allows the mob to stay in the village and fight mobs hostile to the villagers.
      * _defend_village_target constructor.

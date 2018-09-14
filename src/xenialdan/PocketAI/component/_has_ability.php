@@ -2,6 +2,8 @@
 
 namespace xenialdan\PocketAI\component;
 
+use pocketmine\entity\Entity;
+
 class _has_ability extends BaseTest
 {
     protected $name = "has_ability";
@@ -11,7 +13,6 @@ class _has_ability extends BaseTest
     public $subject = "self";
     /** @var string $value (Required) The Ability type to test */
     public $value;
-
 
     /**
      * Returns true when the subject entity has the named ability.
@@ -26,7 +27,7 @@ class _has_ability extends BaseTest
 
     }
 
-    public function test(): bool
+    public function test(Entity $self, Entity $other): bool
     {
         // TODO: Implement test() method.
         return false;

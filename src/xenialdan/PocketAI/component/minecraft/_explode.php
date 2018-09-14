@@ -10,7 +10,6 @@ class _explode extends BaseComponent
 {
     protected $name = "minecraft:explode";
 
-
     /**
      * Defines how the entity explodes.
      * _explode constructor.

@@ -10,7 +10,6 @@ class _hurt_when_wet extends BaseComponent
 {
     protected $name = "minecraft:hurt_when_wet";
 
-
     /**
      * Sets that this entity will take damage when it is wet.
      * _hurt_when_wet constructor.

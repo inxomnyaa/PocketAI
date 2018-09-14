@@ -22,7 +22,6 @@ class _fly extends BaseComponent
     /** @var bool $can_pass_doors Whether a path can be created through a door */
     public $can_pass_doors = true;
 
-
     /**
      * Allows this entity to generate paths in the air like the vanilla Parrots do.
      * _fly constructor.

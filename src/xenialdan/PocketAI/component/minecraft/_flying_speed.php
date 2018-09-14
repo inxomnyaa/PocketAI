@@ -12,7 +12,6 @@ class _flying_speed extends BaseComponent
     /** @var float $value Flying speed in blocks per tick */
     public $value = 0.02;
 
-
     /**
      * Speed in Blocks that this entity flies at.
      * _flying_speed constructor.

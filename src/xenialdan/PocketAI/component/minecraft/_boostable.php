@@ -25,7 +25,6 @@ class _boostable extends BaseComponent
     /** @var float $speed_multiplier Factor by which the entity's normal speed increases. E.g. 2.0 means go twice as fast */
     public $speed_multiplier = 1.0;
 
-
     /**
      * Defines the conditions and behavior of a rideable entity's boost
      * _boostable constructor.

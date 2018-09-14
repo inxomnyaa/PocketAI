@@ -20,7 +20,6 @@ class _leashable extends BaseComponent
     /** @var float $soft_distance Distance in blocks at which the 'spring' effect starts acting to keep this entity close to the entity that leashed it */
     public $soft_distance = 4.0;
 
-
     /**
      * Allows this entity to be leashed and Defines the conditions and events for this entity when is leashed.
      * _leashable constructor.

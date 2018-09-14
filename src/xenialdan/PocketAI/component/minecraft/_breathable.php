@@ -28,7 +28,6 @@ class _breathable extends BaseComponent
     /** @var int $totalSupply Time in seconds the entity can hold its breath */
     public $totalSupply = 15;
 
-
     /**
      * Defines what blocks this entity can breathe in and gives them the ability to suffocate
      * _breathable constructor.

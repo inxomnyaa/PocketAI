@@ -12,7 +12,6 @@ class _type_family extends BaseComponent
     /** @var array $family List of family names */
     public $family;
 
-
     /**
      * Defines the families this entity belongs to.
      * _type_family constructor.

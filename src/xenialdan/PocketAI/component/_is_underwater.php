@@ -2,6 +2,8 @@
 
 namespace xenialdan\PocketAI\component;
 
+use pocketmine\entity\Entity;
+
 class _is_underwater extends BaseTest
 {
     protected $name = "is_underwater";
@@ -11,7 +13,6 @@ class _is_underwater extends BaseTest
     public $subject = "self";
     /** @var bool $value (Optional) true or false. */
     public $value = true;
-
 
     /**
      * Returns true when the subject entity is under water. An entity is considered underwater if it is completely submerged in water blocks.
@@ -26,7 +27,7 @@ class _is_underwater extends BaseTest
 
     }
 
-    public function test(): bool
+    public function test(Entity $self, Entity $other): bool
     {
         // TODO: Implement test() method.
         return false;

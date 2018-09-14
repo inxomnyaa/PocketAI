@@ -2,6 +2,8 @@
 
 namespace xenialdan\PocketAI\component;
 
+use pocketmine\entity\Entity;
+
 class _is_humid extends BaseTest
 {
     protected $name = "is_humid";
@@ -11,7 +13,6 @@ class _is_humid extends BaseTest
     public $subject = "self";
     /** @var bool $value (Optional) true or false. */
     public $value = true;
-
 
     /**
      * Tests whether the Subject is in an area with humidity
@@ -26,7 +27,7 @@ class _is_humid extends BaseTest
 
     }
 
-    public function test(): bool
+    public function test(Entity $self, Entity $other): bool
     {
         // TODO: Implement test() method.
         return false;

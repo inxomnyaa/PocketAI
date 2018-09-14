@@ -10,7 +10,6 @@ class _random_look_around extends BaseComponent
 {
     protected $name = "minecraft:behavior.random_look_around";
 
-
     /**
      * Allows the mob to randomly look around.
      * _random_look_around constructor.

@@ -10,7 +10,6 @@ class _dragonflaming extends BaseComponent
 {
     protected $name = "minecraft:behavior.dragonflaming";
 
-
     /**
      * Allows the dragon to use its flame breath attack. Can only be used by the Ender Dragon.
      * _dragonflaming constructor.

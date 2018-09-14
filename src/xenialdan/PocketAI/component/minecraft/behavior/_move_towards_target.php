@@ -12,7 +12,6 @@ class _move_towards_target extends BaseComponent
     /** @var float $within_radius Defines the radius in blocks that the mob tries to be from the target. A value of 0 means it tries to occupy the same block as the target */
     public $within_radius = 0.0;
 
-
     /**
      * Allows mob to move towards its current target.
      * _move_towards_target constructor.

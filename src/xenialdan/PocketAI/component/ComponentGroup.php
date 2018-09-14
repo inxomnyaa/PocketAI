@@ -1,8 +1,6 @@
 <?php
 
-
 namespace xenialdan\PocketAI\component;
-
 
 use xenialdan\PocketAI\entitytype\AIEntity;
 use xenialdan\PocketAI\entitytype\AIProjectile;

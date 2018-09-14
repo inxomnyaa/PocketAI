@@ -19,7 +19,6 @@ class _spell_effects extends BaseComponent
     /** @var string $remove_effects List of names of effects to be removed from this entity after adding this component */
     public $remove_effects;
 
-
     /**
      * Defines what mob effects to add and remove to the entity when adding this component.
      * _spell_effects constructor.

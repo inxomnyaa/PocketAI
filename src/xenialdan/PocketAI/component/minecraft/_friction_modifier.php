@@ -12,7 +12,6 @@ class _friction_modifier extends BaseComponent
     /** @var float $value The higher the number, the more the friction affects this entity. A value of 1.0 means regular friction, while 2.0 means twice as much */
     public $value = 1.0;
 
-
     /**
      * Defines how much does friction affect this entity.
      * _friction_modifier constructor.

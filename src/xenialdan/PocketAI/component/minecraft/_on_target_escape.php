@@ -16,7 +16,6 @@ class _on_target_escape extends BaseComponent
     /** @var string $target The target of the event */
     public $target = "self";
 
-
     /**
      * Adds a trigger to call when this entity loses the target it currently has.
      * _on_target_escape constructor.

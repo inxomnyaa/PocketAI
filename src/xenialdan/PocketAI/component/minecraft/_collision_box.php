@@ -14,7 +14,6 @@ class _collision_box extends BaseComponent
     /** @var float $width Width and Depth of the Collision Box in Blocks */
     public $width = 1.0;
 
-
     /**
      * Sets the width and height of the Entity's collision box.
      * _collision_box constructor.

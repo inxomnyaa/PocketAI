@@ -10,7 +10,6 @@ class _silverfish_wake_up_friends extends BaseComponent
 {
     protected $name = "minecraft:behavior.silverfish_wake_up_friends";
 
-
     /**
      * Allows the mob to alert mobs in nearby blocks to come out. Currently it can only be used by Silverfish.
      * _silverfish_wake_up_friends constructor.

@@ -2,6 +2,8 @@
 
 namespace xenialdan\PocketAI\component;
 
+use pocketmine\entity\Entity;
+
 class _has_damage extends BaseTest
 {
     protected $name = "has_damage";
@@ -12,7 +14,6 @@ class _has_damage extends BaseTest
     /** @var string $value (Required) The Damage type to test
      */
     public $value;
-
 
     /**
      * Returns true when the subject entity receives the named damage type.
@@ -27,7 +28,7 @@ class _has_damage extends BaseTest
 
     }
 
-    public function test(): bool
+    public function test(Entity $self, Entity $other): bool
     {
         // TODO: Implement test() method.
         return false;

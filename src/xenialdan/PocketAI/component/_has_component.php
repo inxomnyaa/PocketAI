@@ -2,6 +2,8 @@
 
 namespace xenialdan\PocketAI\component;
 
+use pocketmine\entity\Entity;
+
 class _has_component extends BaseTest
 {
     protected $name = "has_component";
@@ -11,7 +13,6 @@ class _has_component extends BaseTest
     public $subject = "self";
     /** @var string $value (Required) The component name to look for */
     public $value;
-
 
     /**
      * Returns true when the subject entity contains the named component.
@@ -26,7 +27,7 @@ class _has_component extends BaseTest
 
     }
 
-    public function test(): bool
+    public function test(Entity $self, Entity $other): bool
     {
         // TODO: Implement test() method.
         return false;

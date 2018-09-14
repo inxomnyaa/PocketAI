@@ -12,7 +12,6 @@ class _addrider extends BaseComponent
     /** @var string $entity_type The entity type that will be riding this entity */
     public $entity_type;
 
-
     /**
      * Adds a rider to the entity. Requires ''minecraft:''rideable.
      * _addrider constructor.

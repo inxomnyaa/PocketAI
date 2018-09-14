@@ -14,7 +14,6 @@ class _ambient_sound_interval extends BaseComponent
     /** @var float $value Minimum time in seconds before the entity plays its ambient sound again */
     public $value = 8.0;
 
-
     /**
      * Sets the entity's delay between playing its ambient sound.
      * _ambient_sound_interval constructor.

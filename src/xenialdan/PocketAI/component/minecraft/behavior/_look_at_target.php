@@ -10,7 +10,6 @@ class _look_at_target extends BaseComponent
 {
     protected $name = "minecraft:behavior.look_at_target";
 
-
     /**
      * Allows the mob to look at the entity they are targetting.
      * _look_at_target constructor.

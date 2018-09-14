@@ -14,7 +14,6 @@ class _trade_table extends BaseComponent
     /** @var string $table File path relative to the resource pack root for this entity's trades */
     public $table;
 
-
     /**
      * Defines this entity's ability to trade with players.
      * _trade_table constructor.

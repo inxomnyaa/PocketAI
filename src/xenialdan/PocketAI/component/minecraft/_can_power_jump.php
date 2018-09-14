@@ -10,7 +10,6 @@ class _can_power_jump extends BaseComponent
 {
     protected $name = "minecraft:can_power_jump";
 
-
     /**
      * Allows the entity to power jump like the horse does in vanilla.
      * _can_power_jump constructor.

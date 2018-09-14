@@ -10,7 +10,6 @@ class _dragontakeoff extends BaseComponent
 {
     protected $name = "minecraft:behavior.dragontakeoff";
 
-
     /**
      * Allows the dragon to leave perch mode and go back to flying around. Can only be used by the Ender Dragon.
      * _dragontakeoff constructor.

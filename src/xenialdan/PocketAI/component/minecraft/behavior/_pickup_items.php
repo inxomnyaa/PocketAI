@@ -18,7 +18,6 @@ class _pickup_items extends BaseComponent
     /** @var bool $track_target If true, this mob will chase after the target as long as it's a valid target */
     public $track_target = false;
 
-
     /**
      * Allows the mob to pick up items on the ground.
      * _pickup_items constructor.

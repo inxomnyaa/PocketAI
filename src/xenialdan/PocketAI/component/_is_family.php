@@ -2,6 +2,8 @@
 
 namespace xenialdan\PocketAI\component;
 
+use pocketmine\entity\Entity;
+
 class _is_family extends BaseTest
 {
     protected $name = "is_family";
@@ -11,7 +13,6 @@ class _is_family extends BaseTest
     public $subject = "self";
     /** @var string $value (Required) The Family name to look for */
     public $value;
-
 
     /**
      * Returns true when the subject entity is a member of the named family.
@@ -26,7 +27,7 @@ class _is_family extends BaseTest
 
     }
 
-    public function test(): bool
+    public function test(Entity $self, Entity $other): bool
     {
         // TODO: Implement test() method.
         return false;

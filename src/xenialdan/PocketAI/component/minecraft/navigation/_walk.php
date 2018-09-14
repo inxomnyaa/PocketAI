@@ -22,7 +22,6 @@ class _walk extends BaseComponent
     /** @var bool $can_pass_doors Whether a path can be created through a door */
     public $can_pass_doors = true;
 
-
     /**
      * Allows this entity to generate paths by walking around and jumping up and down a block like regular mobs.
      * _walk constructor.

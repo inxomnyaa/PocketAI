@@ -25,7 +25,6 @@ class _wither_target_highest_damage extends BaseComponent
     /** @var float $walk_speed_multiplier Multiplier for the walking speed. A value of 1.0 means the speed is unchanged */
     public $walk_speed_multiplier = 1.0;
 
-
     /**
      * Allows the wither to focus its attacks on whichever mob has dealt the most damage to it.
      * _wither_target_highest_damage constructor.

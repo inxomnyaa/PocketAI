@@ -10,7 +10,6 @@ class _silverfish_merge_with_stone extends BaseComponent
 {
     protected $name = "minecraft:behavior.silverfish_merge_with_stone";
 
-
     /**
      * Allows the mob to go into stone blocks like Silverfish do. Currently it can only be used by Silverfish.
      * _silverfish_merge_with_stone constructor.

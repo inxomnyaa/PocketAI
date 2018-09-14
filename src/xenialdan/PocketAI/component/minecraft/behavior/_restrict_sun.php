@@ -10,7 +10,6 @@ class _restrict_sun extends BaseComponent
 {
     protected $name = "minecraft:behavior.restrict_sun";
 
-
     /**
      * Allows the mob to automatically start avoiding the sun when its a clear day out.
      * _restrict_sun constructor.

@@ -2,6 +2,8 @@
 
 namespace xenialdan\PocketAI\component;
 
+use pocketmine\entity\Entity;
+
 class _is_variant extends BaseTest
 {
     protected $name = "is_variant";
@@ -11,7 +13,6 @@ class _is_variant extends BaseTest
     public $subject = "self";
     /** @var int $value (Required) An integer value. */
     public $value;
-
 
     /**
      * Returns true if the subject entity is the variant number provided.
@@ -26,7 +27,7 @@ class _is_variant extends BaseTest
 
     }
 
-    public function test(): bool
+    public function test(Entity $self, Entity $other): bool
     {
         // TODO: Implement test() method.
         return false;

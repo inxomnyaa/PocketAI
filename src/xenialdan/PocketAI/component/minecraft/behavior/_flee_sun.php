@@ -12,7 +12,6 @@ class _flee_sun extends BaseComponent
     /** @var float $speed_multiplier Movement speed multiplier of the mob when using this AI Goal */
     public $speed_multiplier = 1.0;
 
-
     /**
      * Allows the mob to run away from direct sunlight and seek shade.
      * _flee_sun constructor.

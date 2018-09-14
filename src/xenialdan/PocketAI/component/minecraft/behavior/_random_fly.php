@@ -16,7 +16,6 @@ class _random_fly extends BaseComponent
     /** @var int $y_dist Distance in blocks that the mob will look up or down for a new spot to move to. Must be at least 1 */
     public $y_dist = 7;
 
-
     /**
      * Allows a mob to randomly fly around.
      * _random_fly constructor.

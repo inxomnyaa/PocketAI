@@ -10,7 +10,6 @@ class _item_hopper extends BaseComponent
 {
     protected $name = "minecraft:item_hopper";
 
-
     /**
      * Determines that this entity is an item hopper
      * _item_hopper constructor.

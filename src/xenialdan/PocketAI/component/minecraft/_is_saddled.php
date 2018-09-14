@@ -10,7 +10,6 @@ class _is_saddled extends BaseComponent
 {
     protected $name = "minecraft:is_saddled";
 
-
     /**
      * Sets that this entity is currently saddled.
      * _is_saddled constructor.

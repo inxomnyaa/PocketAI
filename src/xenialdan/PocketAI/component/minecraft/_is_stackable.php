@@ -10,7 +10,6 @@ class _is_stackable extends BaseComponent
 {
     protected $name = "minecraft:is_stackable";
 
-
     /**
      * Sets that this entity can be stacked.
      * _is_stackable constructor.

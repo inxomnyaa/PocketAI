@@ -16,7 +16,6 @@ class _tick_world extends BaseComponent
     /** @var int $radius The area around the entity to tick. Default: 2. Allowed range: 2-6. */
     public $radius = 2;
 
-
     /**
      * Defines if the entity ticks the world and the radius around it to tick.
      * _tick_world constructor.

@@ -16,7 +16,6 @@ class _on_death extends BaseComponent
     /** @var string $target The target of the event */
     public $target = "self";
 
-
     /**
      * Only usable by the Ender Dragon. Adds a trigger to call on this entity's death.
      * _on_death constructor.

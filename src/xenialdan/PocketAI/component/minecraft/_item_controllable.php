@@ -12,7 +12,6 @@ class _item_controllable extends BaseComponent
     /** @var array $control_items List of items that can be used to control this entity */
     public $control_items;
 
-
     /**
      * Defines what items can be used to control this entity while ridden
      * _item_controllable constructor.

@@ -16,7 +16,6 @@ class _peek extends BaseComponent
     /** @var string $on_target_open Event to call when the entity's target entity starts peeking */
     public $on_target_open;
 
-
     /**
      * Defines the entity's 'peek' behavior, defining the events that should be called during it
      * _peek constructor.

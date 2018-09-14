@@ -10,7 +10,6 @@ class _can_climb extends BaseComponent
 {
     protected $name = "minecraft:can_climb";
 
-
     /**
      * Allows this entity to climb up ladders.
      * _can_climb constructor.

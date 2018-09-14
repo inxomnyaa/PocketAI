@@ -10,7 +10,6 @@ class _take_flower extends BaseComponent
 {
     protected $name = "minecraft:behavior.take_flower";
 
-
     /**
      * Can only be used by Villagers. Allows the mob to accept flowers from Iron Golems.
      * _take_flower constructor.

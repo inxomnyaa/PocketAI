@@ -10,7 +10,6 @@ class _float extends BaseComponent
 {
     protected $name = "minecraft:behavior.float";
 
-
     /**
      * Allows the mob to stay afloat while swimming.
      * _float constructor.
