@@ -144,7 +144,6 @@ class InventoryEventListener implements Listener
         if ($components->count() > 0) {
             /** @var _interact $component */
             foreach ($components as $component) {//TODO filter & condition checks
-                $player->sendTip(print_r($component, true));//TODO remove debug
                 $on_interact_positive = true;
                 if (is_array($component->on_interact)) {
                     foreach ($component->on_interact as $key => $value) {
@@ -156,7 +155,6 @@ class InventoryEventListener implements Listener
                                         var_dump($testdata);
                                         $class = "xenialdan\\PocketAI\\component\\_" . $testdata["test"];
                                         print_r($class);
-                                        unset($testdata[array_search("test", $testdata)]);
                                         if (class_exists($class)) {
                                             /** @var BaseTest $testclass */
                                             $testclass = new $class($testdata);
