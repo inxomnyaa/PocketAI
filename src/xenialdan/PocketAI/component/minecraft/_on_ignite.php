@@ -3,10 +3,11 @@
 namespace xenialdan\PocketAI\component\minecraft;
 
 use xenialdan\PocketAI\component\BaseComponent;
+use xenialdan\PocketAI\component\IEvent;
 use xenialdan\PocketAI\entitytype\AIEntity;
 use xenialdan\PocketAI\entitytype\AIProjectile;
 
-class _on_ignite extends BaseComponent
+class _on_ignite extends BaseComponent implements IEvent
 {
     protected $name = "minecraft:on_ignite";
     /** @var string $event The event to run when the conditions for this trigger are met */

@@ -1,7 +1,7 @@
 ---
 name: PocketAI
 author: XenialDan
-version: 0.13.1
+version: 0.14.0
 main: xenialdan\PocketAI\Loader
 api: [4.0.0+dev]
 # Changes:
@@ -18,4 +18,5 @@ api: [4.0.0+dev]
 # 0.12.1: Extend BaseTest with operator and subject test, implement has_equipment and is_family tests
 # 0.13.0: Rename BaseTest to BaseFilter, move filters into /filter
 # 0.13.1: Move definitions into /definition
+# 0.14.0: Add interfaces IEvent and IDefinition
 ...
