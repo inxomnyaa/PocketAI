@@ -1,7 +1,7 @@
 ---
 name: PocketAI
 author: XenialDan
-version: 0.12.1
+version: 0.13.1
 main: xenialdan\PocketAI\Loader
 api: [4.0.0+dev]
 # Changes:
@@ -16,4 +16,6 @@ api: [4.0.0+dev]
 # 0.11.0: Extend components & multi-components support
 # 0.12.0: Change component tests to instanceof BaseTest
 # 0.12.1: Extend BaseTest with operator and subject test, implement has_equipment and is_family tests
+# 0.13.0: Rename BaseTest to BaseFilter, move filters into /filter
+# 0.13.1: Move definitions into /definition
 ...

@@ -7,6 +7,10 @@ namespace xenialdan\PocketAI\component;
 use xenialdan\PocketAI\entitytype\AIEntity;
 use xenialdan\PocketAI\entitytype\AIProjectile;
 
+/**
+ * Class BaseComponent
+ * @package xenialdan\PocketAI\component
+ */
 abstract class BaseComponent
 {
     protected $name;

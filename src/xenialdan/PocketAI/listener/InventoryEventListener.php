@@ -13,10 +13,10 @@ use pocketmine\network\mcpe\protocol\InventoryTransactionPacket;
 use pocketmine\network\mcpe\protocol\LevelSoundEventPacket;
 use pocketmine\Player;
 use pocketmine\plugin\Plugin;
-use xenialdan\PocketAI\component\BaseTest;
 use xenialdan\PocketAI\component\Components;
 use xenialdan\PocketAI\component\minecraft\_interact;
 use xenialdan\PocketAI\entitytype\AIEntity;
+use xenialdan\PocketAI\filter\BaseFilter;
 use xenialdan\PocketAI\Loader;
 
 /**
@@ -144,18 +144,18 @@ class InventoryEventListener implements Listener
         $components = $target->getEntityProperties()->findComponents("minecraft:interact");
         if ($components->count() > 0) {
             /** @var _interact $component */
-            foreach ($components as $component) {//TODO filter & condition checks
+            foreach ($components as $component) {
                 $on_interact_positive = true;
-                if (is_array($component->on_interact)) {
+                if (is_array($component->on_interact)) {//TODO event class
                     foreach ($component->on_interact as $key => $value) {
                         if ($key === "filters") {//TODO move filter checks to seperate class
                             foreach ($value as $k => $v) {
                                 if ($k === "all_of") {
                                     foreach ($v as $testdata) {
                                         if (!$on_interact_positive) break;
-                                        $class = "xenialdan\\PocketAI\\component\\_" . $testdata["test"];
+                                        $class = "xenialdan\\PocketAI\\filter\\_" . $testdata["test"];
                                         if (class_exists($class)) {
-                                            /** @var BaseTest $testclass */
+                                            /** @var BaseFilter $testclass */
                                             $testclass = new $class($testdata);
                                             print_r($testclass);
                                             $on_interact_positive = $testclass->test($target, $player);
