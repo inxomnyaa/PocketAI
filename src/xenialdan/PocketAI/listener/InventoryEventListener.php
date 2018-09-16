@@ -6,8 +6,11 @@ use pocketmine\entity\Entity;
 use pocketmine\event\Listener;
 use pocketmine\event\server\DataPacketReceiveEvent;
 use pocketmine\inventory\InventoryHolder;
+use pocketmine\item\Durable;
+use pocketmine\item\Item;
 use pocketmine\network\mcpe\protocol\InteractPacket;
 use pocketmine\network\mcpe\protocol\InventoryTransactionPacket;
+use pocketmine\network\mcpe\protocol\LevelSoundEventPacket;
 use pocketmine\Player;
 use pocketmine\plugin\Plugin;
 use xenialdan\PocketAI\component\BaseTest;
@@ -123,7 +126,7 @@ class InventoryEventListener implements Listener
         return false;
     }
 
-    private function onRightClick(Entity $target, Player $player)
+    private function onSneakRightClick(Entity $target, Player $player)
     {//TODO move to AIEntity for better handling
         $itemInHand = $player->getInventory()->getItemInHand();
         $itemInHandId = $itemInHand->getId();
@@ -134,33 +137,86 @@ class InventoryEventListener implements Listener
         return false;
     }
 
-    private function onSneakRightClick(AIEntity $target, Player $player)
+    private function onRightClick(AIEntity $target, Player $player)
     {//TODO move to AIEntity for better handling
         /** @var Components $components */
         $components = $target->getEntityProperties()->findComponents("minecraft:interact");
-        if($components->count() > 0){
+        if ($components->count() > 0) {
             /** @var _interact $component */
-            foreach ($components as $component){//TODO filter & condition checks
-                $player->sendTip(print_r($component,true));//TODO remove debug
-                if(is_array($component->on_interact)){
-                    foreach ($component->on_interact as $key => $value){
-                        if($key === "filters"){//TODO move filter checks to seperate class
-                            foreach ($value as $k => $v){
-                                if($k === "all_of"){
-                                    foreach ($v as $testdata){
-                                        $class = "xenialdan\\PocketAI\\component\\_" . array_slice($testdata, array_search("test", $testdata), 1)[0];
+            foreach ($components as $component) {//TODO filter & condition checks
+                $player->sendTip(print_r($component, true));//TODO remove debug
+                $on_interact_positive = true;
+                if (is_array($component->on_interact)) {
+                    foreach ($component->on_interact as $key => $value) {
+                        if ($key === "filters") {//TODO move filter checks to seperate class
+                            foreach ($value as $k => $v) {
+                                if ($k === "all_of") {
+                                    foreach ($v as $testdata) {
+                                        if (!$on_interact_positive) break;
+                                        var_dump($testdata);
+                                        $class = "xenialdan\\PocketAI\\component\\_" . $testdata["test"];
+                                        print_r($class);
                                         unset($testdata[array_search("test", $testdata)]);
-                                        if(class_exists($class)){
+                                        if (class_exists($class)) {
                                             /** @var BaseTest $testclass */
                                             $testclass = new $class($testdata);
                                             print_r($testclass);
-                                            $testclass->test($target, $player);
+                                            $on_interact_positive = $testclass->test($target, $player);
                                         }
                                     }
                                 }
+                                if (!$on_interact_positive) break;
                             }
                         }
+                        if (!$on_interact_positive) continue;
                     }
+                }
+                if ($on_interact_positive) {
+
+                    $itemStackInHand = $player->getInventory()->getItemInHand();
+                    /** @var Item|null $addItem */
+                    $addItem = null;
+                    try {
+                        $itemInHand = (clone $itemStackInHand)->pop();
+                    } catch (\InvalidArgumentException $e) {
+                        $itemInHand = new Item(Item::AIR);
+                    }
+                    try {
+                        if (!is_null($component->use_item) && $component->use_item) {
+                            $itemStackInHand->pop();
+                        }
+                        if (!is_null($component->hurt_item) && $itemInHand instanceof Durable) {
+                            $itemInHand->applyDamage($component->hurt_item);
+                        }
+                        if (!is_null($component->play_sounds)) {
+                            foreach (explode(",", $component->play_sounds) as $sound) {//TODO find seperator - no multi-sounds in vanilla behaviours
+                                $pk = new LevelSoundEventPacket();
+                                $pk->sound = constant(get_class($pk) . "::SOUND_" . strtoupper($sound));
+                                $pk->position = $target->asVector3();
+                                $player->sendDataPacket($pk);
+                            }
+                        }
+                        if (!is_null($component->transform_to_item) && ($item = Item::fromString($component->transform_to_item)) instanceof Item) {
+                            $addItem = $item;
+                        }
+                    } catch (\InvalidArgumentException $e) {
+                        //Logger: warning -> x component failed to succeed due to an error in parsing the json script in x aientity with x player
+                        return false;//Abort interaction to remain items even though the component data was invalid
+                    }
+                    if ($itemStackInHand->isNull()) {
+                        if (!is_null($addItem) && !$addItem->isNull()) {
+                            $player->getInventory()->setItemInHand($addItem);
+                        }
+                    } else {
+                        if (!is_null($addItem) && !$addItem->isNull()) {
+                            $player->getInventory()->addItem($addItem);
+                        }
+                        $player->getInventory()->setItemInHand($itemStackInHand);
+                    }
+                    if (!$itemInHand->equals($itemStackInHand, true, true)) {
+                        $player->getInventory()->addItem($itemInHand);
+                    }
+
                 }
             }
             return true;
@@ -183,12 +239,12 @@ class InventoryEventListener implements Listener
     {//TODO move to AIEntity for better handling
         /** @var Components $components */
         $components = $target->getEntityProperties()->findComponents("minecraft:interact");
-        if($components->count() > 0){
+        if ($components->count() > 0) {
             /** @var _interact $component */
-            foreach ($components as $component){//TODO filter & condition checks
+            foreach ($components as $component) {//TODO filter & condition checks
                 print_r($component);
-                $player->sendTip($component->interact_text??"");//TODO remove debug
-                $player->getDataPropertyManager()->setString(Entity::DATA_INTERACTIVE_TAG, $component->interact_text??"");
+                $player->sendTip($component->interact_text ?? "");//TODO remove debug
+                $player->getDataPropertyManager()->setString(Entity::DATA_INTERACTIVE_TAG, $component->interact_text ?? "");
             }
             return true;
         }

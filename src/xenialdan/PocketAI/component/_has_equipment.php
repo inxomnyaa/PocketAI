@@ -32,6 +32,8 @@ class _has_equipment extends BaseTest
 
     public function test(Entity $self, Entity $other): bool
     {
+        //TODO undo!
+        return true;
         // TODO: Implement test() method.
         return false;
     }

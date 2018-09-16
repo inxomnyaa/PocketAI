@@ -29,6 +29,8 @@ class _is_family extends BaseTest
 
     public function test(Entity $self, Entity $other): bool
     {
+        //TODO undo!
+        return true;
         // TODO: Implement test() method.
         return false;
     }
