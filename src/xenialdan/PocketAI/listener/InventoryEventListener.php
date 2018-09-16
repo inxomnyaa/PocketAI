@@ -17,6 +17,7 @@ use xenialdan\PocketAI\component\BaseTest;
 use xenialdan\PocketAI\component\Components;
 use xenialdan\PocketAI\component\minecraft\_interact;
 use xenialdan\PocketAI\entitytype\AIEntity;
+use xenialdan\PocketAI\Loader;
 
 /**
  * Class EventListener
@@ -152,14 +153,13 @@ class InventoryEventListener implements Listener
                                 if ($k === "all_of") {
                                     foreach ($v as $testdata) {
                                         if (!$on_interact_positive) break;
-                                        var_dump($testdata);
                                         $class = "xenialdan\\PocketAI\\component\\_" . $testdata["test"];
-                                        print_r($class);
                                         if (class_exists($class)) {
                                             /** @var BaseTest $testclass */
                                             $testclass = new $class($testdata);
                                             print_r($testclass);
                                             $on_interact_positive = $testclass->test($target, $player);
+                                            Loader::getInstance()->getLogger()->notice("Test " . $testdata["test"] . " completed with result: " . ($on_interact_positive ? "YES" : "NO"));
                                         }
                                     }
                                 }
@@ -169,6 +169,7 @@ class InventoryEventListener implements Listener
                         if (!$on_interact_positive) continue;
                     }
                 }
+                Loader::getInstance()->getLogger()->notice("All on_interact filters completed with result: " . ($on_interact_positive ? "YES" : "NO"));
                 if ($on_interact_positive) {
 
                     $itemStackInHand = $player->getInventory()->getItemInHand();
