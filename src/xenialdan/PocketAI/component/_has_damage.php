@@ -3,6 +3,7 @@
 namespace xenialdan\PocketAI\component;
 
 use pocketmine\entity\Entity;
+use xenialdan\PocketAI\entitytype\AIEntity;
 
 class _has_damage extends BaseTest
 {
@@ -28,8 +29,10 @@ class _has_damage extends BaseTest
 
     }
 
-    public function test(Entity $self, Entity $other): bool
+    public function test(AIEntity $caller, Entity $other): bool
     {
+        $return = parent::test($caller, $other);
+        if (!$return) return $return;
         // TODO: Implement test() method.
         return false;
     }

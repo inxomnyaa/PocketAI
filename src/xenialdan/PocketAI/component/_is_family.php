@@ -3,6 +3,9 @@
 namespace xenialdan\PocketAI\component;
 
 use pocketmine\entity\Entity;
+use pocketmine\Player;
+use xenialdan\PocketAI\component\minecraft\_type_family;
+use xenialdan\PocketAI\entitytype\AIEntity;
 
 class _is_family extends BaseTest
 {
@@ -27,11 +30,18 @@ class _is_family extends BaseTest
 
     }
 
-    public function test(Entity $self, Entity $other): bool
+    public function test(AIEntity $caller, Entity $other): bool
     {
-        //TODO undo!
-        return true;
-        // TODO: Implement test() method.
+        $return = parent::test($caller, $other);
+        if (!$return) return $return;
+        //TODO check vanilla entities?
+        if ($this->subjectToTest instanceof Player && $this->value === "player") return true;//TODO check if Human are also allowed
+        /** @var Components $components */
+        $components = $caller->getEntityProperties()->findComponents("minecraft:type_family");
+        /** @var _type_family $component */
+        foreach ($components as $component) {
+            if (is_array($component->family) && in_array($this->value, $component->family)) return true;
+        }
         return false;
     }
 }

@@ -6,6 +6,7 @@ namespace xenialdan\PocketAI\entitytype;
 
 use pocketmine\block\Liquid;
 use pocketmine\entity\Attribute;
+use pocketmine\entity\Entity;
 use pocketmine\entity\Living;
 use pocketmine\inventory\InventoryHolder;
 use pocketmine\level\particle\HappyVillagerParticle;
@@ -21,6 +22,8 @@ use xenialdan\PocketAI\LootGenerator;
 
 abstract class AIEntity extends Living implements InventoryHolder
 {
+    //Custom entries inside of the EntityProperties DataPropertyManager
+    const DATA_PARENT_EID = 0;
 
     /** @var LootGenerator */
     public $lootGenerator;
@@ -104,6 +107,44 @@ abstract class AIEntity extends Living implements InventoryHolder
     public function getHeight(): float
     {
         return $this->height;
+    }
+
+    /**
+     * Returns the entity ID of the entity's current parent, or null if it doesn't have a parent.
+     * @return int|null
+     */
+    public function getParentEntityId() : ?int{
+        return $this->getEntityProperties()->getLong(self::DATA_PARENT_EID);
+    }
+
+    /**
+     * Returns the entity's current parent entity, or null if not found.
+     * @return Entity|null
+     */
+    public function getParentEntity() : ?Entity{
+        $eid = $this->getParentEntityId();
+        if($eid !== null){
+            return $this->server->findEntity($eid);
+        }
+
+        return null;
+    }
+
+    /**
+     * Sets the entity's current parent entity. Passing null will remove the current parent.
+     *
+     * @param Entity|null $parent
+     *
+     * @throws \InvalidArgumentException if the parent entity is not valid
+     */
+    public function setParentEntity(?Entity $parent) : void{
+        if($parent === null){
+            $this->getEntityProperties()->removeProperty(self::DATA_PARENT_EID);
+        }elseif($parent->closed){
+            throw new \InvalidArgumentException("Supplied parent entity is garbage and cannot be used");
+        }else{
+            $this->getEntityProperties()->setLong(self::DATA_PARENT_EID, $parent->getId());
+        }
     }
 
     /**

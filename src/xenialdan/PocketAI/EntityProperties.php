@@ -2,6 +2,7 @@
 
 namespace xenialdan\PocketAI;
 
+use pocketmine\entity\DataPropertyManager;
 use pocketmine\inventory\InventoryHolder;
 use pocketmine\plugin\PluginException;
 use xenialdan\PocketAI\component\BaseComponent;
@@ -11,7 +12,7 @@ use xenialdan\PocketAI\component\Components;
 use xenialdan\PocketAI\entitytype\AIEntity;
 use xenialdan\PocketAI\entitytype\AIProjectile;
 
-class EntityProperties
+class EntityProperties extends DataPropertyManager
 {
     /** @var string */
     private $behaviourName = "empty";
