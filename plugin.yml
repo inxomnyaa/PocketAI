@@ -1,7 +1,7 @@
 ---
 name: PocketAI
 author: XenialDan
-version: 0.15.1
+version: 0.15.2
 main: xenialdan\PocketAI\Loader
 api: [4.0.0+dev]
 # Changes:
@@ -21,4 +21,5 @@ api: [4.0.0+dev]
 # 0.14.0: Add interfaces IEvent and IDefinition
 # 0.15.0: Add BaseTrigger class
 # 0.15.1: Use Filters class in InventoryEventListener
+# 0.15.2: Change $filters to instanceof Filters
 ...

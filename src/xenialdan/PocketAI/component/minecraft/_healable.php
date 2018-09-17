@@ -5,6 +5,7 @@ namespace xenialdan\PocketAI\component\minecraft;
 use xenialdan\PocketAI\component\BaseComponent;
 use xenialdan\PocketAI\entitytype\AIEntity;
 use xenialdan\PocketAI\entitytype\AIProjectile;
+use xenialdan\PocketAI\filter\Filters;
 
 class _healable extends BaseComponent
 {
@@ -14,7 +15,7 @@ class _healable extends BaseComponent
      *
      */
     public $items;
-    /** @var array (Minecraft Filter) $filters The list of conditions for this trigger */
+    /** @var Filters $filters The list of conditions for this trigger */
     public $filters;
     /** @var bool $force_use Determines if item can be used regardless of entity being full health */
     public $force_use = false;
@@ -31,7 +32,7 @@ class _healable extends BaseComponent
     public function __construct(array $values = [])
     {
         $this->items = $values['items'] ?? $this->items;
-        $this->filters = $values['filters'] ?? $this->filters;
+        $this->filters = new Filters($values['filters'] ?? $this->filters);
         $this->force_use = $values['force_use'] ?? $this->force_use;
         $this->heal_amount = $values['heal_amount'] ?? $this->heal_amount;
         $this->item = $values['item'] ?? $this->item;

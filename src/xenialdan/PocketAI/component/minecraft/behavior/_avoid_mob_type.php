@@ -5,6 +5,7 @@ namespace xenialdan\PocketAI\component\minecraft\behavior;
 use xenialdan\PocketAI\component\BaseComponent;
 use xenialdan\PocketAI\entitytype\AIEntity;
 use xenialdan\PocketAI\entitytype\AIProjectile;
+use xenialdan\PocketAI\filter\Filters;
 
 class _avoid_mob_type extends BaseComponent
 {
@@ -14,7 +15,7 @@ class _avoid_mob_type extends BaseComponent
      *
      */
     public $entity_types;
-    /** @var array (Minecraft Filter) $filters Conditions that make this entry in the list valid */
+    /** @var Filters $filters Conditions that make this entry in the list valid */
     public $filters;
     /** @var float $max_dist Maximum distance to look for an entity */
     public $max_dist = 0.0;
@@ -35,7 +36,7 @@ class _avoid_mob_type extends BaseComponent
     public function __construct(array $values = [])
     {
         $this->entity_types = $values['entity_types'] ?? $this->entity_types;
-        $this->filters = $values['filters'] ?? $this->filters;
+        $this->filters = new Filters($values['filters'] ?? $this->filters);
         $this->max_dist = $values['max_dist'] ?? $this->max_dist;
         $this->must_see = $values['must_see'] ?? $this->must_see;
         $this->sprint_speed_multiplier = $values['sprint_speed_multiplier'] ?? $this->sprint_speed_multiplier;

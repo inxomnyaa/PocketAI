@@ -6,12 +6,13 @@ use pocketmine\entity\Entity;
 use pocketmine\Player;
 use xenialdan\PocketAI\entitytype\AIEntity;
 use xenialdan\PocketAI\entitytype\AIProjectile;
+use xenialdan\PocketAI\filter\Filters;
 
 abstract class BaseTrigger extends BaseComponent
 {
     /** @var string $event The event to run when the conditions for this trigger are met */
     public $event;
-    /** @var array (Minecraft Filter) $filters The list of conditions for this trigger */
+    /** @var Filters $filters The list of conditions for this trigger */
     public $filters;
     /** @var string $target The target of the event */
     public $target = "self";
@@ -26,7 +27,7 @@ abstract class BaseTrigger extends BaseComponent
     public function __construct(array $values = [])
     {
         $this->event = $values['event'] ?? $this->event;
-        $this->filters = $values['filters'] ?? $this->filters;
+        $this->filters = new Filters($values['filters'] ?? $this->filters);
         $this->target = $values['target'] ?? $this->target;
     }
 

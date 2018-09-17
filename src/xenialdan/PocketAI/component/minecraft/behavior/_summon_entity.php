@@ -5,6 +5,7 @@ namespace xenialdan\PocketAI\component\minecraft\behavior;
 use xenialdan\PocketAI\component\BaseComponent;
 use xenialdan\PocketAI\entitytype\AIEntity;
 use xenialdan\PocketAI\entitytype\AIProjectile;
+use xenialdan\PocketAI\filter\Filters;
 
 class _summon_entity extends BaseComponent
 {
@@ -18,7 +19,7 @@ class _summon_entity extends BaseComponent
     public $cast_duration;
     /** @var float $cooldown_time Time in seconds the mob has to wait before using the spell again */
     public $cooldown_time = 0.0;
-    /** @var array (Minecraft Filter) $filters */
+    /** @var Filters $filters */
     public $filters;
     /** @var float $max_activation_range Upper bound of the activation distance in blocks for this spell */
     public $max_activation_range = -1.0;
@@ -68,7 +69,7 @@ class _summon_entity extends BaseComponent
         $this->summon_choices = $values['summon_choices'] ?? $this->summon_choices;
         $this->cast_duration = $values['cast_duration'] ?? $this->cast_duration;
         $this->cooldown_time = $values['cooldown_time'] ?? $this->cooldown_time;
-        $this->filters = $values['filters'] ?? $this->filters;
+        $this->filters = new Filters($values['filters'] ?? $this->filters);
         $this->max_activation_range = $values['max_activation_range'] ?? $this->max_activation_range;
         $this->min_activation_range = $values['min_activation_range'] ?? $this->min_activation_range;
         $this->particle_color = $values['particle_color'] ?? $this->particle_color;

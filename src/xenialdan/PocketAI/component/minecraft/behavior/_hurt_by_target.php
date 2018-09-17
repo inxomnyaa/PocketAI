@@ -5,6 +5,7 @@ namespace xenialdan\PocketAI\component\minecraft\behavior;
 use xenialdan\PocketAI\component\BaseComponent;
 use xenialdan\PocketAI\entitytype\AIEntity;
 use xenialdan\PocketAI\entitytype\AIProjectile;
+use xenialdan\PocketAI\filter\Filters;
 
 class _hurt_by_target extends BaseComponent
 {
@@ -16,7 +17,7 @@ class _hurt_by_target extends BaseComponent
      *
      */
     public $entity_types;
-    /** @var array (Minecraft Filter) $filters Conditions that make this entry in the list valid */
+    /** @var Filters $filters Conditions that make this entry in the list valid */
     public $filters;
     /** @var float $max_dist Maximum distance this mob can be away to be a valid choice */
     public $max_dist = 16;
@@ -38,7 +39,7 @@ class _hurt_by_target extends BaseComponent
     {
         $this->alert_same_type = $values['alert_same_type'] ?? $this->alert_same_type;
         $this->entity_types = $values['entity_types'] ?? $this->entity_types;
-        $this->filters = $values['filters'] ?? $this->filters;
+        $this->filters = new Filters($values['filters'] ?? $this->filters);
         $this->max_dist = $values['max_dist'] ?? $this->max_dist;
         $this->must_see = $values['must_see'] ?? $this->must_see;
         $this->sprint_speed_multiplier = $values['sprint_speed_multiplier'] ?? $this->sprint_speed_multiplier;

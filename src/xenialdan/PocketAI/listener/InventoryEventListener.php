@@ -16,7 +16,6 @@ use pocketmine\plugin\Plugin;
 use xenialdan\PocketAI\component\Components;
 use xenialdan\PocketAI\component\minecraft\_interact;
 use xenialdan\PocketAI\entitytype\AIEntity;
-use xenialdan\PocketAI\filter\BaseFilter;
 use xenialdan\PocketAI\filter\Filters;
 use xenialdan\PocketAI\Loader;
 
