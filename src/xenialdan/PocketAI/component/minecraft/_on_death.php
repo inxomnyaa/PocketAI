@@ -3,11 +3,11 @@
 namespace xenialdan\PocketAI\component\minecraft;
 
 use xenialdan\PocketAI\component\BaseComponent;
-use xenialdan\PocketAI\component\IEvent;
+use xenialdan\PocketAI\component\IEventTrigger;
 use xenialdan\PocketAI\entitytype\AIEntity;
 use xenialdan\PocketAI\entitytype\AIProjectile;
 
-class _on_death extends BaseComponent implements IEvent
+class _on_death extends BaseComponent implements IEventTrigger
 {
     protected $name = "minecraft:on_death";
     /** @var string $event The event to run when the conditions for this trigger are met */

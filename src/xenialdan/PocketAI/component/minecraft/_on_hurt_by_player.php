@@ -3,11 +3,11 @@
 namespace xenialdan\PocketAI\component\minecraft;
 
 use xenialdan\PocketAI\component\BaseComponent;
-use xenialdan\PocketAI\component\IEvent;
+use xenialdan\PocketAI\component\IEventTrigger;
 use xenialdan\PocketAI\entitytype\AIEntity;
 use xenialdan\PocketAI\entitytype\AIProjectile;
 
-class _on_hurt_by_player extends BaseComponent implements IEvent
+class _on_hurt_by_player extends BaseComponent implements IEventTrigger
 {
     protected $name = "minecraft:on_hurt_by_player";
     /** @var string $event The event to run when the conditions for this trigger are met */

@@ -4,7 +4,7 @@
 namespace xenialdan\PocketAI\component;
 
 
-interface IEvent
+interface IEventTrigger
 {
 
 }
