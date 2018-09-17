@@ -1,7 +1,7 @@
 ---
 name: PocketAI
 author: XenialDan
-version: 0.14.0
+version: 0.15.0
 main: xenialdan\PocketAI\Loader
 api: [4.0.0+dev]
 # Changes:
@@ -19,4 +19,5 @@ api: [4.0.0+dev]
 # 0.13.0: Rename BaseTest to BaseFilter, move filters into /filter
 # 0.13.1: Move definitions into /definition
 # 0.14.0: Add interfaces IEvent and IDefinition
+# 0.15.0: Add BaseTrigger class
 ...

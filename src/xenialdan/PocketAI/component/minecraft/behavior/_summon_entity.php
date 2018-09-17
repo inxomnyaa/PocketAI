@@ -5,6 +5,7 @@ namespace xenialdan\PocketAI\component\minecraft\behavior;
 use xenialdan\PocketAI\component\BaseComponent;
 use xenialdan\PocketAI\entitytype\AIEntity;
 use xenialdan\PocketAI\entitytype\AIProjectile;
+use xenialdan\PocketAI\filter\Filters;
 
 class _summon_entity extends BaseComponent
 {
