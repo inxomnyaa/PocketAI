@@ -238,14 +238,24 @@ class InventoryEventListener implements Listener
         return false;
     }
 
-    private function onHover(AIEntity $target, Player $player)
+    private function onHover(AIEntity $target, Player $player)//TODO fix hover calling with old item when changing slot
     {//TODO move to AIEntity for better handling
         /** @var Components $components */
         $components = $target->getEntityProperties()->findComponents("minecraft:interact");
         if ($components->count() > 0) {
             /** @var _interact $component */
-            foreach ($components as $component) {//TODO filter & condition checks
-                print_r($component);
+            foreach ($components as $component) {
+                $on_interact_positive = true;
+                if (is_array($component->on_interact)) {//TODO event class
+                    foreach ($component->on_interact as $key => $value) {
+                        if ($key === "filters") {
+                            $filters = new Filters($value);
+                            $on_interact_positive = $filters->test($target, $player);
+                            Loader::getInstance()->getLogger()->notice("All on_interact filters completed with result: " . ($on_interact_positive ? "YES" : "NO"));
+                        }
+                    }
+                }
+                if(!$on_interact_positive) return false;
                 $player->sendTip($component->interact_text ?? "");//TODO remove debug
                 $player->getDataPropertyManager()->setString(Entity::DATA_INTERACTIVE_TAG, $component->interact_text ?? "");
             }

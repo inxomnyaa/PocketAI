@@ -21,6 +21,7 @@ use xenialdan\PocketAI\entity\Cow;
 use xenialdan\PocketAI\entity\FishingHook;
 use xenialdan\PocketAI\entitytype\AIEntity;
 use xenialdan\PocketAI\item\FishingRod;
+use xenialdan\PocketAI\item\Lead;
 use xenialdan\PocketAI\listener\AddonEventListener;
 use xenialdan\PocketAI\listener\EventListener;
 use xenialdan\PocketAI\listener\InventoryEventListener;
@@ -197,6 +198,8 @@ class Loader extends PluginBase
     public function registerItems()
     {
         ItemFactory::registerItem($item = new FishingRod(), true);
+        $this->getLogger()->notice("Registered Item: " . $item->getName());
+        ItemFactory::registerItem($item = new Lead(), true);
         $this->getLogger()->notice("Registered Item: " . $item->getName());
     }
 

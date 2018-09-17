@@ -118,11 +118,11 @@ class API
     /**
      * Returns the subject that the test should run on
      * @param AIEntity $caller
-     * @param Entity $other
+     * @param null|Entity $other
      * @param string $target
      * @return null|Entity
      */
-    public static function targetToTest(AIEntity $caller, Entity $other, string $target) :?Entity{
+    public static function targetToTest(AIEntity $caller, ?Entity $other, string $target) :?Entity{
         switch ($target){
             //The other member of an interaction, not the caller
             case "other":{

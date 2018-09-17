@@ -64,10 +64,10 @@ class ComponentGroup
     public function remove($entity): void
     {
         $this->components->rewind();
-        while ($this->components->valid()) {
-            /** @var BaseComponent $current */
-            $current = $this->components->pop();
+        /** @var BaseComponent $current */
+        while (($current = $this->components->current())) {
             $current->remove($entity);
+            $this->components->next();
         }
     }
 
