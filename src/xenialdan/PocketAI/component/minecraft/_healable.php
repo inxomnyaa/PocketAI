@@ -32,7 +32,7 @@ class _healable extends BaseComponent
     public function __construct(array $values = [])
     {
         $this->items = $values['items'] ?? $this->items;
-        $this->filters = new Filters($values['filters'] ?? $this->filters);
+        $this->filters = new Filters($values['filters'] ?? $this->filters ?? []);
         $this->force_use = $values['force_use'] ?? $this->force_use;
         $this->heal_amount = $values['heal_amount'] ?? $this->heal_amount;
         $this->item = $values['item'] ?? $this->item;

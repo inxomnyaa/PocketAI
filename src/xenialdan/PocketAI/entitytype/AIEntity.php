@@ -16,8 +16,13 @@ use pocketmine\nbt\tag\CompoundTag;
 use pocketmine\timings\Timings;
 use xenialdan\PocketAI\API;
 use xenialdan\PocketAI\component\ComponentGroup;
+use xenialdan\PocketAI\component\Components;
+use xenialdan\PocketAI\component\minecraft\_leashable;
 use xenialdan\PocketAI\EntityProperties;
+use xenialdan\PocketAI\event\AddonEvent;
 use xenialdan\PocketAI\inventory\AIEntityInventory;
+use xenialdan\PocketAI\item\Lead;
+use xenialdan\PocketAI\Loader;
 use xenialdan\PocketAI\LootGenerator;
 
 abstract class AIEntity extends Living implements InventoryHolder
@@ -41,6 +46,36 @@ abstract class AIEntity extends Living implements InventoryHolder
 
     public $jumpVelocity = 0.42;
 
+    public function isLeashed(): bool
+    {
+        return $this->getDataPropertyManager()->getByte(self::DATA_FLAG_LEASHED) > 0;
+    }
+
+    /**
+     * Leash entity to another entity. If passing null the entity will be unleashed
+     * @param null|Entity $entity
+     */
+    public function setLeashedTo(?Entity $entity)
+    {
+        /** @var Components $components */
+        $components = $this->getEntityProperties()->findComponents("minecraft:leashable");
+        if ($components->count() > 0) {
+            /** @var _leashable $component */
+            foreach ($components as $component) {
+                if (is_null($entity)) {
+                    if($this->isLeashed()) $this->getLevel()->dropItem($this, new Lead());
+                    $this->getDataPropertyManager()->setByte(self::DATA_FLAG_LEASHED, 0);
+                    $this->getDataPropertyManager()->setLong(self::DATA_LEAD_HOLDER_EID, -1);
+                    $this->getLevel()->getServer()->getPluginManager()->callEvent($ev = new AddonEvent(Loader::getInstance(), API::targetToTest($this, $entity, $component->on_unleash["target"]), $component->on_unleash["event"]));
+                } else{
+                    $this->getDataPropertyManager()->setByte(self::DATA_FLAG_LEASHED, 1);
+                    $this->getDataPropertyManager()->setLong(self::DATA_LEAD_HOLDER_EID, $entity->getId());
+                    $this->getLevel()->getServer()->getPluginManager()->callEvent($ev = new AddonEvent(Loader::getInstance(), API::targetToTest($this, $entity, $component->on_leash["target"]), $component->on_leash["event"]));
+                }
+            }
+        }
+    }
+
     protected function initEntity(CompoundTag $nbt): void
     {
         parent::initEntity($nbt);
@@ -56,7 +91,7 @@ abstract class AIEntity extends Living implements InventoryHolder
         $hasUpdate = parent::entityBaseTick($tickDiff);
 
         if ($this->isAlive()) {
-            foreach (API::getAABBCorners($this->getBoundingBox()) as $corner){
+            foreach (API::getAABBCorners($this->getBoundingBox()) as $corner) {
                 $this->getLevel()->addParticle(new HappyVillagerParticle($corner));
             }
             /* behaviour checks */
@@ -96,7 +131,7 @@ abstract class AIEntity extends Living implements InventoryHolder
     /** Overwriting due to float imprecision */
     protected function recalculateBoundingBox(): void
     {
-        $this->boundingBox = (new AxisAlignedBB($this->getX(), $this->getY(), $this->getZ(),$this->getX(), $this->getY(), $this->getZ()))
+        $this->boundingBox = (new AxisAlignedBB($this->getX(), $this->getY(), $this->getZ(), $this->getX(), $this->getY(), $this->getZ()))
             ->expand($this->width / 2, $this->height / 2, $this->width / 2)
             ->offset(0, $this->height / 2, 0);
     }
@@ -113,7 +148,8 @@ abstract class AIEntity extends Living implements InventoryHolder
      * Returns the entity ID of the entity's current parent, or null if it doesn't have a parent.
      * @return int|null
      */
-    public function getParentEntityId() : ?int{
+    public function getParentEntityId(): ?int
+    {
         return $this->getEntityProperties()->getLong(self::DATA_PARENT_EID);
     }
 
@@ -121,9 +157,10 @@ abstract class AIEntity extends Living implements InventoryHolder
      * Returns the entity's current parent entity, or null if not found.
      * @return Entity|null
      */
-    public function getParentEntity() : ?Entity{
+    public function getParentEntity(): ?Entity
+    {
         $eid = $this->getParentEntityId();
-        if($eid !== null){
+        if ($eid !== null) {
             return $this->server->findEntity($eid);
         }
 
@@ -137,12 +174,13 @@ abstract class AIEntity extends Living implements InventoryHolder
      *
      * @throws \InvalidArgumentException if the parent entity is not valid
      */
-    public function setParentEntity(?Entity $parent) : void{
-        if($parent === null){
+    public function setParentEntity(?Entity $parent): void
+    {
+        if ($parent === null) {
             $this->getEntityProperties()->removeProperty(self::DATA_PARENT_EID);
-        }elseif($parent->closed){
+        } elseif ($parent->closed) {
             throw new \InvalidArgumentException("Supplied parent entity is garbage and cannot be used");
-        }else{
+        } else {
             $this->getEntityProperties()->setLong(self::DATA_PARENT_EID, $parent->getId());
         }
     }

@@ -27,7 +27,7 @@ abstract class BaseTrigger extends BaseComponent
     public function __construct(array $values = [])
     {
         $this->event = $values['event'] ?? $this->event;
-        $this->filters = new Filters($values['filters'] ?? $this->filters);
+        $this->filters = new Filters($values['filters'] ?? $this->filters ?? []);
         $this->target = $values['target'] ?? $this->target;
     }
 

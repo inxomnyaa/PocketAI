@@ -39,7 +39,7 @@ class _follow_caravan extends BaseComponent
     {
         $this->entity_count = $values['entity_count'] ?? $this->entity_count;
         $this->entity_types = $values['entity_types'] ?? $this->entity_types;
-        $this->filters = new Filters($values['filters'] ?? $this->filters);
+        $this->filters = new Filters($values['filters'] ?? $this->filters ?? []);
         $this->max_dist = $values['max_dist'] ?? $this->max_dist;
         $this->must_see = $values['must_see'] ?? $this->must_see;
         $this->sprint_speed_multiplier = $values['sprint_speed_multiplier'] ?? $this->sprint_speed_multiplier;

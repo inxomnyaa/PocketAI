@@ -42,15 +42,44 @@ class Filters//TODO rename to FilterGroup? (if multiple groups are definable - i
      * @param array $filters
      */
     public function __construct(array $filters)//TODO check if issues occur if multiple groups are defined - i.e. ["all_of"[...],"any_of"[...]]
-    {
+    {//TODO cleanup
         $this->filters = new \SplDoublyLinkedList();
-        foreach ($filters as $groupType => $filter){
-            $this->groupType = $groupType;
-            foreach ($filter as $value){
-                $class = "xenialdan\\PocketAI\\filter\\_" . $value["test"];
+        if (empty($filters)) return;
+        if (array_key_exists("all_of", $filters) || array_key_exists("any_of", $filters)) {
+            foreach ($filters as $groupType => $filter) {
+                $this->groupType = $groupType;
+                foreach ($filter as $value) {
+                    $class = "xenialdan\\PocketAI\\filter\\_" . $value["test"];
+                    if (class_exists($class)) {
+                        /** @var BaseFilter $testclass */
+                        $testclass = new $class($value);
+                        $this->push($testclass);
+                    }
+                }
+            }
+        } else {
+            if (count($filters) > 0 && $filters ===
+                array_filter($filters,
+                    function ($key) {
+                        return is_int($key);
+                    },
+                    ARRAY_FILTER_USE_KEY
+                )
+            ) {
+                foreach ($filters as $value) {
+                    print_r($value);
+                    $class = "xenialdan\\PocketAI\\filter\\_" . $value["test"];
+                    if (class_exists($class)) {
+                        /** @var BaseFilter $testclass */
+                        $testclass = new $class($value);
+                        $this->push($testclass);
+                    }
+                }
+            } else {
+                $class = "xenialdan\\PocketAI\\filter\\_" . $filters["test"];
                 if (class_exists($class)) {
                     /** @var BaseFilter $testclass */
-                    $testclass = new $class($value);
+                    $testclass = new $class($filters);
                     $this->push($testclass);
                 }
             }
@@ -62,12 +91,13 @@ class Filters//TODO rename to FilterGroup? (if multiple groups are definable - i
      * @param Entity $other Entity involved in the interaction
      * @return bool
      */
-    public function test(AIEntity $caller, Entity $other): bool{
-        $filtered = array_filter(iterator_to_array($this->filters), function ($filter) use ($caller, $other){
+    public function test(AIEntity $caller, Entity $other): bool
+    {
+        $filtered = array_filter(iterator_to_array($this->filters), function ($filter) use ($caller, $other) {
             /** @var BaseFilter $filter */
             return $filter->test($caller, $other);
         });
-        return (($this->groupType === "any_of" && !empty($filtered)) xor ($this->groupType === "all_of" && count($filtered) === $this->filters->count()));
+        return ((is_null($this->groupType) && !empty($filtered)) xor ($this->groupType === "any_of" && !empty($filtered)) xor ($this->groupType === "all_of" && count($filtered) === $this->filters->count()));
     }
 
 

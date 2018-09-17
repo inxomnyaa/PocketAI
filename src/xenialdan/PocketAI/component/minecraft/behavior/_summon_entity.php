@@ -69,7 +69,7 @@ class _summon_entity extends BaseComponent
         $this->summon_choices = $values['summon_choices'] ?? $this->summon_choices;
         $this->cast_duration = $values['cast_duration'] ?? $this->cast_duration;
         $this->cooldown_time = $values['cooldown_time'] ?? $this->cooldown_time;
-        $this->filters = new Filters($values['filters'] ?? $this->filters);
+        $this->filters = new Filters($values['filters'] ?? $this->filters ?? []);
         $this->max_activation_range = $values['max_activation_range'] ?? $this->max_activation_range;
         $this->min_activation_range = $values['min_activation_range'] ?? $this->min_activation_range;
         $this->particle_color = $values['particle_color'] ?? $this->particle_color;

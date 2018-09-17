@@ -3,6 +3,7 @@
 namespace xenialdan\PocketAI;
 
 
+use pocketmine\entity\Entity;
 use pocketmine\event\entity\EntityDamageByChildEntityEvent;
 use pocketmine\event\entity\EntityDamageByEntityEvent;
 use pocketmine\event\entity\EntityDamageEvent;
@@ -112,6 +113,44 @@ class API
 
         }
         return true;
+    }
+
+    /**
+     * Returns the subject that the test should run on
+     * @param AIEntity $caller
+     * @param Entity $other
+     * @param string $target
+     * @return null|Entity
+     */
+    public static function targetToTest(AIEntity $caller, Entity $other, string $target) :?Entity{
+        switch ($target){
+            //The other member of an interaction, not the caller
+            case "other":{
+                return $other;
+                break;
+            }
+            //The caller's current parent
+            case "parent":{
+                return $caller->getParentEntity();
+                break;
+            }
+            //TODO The player involved with the interaction --Could possibly be even another entity?
+            case "player":{
+                return ($other instanceof Player)?$other:null;
+                break;
+            }
+            //The entity or object calling the test
+            case "self":{
+                return $caller;
+                break;
+            }
+            //The caller's current target
+            case "target":{
+                return $caller->getTargetEntity();
+                break;
+            }
+        }
+        return null;
     }
 
     public static function getMinAABB(AxisAlignedBB $aabb):Vector3{

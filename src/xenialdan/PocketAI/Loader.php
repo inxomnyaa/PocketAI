@@ -125,6 +125,7 @@ class Loader extends PluginBase
     {
         try {
             foreach ($behaviourJsonFiles as $filename => $behaviour) {
+                $currentFilename = $filename;
                 if (version_compare($behaviour["minecraft:entity"]["format_version"] ?? "1.2.0", "1.2.0") !== 0) {
                     $this->getLogger()->notice("The Entity behaviour/properties file: " . $filename . " has an unsupported format_version and will not be used");
                     continue;
@@ -181,7 +182,7 @@ class Loader extends PluginBase
                 self::$events[$filename] = $behaviour["minecraft:entity"]["events"] ?? [];
             }
         } catch (\Exception $e) {
-            $this->getLogger()->alert("An exception has occurred whilest preloading the behaviours: " . $e);
+            $this->getLogger()->alert("An exception has occurred whilest preloading the behaviours (File: ".$currentFilename."): " . $e);
         } finally {
             $this->getLogger()->notice("Behaviours successfully pre-loaded and cached! Sizes (should match!): Components: " . sizeof(self::$components) . " Component groups: " . sizeof(self::$component_groups) . " Events: " . sizeof(self::$events));
         }
