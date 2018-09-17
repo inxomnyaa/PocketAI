@@ -2,6 +2,9 @@
 
 namespace xenialdan\PocketAI\filter;
 
+use pocketmine\entity\Entity;
+use xenialdan\PocketAI\entitytype\AIEntity;
+
 /**
  * Class Filters
  * @inheritdoc
@@ -27,28 +30,67 @@ namespace xenialdan\PocketAI\filter;
  *
  * @package xenialdan\PocketAI\filter
  */
-class Filters extends \SplDoublyLinkedList
+class Filters//TODO rename to FilterGroup? (if multiple groups are definable - i.e. ["all_of"[...],"any_of"[...]])
 {
+    /** @var \SplDoublyLinkedList[BaseFilter] */
+    public $filters;
+    /** @var string "all_of" or "any_of" */
+    public $groupType;
+
+    /**
+     * Filters constructor.
+     * @param array $filters
+     */
+    public function __construct(array $filters)//TODO check if issues occur if multiple groups are defined - i.e. ["all_of"[...],"any_of"[...]]
+    {
+        $this->filters = new \SplDoublyLinkedList();
+        foreach ($filters as $groupType => $filter){
+            $this->groupType = $groupType;
+            foreach ($filter as $value){
+                $class = "xenialdan\\PocketAI\\filter\\_" . $value["test"];
+                if (class_exists($class)) {
+                    /** @var BaseFilter $testclass */
+                    $testclass = new $class($value);
+                    print_r($testclass);
+                    $this->push($testclass);
+                }
+            }
+        }
+    }
+
+    /**
+     * @param AIEntity $caller Entity calling the test
+     * @param Entity $other Entity involved in the interaction
+     * @return bool
+     */
+    public function test(AIEntity $caller, Entity $other): bool{
+        $filtered = array_filter(iterator_to_array($this->filters), function ($filter) use ($caller, $other){
+            /** @var BaseFilter $filter */
+            return $filter->test($caller, $other);
+        });
+        return (($this->groupType === "any_of" && !empty($filtered)) xor ($this->groupType === "all_of" && count($filtered) === $this->filters->count()));
+    }
+
 
     public function push($value)
     {
         if (!$value instanceof BaseFilter)
             throw new \InvalidArgumentException("Value must be a filter");
-        parent::push($value);
+        $this->filters->push($value);
     }
 
     public function add($index, $newval)
     {
         if (!$newval instanceof BaseFilter)
             throw new \InvalidArgumentException("Value must be a filter");
-        parent::add($index, $newval);
+        $this->filters->add($index, $newval);
     }
 
     public function offsetSet($index, $newval)
     {
         if (!$newval instanceof BaseFilter)
             throw new \InvalidArgumentException("Value must be a filter");
-        parent::offsetSet($index, $newval);
+        $this->filters->offsetSet($index, $newval);
     }
 
 }

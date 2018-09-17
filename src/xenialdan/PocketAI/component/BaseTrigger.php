@@ -6,7 +6,6 @@ use pocketmine\entity\Entity;
 use pocketmine\Player;
 use xenialdan\PocketAI\entitytype\AIEntity;
 use xenialdan\PocketAI\entitytype\AIProjectile;
-use xenialdan\PocketAI\filter\Filters;
 
 abstract class BaseTrigger extends BaseComponent
 {
