@@ -14,7 +14,7 @@ class _avoid_mob_type extends BaseComponent
      *
      */
     public $entity_types;
-    /** @var string (Minecraft Filter) $filters Conditions that make this entry in the list valid */
+    /** @var array (Minecraft Filter) $filters Conditions that make this entry in the list valid */
     public $filters;
     /** @var float $max_dist Maximum distance to look for an entity */
     public $max_dist = 0.0;

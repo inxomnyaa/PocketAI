@@ -14,7 +14,7 @@ class _vex_copy_owner_target extends BaseComponent
      *
      */
     public $entity_types;
-    /** @var string (Minecraft Filter) $filters Conditions that make this entry in the list valid */
+    /** @var array (Minecraft Filter) $filters Conditions that make this entry in the list valid */
     public $filters;
     /** @var float $max_dist Maximum distance this mob can be away to be a valid choice */
     public $max_dist = 16;

@@ -11,7 +11,7 @@ abstract class BaseTrigger extends BaseComponent
 {
     /** @var string $event The event to run when the conditions for this trigger are met */
     public $event;
-    /** @var string (Minecraft Filter) $filters The list of conditions for this trigger */
+    /** @var array (Minecraft Filter) $filters The list of conditions for this trigger */
     public $filters;
     /** @var string $target The target of the event */
     public $target = "self";

@@ -51,7 +51,6 @@ class Filters//TODO rename to FilterGroup? (if multiple groups are definable - i
                 if (class_exists($class)) {
                     /** @var BaseFilter $testclass */
                     $testclass = new $class($value);
-                    print_r($testclass);
                     $this->push($testclass);
                 }
             }

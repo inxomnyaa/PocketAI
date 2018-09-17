@@ -18,7 +18,7 @@ class _summon_entity extends BaseComponent
     public $cast_duration;
     /** @var float $cooldown_time Time in seconds the mob has to wait before using the spell again */
     public $cooldown_time = 0.0;
-    /** @var string (Minecraft Filter) $filters */
+    /** @var array (Minecraft Filter) $filters */
     public $filters;
     /** @var float $max_activation_range Upper bound of the activation distance in blocks for this spell */
     public $max_activation_range = -1.0;

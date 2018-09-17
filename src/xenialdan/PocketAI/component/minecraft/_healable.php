@@ -14,7 +14,7 @@ class _healable extends BaseComponent
      *
      */
     public $items;
-    /** @var string (Minecraft Filter) $filters The list of conditions for this trigger */
+    /** @var array (Minecraft Filter) $filters The list of conditions for this trigger */
     public $filters;
     /** @var bool $force_use Determines if item can be used regardless of entity being full health */
     public $force_use = false;

@@ -14,7 +14,7 @@ class _share_items extends BaseComponent
      *
      */
     public $entity_types;
-    /** @var string (Minecraft Filter) $filters Conditions that make this entry in the list valid */
+    /** @var array (Minecraft Filter) $filters Conditions that make this entry in the list valid */
     public $filters;
     /** @var float $max_dist Maximum distance in blocks this mob will look for entities to share items with */
     public $max_dist = 0.0;
