@@ -33,9 +33,10 @@ abstract class BaseFilter
      * @param Entity $other Entity involved in the interaction
      * @return bool
      */
-    public function test(AIEntity $caller, Entity $other): bool{
+    public function test(AIEntity $caller, Entity $other): bool
+    {
         $toTest = $this->subjectToTest($caller, $other);
-        if(is_null($toTest)) return false;
+        if (is_null($toTest)) return false;
         $this->subjectToTest = $toTest;
         return true;
     }
@@ -54,33 +55,39 @@ abstract class BaseFilter
      * @param Entity $other
      * @return null|Entity
      */
-    public function subjectToTest(AIEntity $caller, Entity $other) :?Entity{
-        switch ($this->subject){
+    public function subjectToTest(AIEntity $caller, Entity $other): ?Entity
+    {
+        switch ($this->subject) {
             //The other member of an interaction, not the caller
-            case "other":{
-                return $other;
-                break;
-            }
+            case "other":
+                {
+                    return $other;
+                    break;
+                }
             //The caller's current parent
-            case "parent":{
-                return $caller->getParentEntity();
-                break;
-            }
+            case "parent":
+                {
+                    return $caller->getParentEntity();
+                    break;
+                }
             //TODO The player involved with the interaction --Could possibly be even another entity?
-            case "player":{
-                return ($other instanceof Player)?$other:null;
-                break;
-            }
+            case "player":
+                {
+                    return ($other instanceof Player) ? $other : null;
+                    break;
+                }
             //The entity or object calling the test
-            case "self":{
-                return $caller;
-                break;
-            }
+            case "self":
+                {
+                    return $caller;
+                    break;
+                }
             //The caller's current target
-            case "target":{
-                return $caller->getTargetEntity();
-                break;
-            }
+            case "target":
+                {
+                    return $caller->getTargetEntity();
+                    break;
+                }
         }
         return null;
     }
@@ -91,52 +98,61 @@ abstract class BaseFilter
      * @param $val2
      * @return bool
      */
-    public function compare($val1, $val2) : bool{
-        switch ($this->operator){
+    public function compare($val1, $val2): bool
+    {
+        switch ($this->operator) {
             //Test for equality
-            case "=":{
-                return $val1 == $val2;
-                break;
-            }
+            case "=":
+                {
+                    return $val1 == $val2;
+                    break;
+                }
             //Test for equality
             case "==":
-            //Test for equality
-            case "equals":{
-                return $val1 === $val2;
-                break;
-            }
+                //Test for equality
+            case "equals":
+                {
+                    return $val1 === $val2;
+                    break;
+                }
             //Test for inequality
             case "not":
-            //Test for inequality
-            case "!=":{
-                return $val1 != $val2;
-                break;
-            }
+                //Test for inequality
+            case "!=":
+                {
+                    return $val1 != $val2;
+                    break;
+                }
             //Test for less-than the value
-            case "<":{
-                return $val1 < $val2;
-                break;
-            }
+            case "<":
+                {
+                    return $val1 < $val2;
+                    break;
+                }
             //Test for less-than or equal to the value
-            case "<=":{
-                return $val1 <= $val2;
-                break;
-            }
+            case "<=":
+                {
+                    return $val1 <= $val2;
+                    break;
+                }
             //Test for inequality
-            case "<>":{
-                return $val1 <> $val2;
-                break;
-            }
+            case "<>":
+                {
+                    return $val1 <> $val2;
+                    break;
+                }
             //Test for greater-than the value
-            case ">":{
-                return $val1 > $val2;
-                break;
-            }
+            case ">":
+                {
+                    return $val1 > $val2;
+                    break;
+                }
             //Test for greater-than or equal to the value
-            case ">=":{
-                return $val1 !== $val2;
-                break;
-            }
+            case ">=":
+                {
+                    return $val1 !== $val2;
+                    break;
+                }
         }
         return false;
     }

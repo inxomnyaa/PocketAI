@@ -15,9 +15,9 @@ use pocketmine\Player;
 use pocketmine\plugin\Plugin;
 use xenialdan\PocketAI\component\Components;
 use xenialdan\PocketAI\component\minecraft\_interact;
+use xenialdan\PocketAI\entity\LeashKnot;
 use xenialdan\PocketAI\entitytype\AIEntity;
 use xenialdan\PocketAI\filter\Filters;
-use xenialdan\PocketAI\item\Lead;
 use xenialdan\PocketAI\Loader;
 
 /**
@@ -141,7 +141,28 @@ class InventoryEventListener implements Listener
 
     private function onRightClick(AIEntity $target, Player $player)
     {//TODO move to AIEntity for better handling
+        if ($target instanceof LeashKnot) {
+            foreach ($target->getLevel()->getEntities() as $entity) {
+                if (!$entity instanceof AIEntity) continue;
+                if ($entity->getDataPropertyManager()->getLong(AIEntity::DATA_LEAD_HOLDER_EID) === $target->getId()) {
+                    $target->setLeashedTo($player);
+                }
+            }
+            $target->kill();
+            return true;
+        }
         switch ($player->getInventory()->getItemInHand()->getId()) {
+            case Item::AIR:
+                {
+                    if ($target->isLeashed()) {
+                        /** @var Components $components */
+                        $components = $target->getEntityProperties()->findComponents("minecraft:leashable");
+                        if ($components->count() > 0) {
+                            $target->setLeashedTo(null);
+                        }
+                    }
+                    break;
+                }
             case Item::LEAD:
                 {
                     /** @var Components $components */
@@ -150,6 +171,7 @@ class InventoryEventListener implements Listener
                         if ($target->isLeashed()) {
                             $target->setLeashedTo(null);
                         } else {
+                            $player->getInventory()->getItemInHand()->setCount($player->getInventory()->getItemInHand()->getCount() - 1);
                             $target->setLeashedTo($player);
                         }
                     }
@@ -255,7 +277,7 @@ class InventoryEventListener implements Listener
                         }
                     }
                 }
-                if(!$on_interact_positive) return false;
+                if (!$on_interact_positive) return false;
                 $player->sendTip($component->interact_text ?? "");//TODO remove debug
                 $player->getDataPropertyManager()->setString(Entity::DATA_INTERACTIVE_TAG, $component->interact_text ?? "");
             }

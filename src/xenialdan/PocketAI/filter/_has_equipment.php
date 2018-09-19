@@ -38,10 +38,10 @@ class _has_equipment extends BaseFilter
     public function test(AIEntity $caller, Entity $other): bool
     {
         $return = parent::test($caller, $other);
-        if(!$return) return $return;
-        if(!$this->subjectToTest instanceof InventoryHolder) return false;
+        if (!$return) return $return;
+        if (!$this->subjectToTest instanceof InventoryHolder) return false;
         $item = Item::fromString($this->value);
-        if($item->isNull()) return false;
+        if ($item->isNull()) return false;
         switch ($this->domain) {
             case "any":
                 {
@@ -50,37 +50,37 @@ class _has_equipment extends BaseFilter
                 }
             case "armor":
                 {
-                    if(!$this->subjectToTest instanceof Living) return false;
+                    if (!$this->subjectToTest instanceof Living) return false;
                     return $this->subjectToTest->getArmorInventory()->contains($item);
                     break;
                 }
             case "feet":
                 {
-                    if(!$this->subjectToTest instanceof Living) return false;
+                    if (!$this->subjectToTest instanceof Living) return false;
                     return $this->subjectToTest->getArmorInventory()->getBoots()->equals($item, true);
                     break;
                 }
             case "hand":
                 {
-                    if(!$this->subjectToTest instanceof Human) return false;
+                    if (!$this->subjectToTest instanceof Human) return false;
                     return $this->subjectToTest->getInventory()->getItemInHand()->equals($item, true);
                     break;
                 }
             case "head":
                 {
-                    if(!$this->subjectToTest instanceof Living) return false;
+                    if (!$this->subjectToTest instanceof Living) return false;
                     return $this->subjectToTest->getArmorInventory()->getHelmet()->equals($item, true);
                     break;
                 }
             case "leg":
                 {
-                    if(!$this->subjectToTest instanceof Living) return false;
+                    if (!$this->subjectToTest instanceof Living) return false;
                     return $this->subjectToTest->getArmorInventory()->getLeggings()->equals($item, true);
                     break;
                 }
             case "torso":
                 {
-                    if(!$this->subjectToTest instanceof Living) return false;
+                    if (!$this->subjectToTest instanceof Living) return false;
                     return $this->subjectToTest->getArmorInventory()->getChestplate()->equals($item, true);
                     break;
                 }

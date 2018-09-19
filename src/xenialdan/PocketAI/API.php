@@ -122,46 +122,55 @@ class API
      * @param string $target
      * @return null|Entity
      */
-    public static function targetToTest(AIEntity $caller, ?Entity $other, string $target) :?Entity{
-        switch ($target){
+    public static function targetToTest(AIEntity $caller, ?Entity $other, string $target): ?Entity
+    {
+        switch ($target) {
             //The other member of an interaction, not the caller
-            case "other":{
-                return $other;
-                break;
-            }
+            case "other":
+                {
+                    return $other;
+                    break;
+                }
             //The caller's current parent
-            case "parent":{
-                return $caller->getParentEntity();
-                break;
-            }
+            case "parent":
+                {
+                    return $caller->getParentEntity();
+                    break;
+                }
             //TODO The player involved with the interaction --Could possibly be even another entity?
-            case "player":{
-                return ($other instanceof Player)?$other:null;
-                break;
-            }
+            case "player":
+                {
+                    return ($other instanceof Player) ? $other : null;
+                    break;
+                }
             //The entity or object calling the test
-            case "self":{
-                return $caller;
-                break;
-            }
+            case "self":
+                {
+                    return $caller;
+                    break;
+                }
             //The caller's current target
-            case "target":{
-                return $caller->getTargetEntity();
-                break;
-            }
+            case "target":
+                {
+                    return $caller->getTargetEntity();
+                    break;
+                }
         }
         return null;
     }
 
-    public static function getMinAABB(AxisAlignedBB $aabb):Vector3{
+    public static function getMinAABB(AxisAlignedBB $aabb): Vector3
+    {
         return new Vector3($aabb->minX, $aabb->minY, $aabb->minZ);
     }
 
-    public static function getMaxAABB(AxisAlignedBB $aabb):Vector3{
+    public static function getMaxAABB(AxisAlignedBB $aabb): Vector3
+    {
         return new Vector3($aabb->maxX, $aabb->maxY, $aabb->maxZ);
     }
 
-    public static function getAABBCorners(AxisAlignedBB $aabb):array {
+    public static function getAABBCorners(AxisAlignedBB $aabb): array
+    {
         return [
             new Vector3($aabb->minX, $aabb->minY, $aabb->minZ),
             new Vector3($aabb->minX, $aabb->minY, $aabb->maxZ),

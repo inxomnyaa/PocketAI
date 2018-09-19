@@ -36,9 +36,10 @@ abstract class BaseTrigger extends BaseComponent
      * @param Entity $other Entity involved in the interaction
      * @return bool
      */
-    public function trigger(AIEntity $caller, Entity $other): bool{
+    public function trigger(AIEntity $caller, Entity $other): bool
+    {
         $toUse = $this->targetToTest($caller, $other);
-        if(is_null($toUse)) return false;
+        if (is_null($toUse)) return false;
         $this->targetToUse = $toUse;
         return true;
     }
@@ -49,33 +50,39 @@ abstract class BaseTrigger extends BaseComponent
      * @param Entity $other
      * @return null|Entity
      */
-    public function targetToTest(AIEntity $caller, Entity $other) :?Entity{
-        switch ($this->target){
+    public function targetToTest(AIEntity $caller, Entity $other): ?Entity
+    {
+        switch ($this->target) {
             //The other member of an interaction, not the caller
-            case "other":{
-                return $other;
-                break;
-            }
+            case "other":
+                {
+                    return $other;
+                    break;
+                }
             //The caller's current parent
-            case "parent":{
-                return $caller->getParentEntity();
-                break;
-            }
+            case "parent":
+                {
+                    return $caller->getParentEntity();
+                    break;
+                }
             //TODO The player involved with the interaction --Could possibly be even another entity?
-            case "player":{
-                return ($other instanceof Player)?$other:null;
-                break;
-            }
+            case "player":
+                {
+                    return ($other instanceof Player) ? $other : null;
+                    break;
+                }
             //The entity or object calling the test
-            case "self":{
-                return $caller;
-                break;
-            }
+            case "self":
+                {
+                    return $caller;
+                    break;
+                }
             //The caller's current target
-            case "target":{
-                return $caller->getTargetEntity();
-                break;
-            }
+            case "target":
+                {
+                    return $caller->getTargetEntity();
+                    break;
+                }
         }
         return null;
     }
@@ -84,11 +91,15 @@ abstract class BaseTrigger extends BaseComponent
      * Applies the changes to the mob
      * @param AIEntity|AIProjectile $entity
      */
-    public function apply($entity): void{}
+    public function apply($entity): void
+    {
+    }
 
     /**
      * Removes the changes from the mob
      * @param AIEntity|AIProjectile $entity
      */
-    public function remove($entity): void{}
+    public function remove($entity): void
+    {
+    }
 }

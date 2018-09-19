@@ -19,6 +19,7 @@ use xenialdan\PocketAI\component\ComponentGroups;
 use xenialdan\PocketAI\component\Components;
 use xenialdan\PocketAI\entity\Cow;
 use xenialdan\PocketAI\entity\FishingHook;
+use xenialdan\PocketAI\entity\LeashKnot;
 use xenialdan\PocketAI\entitytype\AIEntity;
 use xenialdan\PocketAI\item\FishingRod;
 use xenialdan\PocketAI\item\Lead;
@@ -100,26 +101,32 @@ class Loader extends PluginBase
 
     private function debug()
     {
-        $e = new Cow($this->getServer()->getDefaultLevel(), Cow::createBaseNBT($this->getServer()->getDefaultLevel()->getSpawnLocation()->asVector3()));
-        $this->getLogger()->debug(">==========< getBehaviourName >==========<");
-        $this->getLogger()->debug(print_r($e->entityProperties->getBehaviourName(), true));
-        $this->getLogger()->debug(">==========< getEvents >==========<");
-        $this->getLogger()->debug(print_r($e->entityProperties->getEvents(), true));
-        $this->getLogger()->debug(">==========< getComponents >==========<");
-        $this->getLogger()->debug(print_r($e->entityProperties->getComponents(), true));
-        $this->getLogger()->debug(">==========< getComponentGroups >==========<");
-        $this->getLogger()->debug(print_r($e->entityProperties->getComponentGroups(), true));
-        $this->getLogger()->debug(">==========< findComponents >==========<");
-        $this->getLogger()->debug(print_r($e->entityProperties->findComponents("minecraft:identifier"), true));
-        $this->getLogger()->debug(">==========< findComponents more than 1 entry >==========<");
-        $this->getLogger()->debug(print_r($e->entityProperties->findComponents("minecraft:behavior.follow_parent"), true));
-        $this->getLogger()->debug(">==========< findComponentGroups >==========<");
-        $this->getLogger()->debug(print_r($e->entityProperties->findComponentGroups("minecraft:cow_adult"), true));
-        $this->getLogger()->debug(">==========< getActiveComponentGroups >==========<");
-        $this->getLogger()->debug(print_r($e->entityProperties->getActiveComponentGroups(), true));
-        $this->getLogger()->debug(">==========< Cow! >==========<");
-        $this->getLogger()->debug(print_r($e, true));
-        $e->kill();
+        try {
+            $e = new Cow($this->getServer()->getDefaultLevel(), Cow::createBaseNBT($this->getServer()->getDefaultLevel()->getSpawnLocation()->asVector3()));
+            $entityProperties = $e->getEntityProperties();
+            if (is_null($entityProperties)) return;
+            $this->getLogger()->debug(">==========< getBehaviourName >==========<");
+            $this->getLogger()->debug(print_r($entityProperties->getBehaviourName(), true));
+            $this->getLogger()->debug(">==========< getEvents >==========<");
+            $this->getLogger()->debug(print_r($entityProperties->getEvents(), true));
+            $this->getLogger()->debug(">==========< getComponents >==========<");
+            $this->getLogger()->debug(print_r($entityProperties->getComponents(), true));
+            $this->getLogger()->debug(">==========< getComponentGroups >==========<");
+            $this->getLogger()->debug(print_r($entityProperties->getComponentGroups(), true));
+            $this->getLogger()->debug(">==========< findComponents >==========<");
+            $this->getLogger()->debug(print_r($entityProperties->findComponents("minecraft:identifier"), true));
+            $this->getLogger()->debug(">==========< findComponents more than 1 entry >==========<");
+            $this->getLogger()->debug(print_r($entityProperties->findComponents("minecraft:behavior.follow_parent"), true));
+            $this->getLogger()->debug(">==========< findComponentGroups >==========<");
+            $this->getLogger()->debug(print_r($entityProperties->findComponentGroups("minecraft:cow_adult"), true));
+            $this->getLogger()->debug(">==========< getActiveComponentGroups >==========<");
+            $this->getLogger()->debug(print_r($entityProperties->getActiveComponentGroups(), true));
+            $this->getLogger()->debug(">==========< Cow! >==========<");
+            $this->getLogger()->debug(print_r($e, true));
+            $e->kill();
+        } catch (\Exception $exception) {
+            print_r($exception);
+        }
     }
 
     private function preloadJson(array $behaviourJsonFiles)
@@ -158,13 +165,13 @@ class Loader extends PluginBase
                                     function ($key) {
                                         return is_int($key);
                                     },
-                                ARRAY_FILTER_USE_KEY
+                                    ARRAY_FILTER_USE_KEY
                                 )
                             ) {
                                 $this->getLogger()->notice("MULTIPLE!");
                                 foreach ($component_data as $component_datum) {
                                     print_r($component_datum);
-                                    if($component_name == "minecraft:environment_sensor")//This is due to a probable Mojang-Json-Coding issue in dolphin.json. Investigating.
+                                    if ($component_name == "minecraft:environment_sensor")//This is due to a probable Mojang-Json-Coding issue in dolphin.json. Investigating.
                                         $groups[] = new $c(["on_environment" => $component_datum]);
                                     else
                                         $groups[] = new $c($component_datum);
@@ -183,7 +190,7 @@ class Loader extends PluginBase
                 self::$events[$filename] = $behaviour["minecraft:entity"]["events"] ?? [];
             }
         } catch (\Exception $e) {
-            $this->getLogger()->alert("An exception has occurred whilest preloading the behaviours (File: ".$currentFilename."): " . $e);
+            $this->getLogger()->alert("An exception has occurred whilest preloading the behaviours (File: " . $currentFilename . "): " . $e);
         } finally {
             $this->getLogger()->notice("Behaviours successfully pre-loaded and cached! Sizes (should match!): Components: " . sizeof(self::$components) . " Component groups: " . sizeof(self::$component_groups) . " Events: " . sizeof(self::$events));
         }
@@ -193,6 +200,8 @@ class Loader extends PluginBase
     {
         Entity::registerEntity(Cow::class, true, ["pocketai:cow", "minecraft:cow"]);//TODO use _identifier
         $this->getLogger()->notice("Registered AI for: Cow");
+        Entity::registerEntity(LeashKnot::class, true, ["pocketai:leash_knot", "minecraft:leash_knot"]);
+        $this->getLogger()->notice("Registered Entity: LeashKnot");
     }
 
     public function registerItems()

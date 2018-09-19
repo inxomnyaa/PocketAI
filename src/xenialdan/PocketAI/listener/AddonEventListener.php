@@ -54,7 +54,9 @@ class AddonEventListener implements Listener
 
     public function onAddonEvent(AddonEvent $event)
     {
-        $data = $event->getEntity()->getEntityProperties()->getEventData($event->getEvent());
+        $entityProperties = $event->getEntity()->getEntityProperties();
+        if (is_null($entityProperties)) return;
+        $data = $entityProperties->getEventData($event->getEvent());
         $event->execute($data);
     }
 }

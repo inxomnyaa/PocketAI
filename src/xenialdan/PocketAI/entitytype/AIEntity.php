@@ -13,6 +13,7 @@ use pocketmine\level\particle\HappyVillagerParticle;
 use pocketmine\math\AxisAlignedBB;
 use pocketmine\math\Vector3;
 use pocketmine\nbt\tag\CompoundTag;
+use pocketmine\network\mcpe\protocol\EntityEventPacket;
 use pocketmine\timings\Timings;
 use xenialdan\PocketAI\API;
 use xenialdan\PocketAI\component\ComponentGroup;
@@ -21,7 +22,6 @@ use xenialdan\PocketAI\component\minecraft\_leashable;
 use xenialdan\PocketAI\EntityProperties;
 use xenialdan\PocketAI\event\AddonEvent;
 use xenialdan\PocketAI\inventory\AIEntityInventory;
-use xenialdan\PocketAI\item\Lead;
 use xenialdan\PocketAI\Loader;
 use xenialdan\PocketAI\LootGenerator;
 
@@ -46,9 +46,16 @@ abstract class AIEntity extends Living implements InventoryHolder
 
     public $jumpVelocity = 0.42;
 
+    protected function initEntity(CompoundTag $nbt): void
+    {
+        parent::initEntity($nbt);
+
+        $this->setLootGenerator(new LootGenerator());
+    }
+
     public function isLeashed(): bool
     {
-        return $this->getDataPropertyManager()->getByte(self::DATA_FLAG_LEASHED) > 0;
+        return $this->getGenericFlag(self::DATA_FLAG_LEASHED);
     }
 
     /**
@@ -57,30 +64,33 @@ abstract class AIEntity extends Living implements InventoryHolder
      */
     public function setLeashedTo(?Entity $entity)
     {
+        $this->getDataPropertyManager()->setLong(self::DATA_LEAD_HOLDER_EID, -1);
         /** @var Components $components */
         $components = $this->getEntityProperties()->findComponents("minecraft:leashable");
         if ($components->count() > 0) {
             /** @var _leashable $component */
             foreach ($components as $component) {
                 if (is_null($entity)) {
-                    if($this->isLeashed()) $this->getLevel()->dropItem($this, new Lead());
-                    $this->getDataPropertyManager()->setByte(self::DATA_FLAG_LEASHED, 0);
+                    if ($this->isLeashed()) {
+                        $this->getLevel()->getServer()->getPluginManager()->callEvent($ev = new AddonEvent(Loader::getInstance(), API::targetToTest($this, $entity, $component->on_unleash["target"]), $component->on_unleash["event"]));
+                    }
                     $this->getDataPropertyManager()->setLong(self::DATA_LEAD_HOLDER_EID, -1);
-                    $this->getLevel()->getServer()->getPluginManager()->callEvent($ev = new AddonEvent(Loader::getInstance(), API::targetToTest($this, $entity, $component->on_unleash["target"]), $component->on_unleash["event"]));
-                } else{
-                    $this->getDataPropertyManager()->setByte(self::DATA_FLAG_LEASHED, 1);
+                    $this->setGenericFlag(self::DATA_FLAG_LEASHED, false);
+                    $pk = new EntityEventPacket();
+                    $pk->event = EntityEventPacket::REMOVE_LEASH;
+                    $pk->entityRuntimeId = $this->getId();
+                    $this->getLevel()->addGlobalPacket($pk);
+                } else {
+                    print_r($this->isLeashed() ? "Leashed" : "Not leashed");
+                    if ($this->isLeashed()) $this->setLeashedTo(null);
+                    print_r($this->isLeashed() ? "Leashed" : "Not leashed");
                     $this->getDataPropertyManager()->setLong(self::DATA_LEAD_HOLDER_EID, $entity->getId());
-                    $this->getLevel()->getServer()->getPluginManager()->callEvent($ev = new AddonEvent(Loader::getInstance(), API::targetToTest($this, $entity, $component->on_leash["target"]), $component->on_leash["event"]));
+                    $this->setGenericFlag(self::DATA_FLAG_LEASHED, true);
+                    print_r($this->isLeashed() ? "Leashed" : "Not leashed");
+                    if ($this->isLeashed()) $this->getLevel()->getServer()->getPluginManager()->callEvent($ev = new AddonEvent(Loader::getInstance(), API::targetToTest($this, $entity, $component->on_leash["target"]), $component->on_leash["event"]));
                 }
             }
         }
-    }
-
-    protected function initEntity(CompoundTag $nbt): void
-    {
-        parent::initEntity($nbt);
-
-        $this->setLootGenerator(new LootGenerator());
     }
 
     /* AI */
@@ -365,12 +375,13 @@ abstract class AIEntity extends Living implements InventoryHolder
     }
 
     /**
-     * @param EntityProperties $entityProperties
+     * @param null|EntityProperties $entityProperties
      */
-    public function setEntityProperties(EntityProperties $entityProperties)
+    public function setEntityProperties(?EntityProperties $entityProperties)
     {
         //TODO remove current properties
         $this->entityProperties = $entityProperties;
-        $this->entityProperties->applyComponents();
+        if (!is_null($entityProperties))
+            $this->entityProperties->applyComponents();
     }
 }

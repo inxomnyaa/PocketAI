@@ -74,7 +74,7 @@ class EntityProperties extends DataPropertyManager
     /**
      * @return Components
      */
-    public function getComponents() :Components
+    public function getComponents(): Components
     {
         return $this->components;
     }
@@ -101,7 +101,7 @@ class EntityProperties extends DataPropertyManager
                 return $v->getName() === $name;
             }), $map);
         }
-        foreach ($map as $value){
+        foreach ($map as $value) {
             $c->push($value);
         }
         if ($c->count() === 0) Loader::getInstance()->getLogger()->debug("No Component with name $name found");
@@ -119,7 +119,7 @@ class EntityProperties extends DataPropertyManager
     /**
      * @return ComponentGroups
      */
-    public function getComponentGroups():ComponentGroups
+    public function getComponentGroups(): ComponentGroups
     {
         return $this->componentGroups;
     }
@@ -137,8 +137,8 @@ class EntityProperties extends DataPropertyManager
         });
         $cg = new ComponentGroups();
         if (empty($map)) Loader::getInstance()->getLogger()->debug("No ComponentGroup with name $name found");
-        else{
-            foreach ($map as $value){
+        else {
+            foreach ($map as $value) {
                 $cg->push($value);
             }
         }
