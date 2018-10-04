@@ -2,11 +2,10 @@
 
 namespace xenialdan\PocketAI\component\minecraft\behavior;
 
-use xenialdan\PocketAI\component\BaseComponent;
 use xenialdan\PocketAI\entitytype\AIEntity;
 use xenialdan\PocketAI\entitytype\AIProjectile;
 
-class _enderman_leave_block extends BaseComponent
+class _enderman_leave_block extends BehaviourComponent
 {
     protected $name = "minecraft:behavior.enderman_leave_block";
 
@@ -18,6 +17,7 @@ class _enderman_leave_block extends BaseComponent
     public function __construct(array $values = [])
     {
 
+        parent::__construct($values);
     }
 
     /**
@@ -36,5 +36,10 @@ class _enderman_leave_block extends BaseComponent
     public function remove($entity): void
     {
         // TODO: Implement remove() method.
+    }
+
+    public function tick(int $tickDiff)
+    {
+        // TODO: Implement tick() method.
     }
 }

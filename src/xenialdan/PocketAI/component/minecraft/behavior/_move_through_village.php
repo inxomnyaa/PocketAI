@@ -2,11 +2,10 @@
 
 namespace xenialdan\PocketAI\component\minecraft\behavior;
 
-use xenialdan\PocketAI\component\BaseComponent;
 use xenialdan\PocketAI\entitytype\AIEntity;
 use xenialdan\PocketAI\entitytype\AIProjectile;
 
-class _move_through_village extends BaseComponent
+class _move_through_village extends BehaviourComponent
 {
     protected $name = "minecraft:behavior.move_through_village";
     /** @var bool $only_at_night If true, the mob will only move through the village during night time */
@@ -24,6 +23,7 @@ class _move_through_village extends BaseComponent
         $this->only_at_night = $values['only_at_night'] ?? $this->only_at_night;
         $this->speed_multiplier = $values['speed_multiplier'] ?? $this->speed_multiplier;
 
+        parent::__construct($values);
     }
 
     /**
@@ -42,5 +42,10 @@ class _move_through_village extends BaseComponent
     public function remove($entity): void
     {
         // TODO: Implement remove() method.
+    }
+
+    public function tick(int $tickDiff)
+    {
+        // TODO: Implement tick() method.
     }
 }

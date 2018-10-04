@@ -2,11 +2,10 @@
 
 namespace xenialdan\PocketAI\component\minecraft\behavior;
 
-use xenialdan\PocketAI\component\BaseComponent;
 use xenialdan\PocketAI\entitytype\AIEntity;
 use xenialdan\PocketAI\entitytype\AIProjectile;
 
-class _open_door extends BaseComponent
+class _open_door extends BehaviourComponent
 {
     protected $name = "minecraft:behavior.open_door";
     /** @var bool $close_door_after If true, the mob will close the door after opening it and going through it */
@@ -21,6 +20,7 @@ class _open_door extends BaseComponent
     {
         $this->close_door_after = $values['close_door_after'] ?? $this->close_door_after;
 
+        parent::__construct($values);
     }
 
     /**
@@ -39,5 +39,10 @@ class _open_door extends BaseComponent
     public function remove($entity): void
     {
         // TODO: Implement remove() method.
+    }
+
+    public function tick(int $tickDiff)
+    {
+        // TODO: Implement tick() method.
     }
 }

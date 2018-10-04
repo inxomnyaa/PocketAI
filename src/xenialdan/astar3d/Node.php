@@ -4,7 +4,7 @@ namespace xenialdan\astar3d;
 
 use pocketmine\math\Vector3;
 
-class Node
+class Node extends Vector3
 {
     /** @var bool */
     public $walkable;
@@ -33,6 +33,7 @@ class Node
      */
     public function __construct(bool $walkable, Vector3 $worldPosition, Vector3 $gridPosition, int $movementPenalty)
     {
+        parent::__construct($worldPosition->getX(), $worldPosition->getY(), $worldPosition->getZ());
         $this->walkable = $walkable;
         $this->worldPosition = $worldPosition;
         $this->gridPosition = $gridPosition;

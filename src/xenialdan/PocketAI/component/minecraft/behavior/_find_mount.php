@@ -2,11 +2,10 @@
 
 namespace xenialdan\PocketAI\component\minecraft\behavior;
 
-use xenialdan\PocketAI\component\BaseComponent;
 use xenialdan\PocketAI\entitytype\AIEntity;
 use xenialdan\PocketAI\entitytype\AIProjectile;
 
-class _find_mount extends BaseComponent
+class _find_mount extends BehaviourComponent
 {
     protected $name = "minecraft:behavior.find_mount";
     /** @var bool $avoid_water If true, the mob will not go into water blocks when going towards a mount */
@@ -33,6 +32,7 @@ class _find_mount extends BaseComponent
         $this->target_needed = $values['target_needed'] ?? $this->target_needed;
         $this->within_radius = $values['within_radius'] ?? $this->within_radius;
 
+        parent::__construct($values);
     }
 
     /**
@@ -51,5 +51,10 @@ class _find_mount extends BaseComponent
     public function remove($entity): void
     {
         // TODO: Implement remove() method.
+    }
+
+    public function tick(int $tickDiff)
+    {
+        // TODO: Implement tick() method.
     }
 }

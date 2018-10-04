@@ -2,11 +2,10 @@
 
 namespace xenialdan\PocketAI\component\minecraft\behavior;
 
-use xenialdan\PocketAI\component\BaseComponent;
 use xenialdan\PocketAI\entitytype\AIEntity;
 use xenialdan\PocketAI\entitytype\AIProjectile;
 
-class _tempt extends BaseComponent
+class _tempt extends BehaviourComponent
 {
     protected $name = "minecraft:behavior.tempt";
     /** @var bool $can_get_scared If true, the mob can stop being tempted if the player moves too fast while close to this mob */
@@ -30,6 +29,7 @@ class _tempt extends BaseComponent
         $this->speed_multiplier = $values['speed_multiplier'] ?? $this->speed_multiplier;
         $this->within_radius = $values['within_radius'] ?? $this->within_radius;
 
+        parent::__construct($values);
     }
 
     /**
@@ -48,5 +48,10 @@ class _tempt extends BaseComponent
     public function remove($entity): void
     {
         // TODO: Implement remove() method.
+    }
+
+    public function tick(int $tickDiff)
+    {
+        // TODO: Implement tick() method.
     }
 }

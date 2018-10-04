@@ -36,11 +36,11 @@ class Loader extends PluginBase
 
     public static $behaviourJson = [];
     /** @var array[Components] */
-    public static $components;
+    public static $components = [];
     /** @var array[ComponentGroups] */
-    public static $component_groups;
+    public static $component_groups = [];
     /** @var array[] */
-    public static $events;
+    public static $events = [];
     public static $loottables = [];
 
     public static $links = [];

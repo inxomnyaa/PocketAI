@@ -76,18 +76,18 @@ class InventoryEventListener implements Listener
                 }
                 if (!$target instanceof AIEntity) return false;
                 if ($target instanceof InventoryHolder/* && $target instanceof Tamable && $target->isTamed()*/) {
-                    return $this->onInventoryOpen($target, $player);
+                    return $target->onInventoryOpen($target, $player);
                 }
                 return true;
                 #}
                 break;
-            case InteractPacket::ACTION_MOUSEOVER:
+            case InteractPacket::ACTION_MOUSEOVER://TODO fix slot change
                 $target = $player->getServer()->findEntity($packet->target);
                 if (is_null($target)) {
                     return false;
                 }
                 if (!$target instanceof AIEntity) return false;
-                return $this->onHover($target, $player);
+                return $target->onHover($target, $player);
                 break;
         }
 
@@ -115,7 +115,7 @@ class InventoryEventListener implements Listener
                                     return false;
                                 }
                                 if (!$target instanceof AIEntity) return false;
-                                return ($player->isSneaking() ? $this->onSneakRightClick($target, $player) : $this->onRightClick($target, $player));
+                                return $target->onRightClick($player);
                             }
                     }
                     break;
@@ -125,164 +125,6 @@ class InventoryEventListener implements Listener
                 }
         }
 
-        return false;
-    }
-
-    private function onSneakRightClick(Entity $target, Player $player)
-    {//TODO move to AIEntity for better handling
-        $itemInHand = $player->getInventory()->getItemInHand();
-        $itemInHandId = $itemInHand->getId();
-        switch ($itemInHandId) {
-            default:
-                return true; //cancel all item events - for now.
-        }
-        return false;
-    }
-
-    private function onRightClick(AIEntity $target, Player $player)
-    {//TODO move to AIEntity for better handling
-        if ($target instanceof LeashKnot) {
-            foreach ($target->getLevel()->getEntities() as $entity) {
-                if (!$entity instanceof AIEntity) continue;
-                if ($entity->getDataPropertyManager()->getLong(AIEntity::DATA_LEAD_HOLDER_EID) === $target->getId()) {
-                    $target->setLeashedTo($player);
-                }
-            }
-            $target->kill();
-            return true;
-        }
-        switch ($player->getInventory()->getItemInHand()->getId()) {
-            case Item::AIR:
-                {
-                    if ($target->isLeashed()) {
-                        /** @var Components $components */
-                        $components = $target->getEntityProperties()->findComponents("minecraft:leashable");
-                        if ($components->count() > 0) {
-                            $target->setLeashedTo(null);
-                        }
-                    }
-                    break;
-                }
-            case Item::LEAD:
-                {
-                    /** @var Components $components */
-                    $components = $target->getEntityProperties()->findComponents("minecraft:leashable");
-                    if ($components->count() > 0) {
-                        if ($target->isLeashed()) {
-                            $target->setLeashedTo(null);
-                        } else {
-                            $player->getInventory()->getItemInHand()->setCount($player->getInventory()->getItemInHand()->getCount() - 1);
-                            $target->setLeashedTo($player);
-                        }
-                    }
-                    break;
-                }
-            default:
-                {
-                    /** @var Components $components */
-                    $components = $target->getEntityProperties()->findComponents("minecraft:interact");
-                    if ($components->count() > 0) {
-                        /** @var _interact $component */
-                        foreach ($components as $component) {
-                            $on_interact_positive = true;
-                            if (is_array($component->on_interact)) {//TODO event class
-                                foreach ($component->on_interact as $key => $value) {
-                                    if ($key === "filters") {//TODO move filter checks to seperate class
-                                        $filters = new Filters($value);
-                                        $on_interact_positive = $filters->test($target, $player);
-                                        Loader::getInstance()->getLogger()->notice("All on_interact filters completed with result: " . ($on_interact_positive ? "YES" : "NO"));
-                                    }
-                                }
-                            }
-                            if ($on_interact_positive) {
-
-                                $itemStackInHand = $player->getInventory()->getItemInHand();
-                                /** @var Item|null $addItem */
-                                $addItem = null;
-                                try {
-                                    $itemInHand = (clone $itemStackInHand)->pop();
-                                } catch (\InvalidArgumentException $e) {
-                                    $itemInHand = new Item(Item::AIR);
-                                }
-                                try {
-                                    if (!is_null($component->use_item) && $component->use_item) {
-                                        $itemStackInHand->pop();
-                                    }
-                                    if (!is_null($component->hurt_item) && $itemInHand instanceof Durable) {
-                                        $itemInHand->applyDamage($component->hurt_item);
-                                    }
-                                    if (!is_null($component->play_sounds)) {
-                                        foreach (explode(",", $component->play_sounds) as $sound) {//TODO find seperator - no multi-sounds in vanilla behaviours
-                                            $pk = new LevelSoundEventPacket();
-                                            $pk->sound = constant(get_class($pk) . "::SOUND_" . strtoupper($sound));
-                                            $pk->position = $target->asVector3();
-                                            $player->sendDataPacket($pk);
-                                        }
-                                    }
-                                    if (!is_null($component->transform_to_item) && ($item = Item::fromString($component->transform_to_item)) instanceof Item) {
-                                        $addItem = $item;
-                                    }
-                                } catch (\InvalidArgumentException $e) {
-                                    //Logger: warning -> x component failed to succeed due to an error in parsing the json script in x aientity with x player
-                                    return false;//Abort interaction to remain items even though the component data was invalid
-                                }
-                                if ($itemStackInHand->isNull()) {
-                                    if (!is_null($addItem) && !$addItem->isNull()) {
-                                        $player->getInventory()->setItemInHand($addItem);
-                                    }
-                                } else {
-                                    if (!is_null($addItem) && !$addItem->isNull()) {
-                                        $player->getInventory()->addItem($addItem);
-                                    }
-                                    $player->getInventory()->setItemInHand($itemStackInHand);
-                                }
-                                if (!$itemInHand->equals($itemStackInHand, true, true)) {
-                                    $player->getInventory()->addItem($itemInHand);
-                                }
-
-                            }
-                        }
-                        return true;
-                    }
-                }
-        }
-        return false;
-    }
-
-    public function onInventoryOpen(InventoryHolder $inventoryHolder, Player $player)
-    { //TODO other entities //TODO move to AIEntity for better handling
-        if ($inventoryHolder instanceof AIEntity && !is_null($inventoryHolder->getInventory())) {
-            var_dump($inventoryHolder->getInventory()->getName());
-            var_dump($inventoryHolder->getInventory()->getNetworkType());
-            $player->addWindow($inventoryHolder->getInventory());
-            return true;
-        }
-        return false;
-    }
-
-    private function onHover(AIEntity $target, Player $player)//TODO fix hover calling with old item when changing slot
-    {//TODO move to AIEntity for better handling
-        /** @var Components $components */
-        $components = $target->getEntityProperties()->findComponents("minecraft:interact");
-        if ($components->count() > 0) {
-            /** @var _interact $component */
-            foreach ($components as $component) {
-                $on_interact_positive = true;
-                if (is_array($component->on_interact)) {//TODO event class
-                    foreach ($component->on_interact as $key => $value) {
-                        if ($key === "filters") {
-                            $filters = new Filters($value);
-                            $on_interact_positive = $filters->test($target, $player);
-                            Loader::getInstance()->getLogger()->notice("All on_interact filters completed with result: " . ($on_interact_positive ? "YES" : "NO"));
-                        }
-                    }
-                }
-                if (!$on_interact_positive) return false;
-                $player->sendTip($component->interact_text ?? "");//TODO remove debug
-                $player->getDataPropertyManager()->setString(Entity::DATA_INTERACTIVE_TAG, $component->interact_text ?? "");
-            }
-            return true;
-        }
         return false;
     }
 }

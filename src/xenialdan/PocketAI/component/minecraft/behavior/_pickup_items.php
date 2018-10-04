@@ -2,11 +2,10 @@
 
 namespace xenialdan\PocketAI\component\minecraft\behavior;
 
-use xenialdan\PocketAI\component\BaseComponent;
 use xenialdan\PocketAI\entitytype\AIEntity;
 use xenialdan\PocketAI\entitytype\AIProjectile;
 
-class _pickup_items extends BaseComponent
+class _pickup_items extends BehaviourComponent
 {
     protected $name = "minecraft:behavior.pickup_items";
     /** @var float $goal_radius Distance in blocks within the mob considers it has reached the goal. This is the "wiggle room" to stop the AI from bouncing back and forth trying to reach a specific spot */
@@ -30,6 +29,7 @@ class _pickup_items extends BaseComponent
         $this->speed_multiplier = $values['speed_multiplier'] ?? $this->speed_multiplier;
         $this->track_target = $values['track_target'] ?? $this->track_target;
 
+        parent::__construct($values);
     }
 
     /**
@@ -48,5 +48,10 @@ class _pickup_items extends BaseComponent
     public function remove($entity): void
     {
         // TODO: Implement remove() method.
+    }
+
+    public function tick(int $tickDiff)
+    {
+        // TODO: Implement tick() method.
     }
 }

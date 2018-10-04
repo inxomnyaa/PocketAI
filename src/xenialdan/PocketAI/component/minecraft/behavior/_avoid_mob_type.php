@@ -2,12 +2,11 @@
 
 namespace xenialdan\PocketAI\component\minecraft\behavior;
 
-use xenialdan\PocketAI\component\BaseComponent;
 use xenialdan\PocketAI\entitytype\AIEntity;
 use xenialdan\PocketAI\entitytype\AIProjectile;
 use xenialdan\PocketAI\filter\Filters;
 
-class _avoid_mob_type extends BaseComponent
+class _avoid_mob_type extends BehaviourComponent
 {
     protected $name = "minecraft:behavior.avoid_mob_type";
     /** @var mixed (JSON Object) $entity_types List of entity types this mob avoids.
@@ -43,6 +42,7 @@ class _avoid_mob_type extends BaseComponent
         $this->walk_speed_multiplier = $values['walk_speed_multiplier'] ?? $this->walk_speed_multiplier;
         $this->probability_per_strength = $values['probability_per_strength'] ?? $this->probability_per_strength;
 
+        parent::__construct($values);
     }
 
     /**
@@ -61,5 +61,10 @@ class _avoid_mob_type extends BaseComponent
     public function remove($entity): void
     {
         // TODO: Implement remove() method.
+    }
+
+    public function tick(int $tickDiff)
+    {
+        // TODO: Implement tick() method.
     }
 }

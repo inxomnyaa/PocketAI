@@ -2,11 +2,10 @@
 
 namespace xenialdan\PocketAI\component\minecraft\behavior;
 
-use xenialdan\PocketAI\component\BaseComponent;
 use xenialdan\PocketAI\entitytype\AIEntity;
 use xenialdan\PocketAI\entitytype\AIProjectile;
 
-class _dragonflaming extends BaseComponent
+class _dragonflaming extends BehaviourComponent
 {
     protected $name = "minecraft:behavior.dragonflaming";
 
@@ -18,6 +17,7 @@ class _dragonflaming extends BaseComponent
     public function __construct(array $values = [])
     {
 
+        parent::__construct($values);
     }
 
     /**
@@ -36,5 +36,10 @@ class _dragonflaming extends BaseComponent
     public function remove($entity): void
     {
         // TODO: Implement remove() method.
+    }
+
+    public function tick(int $tickDiff)
+    {
+        // TODO: Implement tick() method.
     }
 }

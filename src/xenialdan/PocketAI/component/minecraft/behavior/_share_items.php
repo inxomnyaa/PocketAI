@@ -2,12 +2,11 @@
 
 namespace xenialdan\PocketAI\component\minecraft\behavior;
 
-use xenialdan\PocketAI\component\BaseComponent;
 use xenialdan\PocketAI\entitytype\AIEntity;
 use xenialdan\PocketAI\entitytype\AIProjectile;
 use xenialdan\PocketAI\filter\Filters;
 
-class _share_items extends BaseComponent
+class _share_items extends BehaviourComponent
 {
     protected $name = "minecraft:behavior.share_items";
     /** @var mixed (JSON Object) $entity_types List of entities this mob will share items with
@@ -46,6 +45,7 @@ class _share_items extends BaseComponent
         $this->goal_radius = $values['goal_radius'] ?? $this->goal_radius;
         $this->speed_multiplier = $values['speed_multiplier'] ?? $this->speed_multiplier;
 
+        parent::__construct($values);
     }
 
     /**
@@ -64,5 +64,10 @@ class _share_items extends BaseComponent
     public function remove($entity): void
     {
         // TODO: Implement remove() method.
+    }
+
+    public function tick(int $tickDiff)
+    {
+        // TODO: Implement tick() method.
     }
 }

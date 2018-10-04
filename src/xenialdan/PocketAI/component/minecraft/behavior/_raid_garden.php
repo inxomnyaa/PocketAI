@@ -2,11 +2,10 @@
 
 namespace xenialdan\PocketAI\component\minecraft\behavior;
 
-use xenialdan\PocketAI\component\BaseComponent;
 use xenialdan\PocketAI\entitytype\AIEntity;
 use xenialdan\PocketAI\entitytype\AIProjectile;
 
-class _raid_garden extends BaseComponent
+class _raid_garden extends BehaviourComponent
 {
     protected $name = "minecraft:behavior.raid_garden";
     /** @var array $blocks Blocks that the mob is looking for to eat */
@@ -39,6 +38,7 @@ class _raid_garden extends BaseComponent
         $this->search_range = $values['search_range'] ?? $this->search_range;
         $this->speed_multiplier = $values['speed_multiplier'] ?? $this->speed_multiplier;
 
+        parent::__construct($values);
     }
 
     /**
@@ -57,5 +57,10 @@ class _raid_garden extends BaseComponent
     public function remove($entity): void
     {
         // TODO: Implement remove() method.
+    }
+
+    public function tick(int $tickDiff)
+    {
+        // TODO: Implement tick() method.
     }
 }

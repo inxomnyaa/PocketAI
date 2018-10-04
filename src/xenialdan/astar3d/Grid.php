@@ -82,7 +82,7 @@ class Grid
     /** @var int */
     public $newLevel = 3;
     /** @var Stopwatch */
-    private $stopwatch ;
+    private $stopwatch;
 
     public function getSubdivisionDiameter(): float
     {
@@ -109,10 +109,12 @@ class Grid
         return $this->gridSizeX * $this->gridSizeY * $this->gridSizeZ;
     }
 
-    public function Awake ():void {
+    public function Awake(): void
+    {
         if ($this->Base != null) {
             self::$instance = $this;
-            /*yield*/ $this->BuildGrid(null);//StartCoroutine
+            /*yield*/
+            $this->BuildGrid(null);//StartCoroutine
         }
     }
 
@@ -155,8 +157,7 @@ class Grid
         $surfaceIsInWalkableMask = false;
         /** @var SurfaceType $surf */
         foreach ($this->walkableRegions as $surf) {
-            $this->walkableMask |= $surf->layerMask
-            ;
+            $this->walkableMask |= $surf->layerMask;
             $this->walkableRegionsDictionary->add($this->walkableRegionsDictionary->count(), [(int)log($surf->layerMask, 2), $surf->penalty]);
             if (log($surf->layerMask, 2) == $this->Base->getLevel()->getId()) {
                 $surfaceIsInWalkableMask = true;
@@ -203,7 +204,7 @@ class Grid
 
                             /** @var Vector3 $nwpt */
                             $nwpt = $worldBottomLeft->add((new Vector3(0, 1))->multiply($nyi * $nsdheightstep))->add((new Vector3(0, 0, 1))->multiply(($nxi * $this->getNewDiameter() + ($this->getNewDiameter() * 0.5))))->add((new  Vector3(1))->multiply($nzi * $this->getNewDiameter() + ($this->getNewDiameter() * 0.5)));
-                            if (Physics::CheckSphere($nwpt, $this->getNewDiameter()*0.5, $this->walkableMask)) {
+                            if (Physics::CheckSphere($nwpt, $this->getNewDiameter() * 0.5, $this->walkableMask)) {
                                 $subNode = new SubDivisionNodeExtended($nwpt, $worldBottomLeft, $heightStep, $this->nodeDiameter, $this->nodeRadius, $this->newLevel, $this->gridSizeX, $this->gridSizeY, $this->gridSizeZ);
                                 $newGrid->add($newGrid->count(), $subNode);
                             }
@@ -255,7 +256,7 @@ class Grid
 
                             /** @var Vector3 */
                             $wpt = $worldBottomLeft + (new Vector3(0, 1))->multiply($yi * $sdheightstep)->add((new Vector3(0, 0, 1))->multiply(($xi * $this->getSubdivisionDiameter() + ($this->getSubdivisionDiameter() * 0.5))))->add((new Vector3(1))->multiply($zi * $this->getSubdivisionDiameter() + ($this->getSubdivisionDiameter() * 0.5)));
-                            if (Physics::CheckSphere($wpt, $this->getSubdivisionDiameter()*0.5, $this->walkableMask)) {
+                            if (Physics::CheckSphere($wpt, $this->getSubdivisionDiameter() * 0.5, $this->walkableMask)) {
                                 $subdivGrid->add($subdivGrid->count(), $wpt);
                             }
                         }
@@ -685,10 +686,9 @@ class Grid
     {
         $ret = new \SplQueue();
         $level = Server::getInstance()->getLevel($layer);
-        foreach ($level->getEntities() as $t)
-        {
-            if(!$t instanceof ItemEntity && !$t instanceof ExperienceOrb && !$t instanceof PrimedTNT && !$t instanceof Painting && !$t instanceof FallingBlock&& !$t instanceof Projectile )
-                $ret->add ($t);
+        foreach ($level->getEntities() as $t) {
+            if (!$t instanceof ItemEntity && !$t instanceof ExperienceOrb && !$t instanceof PrimedTNT && !$t instanceof Painting && !$t instanceof FallingBlock && !$t instanceof Projectile)
+                $ret->add($t);
 
         }
         return iterator_to_array($ret);

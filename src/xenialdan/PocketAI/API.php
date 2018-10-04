@@ -212,4 +212,9 @@ class API
         }
         return -1;
     }
+
+    public static function clamp($current, $min, $max)
+    {
+        return max($min, min($max, $current));
+    }
 }

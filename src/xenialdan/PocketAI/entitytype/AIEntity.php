@@ -9,19 +9,27 @@ use pocketmine\entity\Attribute;
 use pocketmine\entity\Entity;
 use pocketmine\entity\Living;
 use pocketmine\inventory\InventoryHolder;
+use pocketmine\item\Durable;
+use pocketmine\item\Item;
 use pocketmine\level\particle\HappyVillagerParticle;
 use pocketmine\math\AxisAlignedBB;
 use pocketmine\math\Vector3;
 use pocketmine\nbt\tag\CompoundTag;
 use pocketmine\network\mcpe\protocol\EntityEventPacket;
-use pocketmine\timings\Timings;
+use pocketmine\network\mcpe\protocol\LevelSoundEventPacket;
+use pocketmine\Player;
+use xenialdan\PocketAI\ai\AIManager;
 use xenialdan\PocketAI\API;
 use xenialdan\PocketAI\component\ComponentGroup;
 use xenialdan\PocketAI\component\Components;
+use xenialdan\PocketAI\component\minecraft\_interact;
 use xenialdan\PocketAI\component\minecraft\_leashable;
+use xenialdan\PocketAI\entity\LeashKnot;
 use xenialdan\PocketAI\EntityProperties;
 use xenialdan\PocketAI\event\AddonEvent;
+use xenialdan\PocketAI\filter\Filters;
 use xenialdan\PocketAI\inventory\AIEntityInventory;
+use xenialdan\PocketAI\item\Lead;
 use xenialdan\PocketAI\Loader;
 use xenialdan\PocketAI\LootGenerator;
 
@@ -46,9 +54,13 @@ abstract class AIEntity extends Living implements InventoryHolder
 
     public $jumpVelocity = 0.42;
 
+    /** @var AIManager */
+    public $aiManager;
+
     protected function initEntity(CompoundTag $nbt): void
     {
         parent::initEntity($nbt);
+
 
         $this->setLootGenerator(new LootGenerator());
     }
@@ -64,7 +76,8 @@ abstract class AIEntity extends Living implements InventoryHolder
      */
     public function setLeashedTo(?Entity $entity)
     {
-        $this->getDataPropertyManager()->setLong(self::DATA_LEAD_HOLDER_EID, -1);
+        //$this->getDataPropertyManager()->setLong(self::DATA_LEAD_HOLDER_EID, -1);
+        if (is_null($this->getEntityProperties())) return;
         /** @var Components $components */
         $components = $this->getEntityProperties()->findComponents("minecraft:leashable");
         if ($components->count() > 0) {
@@ -81,22 +94,35 @@ abstract class AIEntity extends Living implements InventoryHolder
                     $pk->entityRuntimeId = $this->getId();
                     $this->getLevel()->addGlobalPacket($pk);
                 } else {
+                    print "\n\n";
                     print_r($this->isLeashed() ? "Leashed" : "Not leashed");
-                    if ($this->isLeashed()) $this->setLeashedTo(null);
-                    print_r($this->isLeashed() ? "Leashed" : "Not leashed");
+                    print "\n";
+                    //if ($this->isLeashed()) $this->setLeashedTo(null);
+                    //print "\n";
+                    // print_r($this->isLeashed() ? "Leashed" : "Not leashed");
+                    // print "\n";
                     $this->getDataPropertyManager()->setLong(self::DATA_LEAD_HOLDER_EID, $entity->getId());
                     $this->setGenericFlag(self::DATA_FLAG_LEASHED, true);
+                    print "\n";
                     print_r($this->isLeashed() ? "Leashed" : "Not leashed");
+                    print "\n";
                     if ($this->isLeashed()) $this->getLevel()->getServer()->getPluginManager()->callEvent($ev = new AddonEvent(Loader::getInstance(), API::targetToTest($this, $entity, $component->on_leash["target"]), $component->on_leash["event"]));
                 }
             }
         }
     }
 
+    /**
+     * @return null|Entity
+     */
+    public function getLeadHolder()
+    {
+        return $this->getLevel()->getServer()->findEntity($this->getDataPropertyManager()->getLong(self::DATA_LEAD_HOLDER_EID));
+    }
+
     /* AI */
     public function entityBaseTick(int $tickDiff = 1): bool
     {
-        Timings::$timerLivingEntityBaseTick->startTiming();
 
         $hasUpdate = parent::entityBaseTick($tickDiff);
 
@@ -104,16 +130,19 @@ abstract class AIEntity extends Living implements InventoryHolder
             foreach (API::getAABBCorners($this->getBoundingBox()) as $corner) {
                 $this->getLevel()->addParticle(new HappyVillagerParticle($corner));
             }
-            /* behaviour checks */
         }
-
-        Timings::$timerLivingEntityBaseTick->stopTiming();
 
         return $hasUpdate;
     }
 
-    /* END AI */
+    protected function applyGravity(): void
+    {
+        if ($this->getEntityProperties()->hasComponent("minecraft:physics")) {
+            parent::applyGravity();
+        }
+    }
 
+    /* END AI */
 
     public function setWidth(float $width)
     {
@@ -318,8 +347,10 @@ abstract class AIEntity extends Living implements InventoryHolder
         $nbt = parent::saveNBT();
         $activeComponents = new CompoundTag("components");
         /** @var ComponentGroup $activeComponentGroup */
-        foreach ($this->getEntityProperties()->getActiveComponentGroups() as $activeComponentGroup) {
-            $activeComponents->setByte($activeComponentGroup->getName(), 1);
+        if (!is_null($this->getEntityProperties())) {
+            foreach ($this->getEntityProperties()->getActiveComponentGroups() as $activeComponentGroup) {
+                $activeComponents->setByte($activeComponentGroup->getName(), 1);
+            }
         }
         $nbt->setTag($activeComponents);
         return $nbt;
@@ -343,11 +374,6 @@ abstract class AIEntity extends Living implements InventoryHolder
         }
 
         return false;
-    }
-
-    public function generateRandomDirection(): Vector3
-    {
-        return new Vector3(mt_rand(-1000, 1000) / 1000, mt_rand(-500, 500) / 1000, mt_rand(-1000, 1000) / 1000);
     }
 
     /**
@@ -383,5 +409,150 @@ abstract class AIEntity extends Living implements InventoryHolder
         $this->entityProperties = $entityProperties;
         if (!is_null($entityProperties))
             $this->entityProperties->applyComponents();
+    }
+
+    //INTERACTIONS
+
+    public function onRightClick(Player $player): bool
+    {
+        $entityProperties = $this->getEntityProperties();
+        if (is_null($entityProperties)) return false;
+        //leashing start
+        if ($this->isLeashed()) {
+            if ($this->getEntityProperties()->hasComponent("minecraft:leashable")) {
+                $holder = $this->getLeadHolder();
+                if ($holder instanceof LeashKnot) $holder->kill();
+                elseif ($holder->getId() === $player->getId()){
+                    $this->getLevel()->dropItem($this, new Lead());
+                    $this->setLeashedTo(null);
+                }
+                return true;
+            } else {
+                $this->setGenericFlag(self::DATA_FLAG_LEASHED, false);
+                $this->getDataPropertyManager()->setLong(self::DATA_LEAD_HOLDER_EID, -1);
+            }
+        }
+        //leashing end
+        switch ($player->getInventory()->getItemInHand()->getId()) {
+            case Item::LEAD:
+                {
+                    if ($this->getEntityProperties()->hasComponent("minecraft:leashable")) {
+                        if (!$this->isLeashed()) {
+                            $player->getInventory()->getItemInHand()->pop();
+                            $this->setLeashedTo($player);
+                        }
+                    }
+                    break;
+                }
+            default:
+                {
+                    /** @var Components $components */
+                    $components = $this->getEntityProperties()->findComponents("minecraft:interact");
+                    if ($components->count() > 0) {
+                        /** @var _interact $component */
+                        foreach ($components as $component) {
+                            $on_interact_positive = true;
+                            if (is_array($component->on_interact)) {//TODO event class
+                                foreach ($component->on_interact as $key => $value) {
+                                    if ($key === "filters") {//TODO move filter checks to seperate class
+                                        $filters = new Filters($value);
+                                        $on_interact_positive = $filters->test($this, $player);
+                                        Loader::getInstance()->getLogger()->notice("All on_interact filters completed with result: " . ($on_interact_positive ? "YES" : "NO"));
+                                    }
+                                }
+                            }
+                            if ($on_interact_positive) {//TODO optimise
+
+                                $itemStackInHand = $player->getInventory()->getItemInHand();
+                                /** @var Item|null $addItem */
+                                $addItem = null;
+                                try {
+                                    $itemInHand = (clone $itemStackInHand)->pop();
+                                } catch (\InvalidArgumentException $e) {
+                                    $itemInHand = new Item(Item::AIR);
+                                }
+                                try {
+                                    if (!is_null($component->use_item) && $component->use_item) {
+                                        $itemStackInHand->pop();
+                                    }
+                                    if (!is_null($component->hurt_item) && $itemInHand instanceof Durable) {
+                                        $itemInHand->applyDamage($component->hurt_item);
+                                    }
+                                    if (!is_null($component->play_sounds)) {
+                                        foreach (explode(",", $component->play_sounds) as $sound) {//TODO find seperator - no multi-sounds in vanilla behaviours
+                                            $pk = new LevelSoundEventPacket();
+                                            $pk->sound = constant(get_class($pk) . "::SOUND_" . strtoupper(trim($sound)));
+                                            $pk->position = $this->asVector3();
+                                            $player->sendDataPacket($pk);
+                                        }
+                                    }
+                                    if (!is_null($component->transform_to_item) && ($item = Item::fromString($component->transform_to_item)) instanceof Item) {
+                                        $addItem = $item;
+                                    }
+                                } catch (\InvalidArgumentException $e) {
+                                    //Logger: warning -> x component failed to succeed due to an error in parsing the json script in x aientity with x player
+                                    return false;//Abort interaction to remain items even though the component data was invalid
+                                }
+                                if ($itemStackInHand->isNull()) {
+                                    if (!is_null($addItem) && !$addItem->isNull()) {
+                                        $player->getInventory()->setItemInHand($addItem);
+                                    }
+                                } else {
+                                    if (!is_null($addItem) && !$addItem->isNull()) {
+                                        $player->getInventory()->addItem($addItem);
+                                    }
+                                    $player->getInventory()->setItemInHand($itemStackInHand);
+                                }
+                                if (!$itemInHand->equals($itemStackInHand, true, true)) {
+                                    $player->getInventory()->addItem($itemInHand);
+                                }
+
+                            }
+                        }
+                        return true;
+                    }
+                }
+        }
+        return false;
+    }
+
+    public function onInventoryOpen(InventoryHolder $inventoryHolder, Player $player)
+    { //TODO other entities
+        if ($inventoryHolder instanceof AIEntity && !is_null($inventoryHolder->getInventory())) {
+            var_dump($inventoryHolder->getInventory()->getName());
+            var_dump($inventoryHolder->getInventory()->getNetworkType());
+            $player->addWindow($inventoryHolder->getInventory());
+            return true;
+        }
+        return false;
+    }
+
+    public function onHover(AIEntity $target, Player $player): bool//TODO fix hover calling with old item when changing slot
+    {
+        $player->getDataPropertyManager()->setString(Entity::DATA_INTERACTIVE_TAG, "");//remove button text
+        /** @var Components $components */
+        $entityProperties = $target->getEntityProperties();
+        if (is_null($entityProperties)) return false;
+        $components = $entityProperties->findComponents("minecraft:interact");
+        if ($components->count() > 0) {
+            /** @var _interact $component */
+            foreach ($components as $component) {
+                $on_interact_positive = true;
+                if (is_array($component->on_interact)) {//TODO event class
+                    foreach ($component->on_interact as $key => $value) {
+                        if ($key === "filters") {
+                            $filters = new Filters($value);
+                            $on_interact_positive = $filters->test($target, $player);
+                            Loader::getInstance()->getLogger()->notice("All on_interact filters completed with result: " . ($on_interact_positive ? "YES" : "NO"));
+                        }
+                    }
+                }
+                if (!$on_interact_positive) return false;
+                $player->sendTip($component->interact_text ?? "");//TODO remove debug
+                $player->getDataPropertyManager()->setString(Entity::DATA_INTERACTIVE_TAG, $component->interact_text ?? "");
+            }
+            return true;
+        }
+        return false;
     }
 }

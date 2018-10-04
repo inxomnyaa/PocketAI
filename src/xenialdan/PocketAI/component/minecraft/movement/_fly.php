@@ -2,11 +2,10 @@
 
 namespace xenialdan\PocketAI\component\minecraft\movement;
 
-use xenialdan\PocketAI\component\BaseComponent;
 use xenialdan\PocketAI\entitytype\AIEntity;
 use xenialdan\PocketAI\entitytype\AIProjectile;
 
-class _fly extends BaseComponent
+class _fly extends MovementComponent
 {
     protected $name = "minecraft:movement.fly";
     /** @var float $max_turn The maximum number in degrees the mob can turn per tick. */
@@ -20,6 +19,7 @@ class _fly extends BaseComponent
     public function __construct(array $values = [])
     {
         $this->max_turn = $values['max_turn'] ?? $this->max_turn;
+        parent::__construct($values);
 
     }
 

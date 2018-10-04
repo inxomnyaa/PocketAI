@@ -104,8 +104,23 @@ class EntityProperties extends DataPropertyManager
         foreach ($map as $value) {
             $c->push($value);
         }
-        if ($c->count() === 0) Loader::getInstance()->getLogger()->debug("No Component with name $name found");
+        //if ($c->count() === 0) Loader::getInstance()->getLogger()->debug("No Component with name $name found");
         return $c;
+    }
+
+    public function hasComponent(string $name):bool{
+        $map = array_filter($this->getComponentsArray(), function ($v) use ($name) {
+            /** @var BaseComponent $v */
+            return $v->getName() === $name;
+        });
+        foreach ($this->getActiveComponentGroups() as $componentGroup) {
+            /** @var ComponentGroup $componentGroup */
+            $map = array_merge(array_filter($componentGroup->getComponentsArray(), function ($v) use ($name) {//TODO check if array_merge removes components
+                /** @var BaseComponent $v */
+                return $v->getName() === $name;
+            }), $map);
+        }
+        return !empty($map);
     }
 
     /**

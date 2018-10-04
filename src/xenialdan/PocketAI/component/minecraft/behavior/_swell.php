@@ -2,11 +2,10 @@
 
 namespace xenialdan\PocketAI\component\minecraft\behavior;
 
-use xenialdan\PocketAI\component\BaseComponent;
 use xenialdan\PocketAI\entitytype\AIEntity;
 use xenialdan\PocketAI\entitytype\AIProjectile;
 
-class _swell extends BaseComponent
+class _swell extends BehaviourComponent
 {
     protected $name = "minecraft:behavior.swell";
     /** @var float $start_distance This mob starts swelling when a target is at least this many blocks away */
@@ -24,6 +23,7 @@ class _swell extends BaseComponent
         $this->start_distance = $values['start_distance'] ?? $this->start_distance;
         $this->stop_distance = $values['stop_distance'] ?? $this->stop_distance;
 
+        parent::__construct($values);
     }
 
     /**
@@ -42,5 +42,10 @@ class _swell extends BaseComponent
     public function remove($entity): void
     {
         // TODO: Implement remove() method.
+    }
+
+    public function tick(int $tickDiff)
+    {
+        // TODO: Implement tick() method.
     }
 }

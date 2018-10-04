@@ -2,11 +2,10 @@
 
 namespace xenialdan\PocketAI\component\minecraft\behavior;
 
-use xenialdan\PocketAI\component\BaseComponent;
 use xenialdan\PocketAI\entitytype\AIEntity;
 use xenialdan\PocketAI\entitytype\AIProjectile;
 
-class _run_around_like_crazy extends BaseComponent
+class _run_around_like_crazy extends BehaviourComponent
 {
     protected $name = "minecraft:behavior.run_around_like_crazy";
     /** @var float $speed_multiplier Movement speed multiplier of the mob when using this AI Goal */
@@ -21,6 +20,7 @@ class _run_around_like_crazy extends BaseComponent
     {
         $this->speed_multiplier = $values['speed_multiplier'] ?? $this->speed_multiplier;
 
+        parent::__construct($values);
     }
 
     /**
@@ -39,5 +39,10 @@ class _run_around_like_crazy extends BaseComponent
     public function remove($entity): void
     {
         // TODO: Implement remove() method.
+    }
+
+    public function tick(int $tickDiff)
+    {
+        // TODO: Implement tick() method.
     }
 }

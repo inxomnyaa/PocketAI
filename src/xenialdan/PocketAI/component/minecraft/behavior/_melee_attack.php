@@ -2,11 +2,10 @@
 
 namespace xenialdan\PocketAI\component\minecraft\behavior;
 
-use xenialdan\PocketAI\component\BaseComponent;
 use xenialdan\PocketAI\entitytype\AIEntity;
 use xenialdan\PocketAI\entitytype\AIProjectile;
 
-class _melee_attack extends BaseComponent
+class _melee_attack extends BehaviourComponent
 {
     protected $name = "minecraft:behavior.melee_attack";
     /** @var string $attack_types Defines the entity types this mob will attack */
@@ -33,6 +32,7 @@ class _melee_attack extends BaseComponent
         $this->speed_multiplier = $values['speed_multiplier'] ?? $this->speed_multiplier;
         $this->track_target = $values['track_target'] ?? $this->track_target;
 
+        parent::__construct($values);
     }
 
     /**
@@ -51,5 +51,10 @@ class _melee_attack extends BaseComponent
     public function remove($entity): void
     {
         // TODO: Implement remove() method.
+    }
+
+    public function tick(int $tickDiff)
+    {
+        // TODO: Implement tick() method.
     }
 }

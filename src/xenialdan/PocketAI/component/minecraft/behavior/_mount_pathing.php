@@ -2,11 +2,10 @@
 
 namespace xenialdan\PocketAI\component\minecraft\behavior;
 
-use xenialdan\PocketAI\component\BaseComponent;
 use xenialdan\PocketAI\entitytype\AIEntity;
 use xenialdan\PocketAI\entitytype\AIProjectile;
 
-class _mount_pathing extends BaseComponent
+class _mount_pathing extends BehaviourComponent
 {
     protected $name = "minecraft:behavior.mount_pathing";
     /** @var float $speed_multiplier Movement speed multiplier of the mob when using this AI Goal */
@@ -27,6 +26,7 @@ class _mount_pathing extends BaseComponent
         $this->target_dist = $values['target_dist'] ?? $this->target_dist;
         $this->track_target = $values['track_target'] ?? $this->track_target;
 
+        parent::__construct($values);
     }
 
     /**
@@ -45,5 +45,10 @@ class _mount_pathing extends BaseComponent
     public function remove($entity): void
     {
         // TODO: Implement remove() method.
+    }
+
+    public function tick(int $tickDiff)
+    {
+        // TODO: Implement tick() method.
     }
 }

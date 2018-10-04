@@ -2,11 +2,10 @@
 
 namespace xenialdan\PocketAI\component\minecraft\behavior;
 
-use xenialdan\PocketAI\component\BaseComponent;
 use xenialdan\PocketAI\entitytype\AIEntity;
 use xenialdan\PocketAI\entitytype\AIProjectile;
 
-class _ocelotattack extends BaseComponent
+class _ocelotattack extends BehaviourComponent
 {
     protected $name = "minecraft:behavior.ocelotattack";
     /** @var float $sneak_speed_multiplier Multiplier for the sneaking speed. 1.0 means the ocelot will move at the speed it normally sneaks */
@@ -27,6 +26,7 @@ class _ocelotattack extends BaseComponent
         $this->sprint_speed_multiplier = $values['sprint_speed_multiplier'] ?? $this->sprint_speed_multiplier;
         $this->walk_speed_multiplier = $values['walk_speed_multiplier'] ?? $this->walk_speed_multiplier;
 
+        parent::__construct($values);
     }
 
     /**
@@ -45,5 +45,10 @@ class _ocelotattack extends BaseComponent
     public function remove($entity): void
     {
         // TODO: Implement remove() method.
+    }
+
+    public function tick(int $tickDiff)
+    {
+        // TODO: Implement tick() method.
     }
 }

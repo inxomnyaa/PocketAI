@@ -2,11 +2,10 @@
 
 namespace xenialdan\PocketAI\component\minecraft\behavior;
 
-use xenialdan\PocketAI\component\BaseComponent;
 use xenialdan\PocketAI\entitytype\AIEntity;
 use xenialdan\PocketAI\entitytype\AIProjectile;
 
-class _random_stroll extends BaseComponent
+class _random_stroll extends BehaviourComponent
 {
     protected $name = "minecraft:behavior.random_stroll";
     /** @var int $xz_dist Distance in blocks on ground that the mob will look for a new spot to move to. Must be at least 1 */
@@ -24,6 +23,7 @@ class _random_stroll extends BaseComponent
         $this->xz_dist = $values['xz_dist'] ?? $this->xz_dist;
         $this->y_dist = $values['y_dist'] ?? $this->y_dist;
 
+        parent::__construct($values);
     }
 
     /**
@@ -42,5 +42,10 @@ class _random_stroll extends BaseComponent
     public function remove($entity): void
     {
         // TODO: Implement remove() method.
+    }
+
+    public function tick(int $tickDiff)
+    {
+        // TODO: Implement tick() method.
     }
 }

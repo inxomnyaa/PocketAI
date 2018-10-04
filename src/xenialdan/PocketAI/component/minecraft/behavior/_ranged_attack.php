@@ -2,11 +2,10 @@
 
 namespace xenialdan\PocketAI\component\minecraft\behavior;
 
-use xenialdan\PocketAI\component\BaseComponent;
 use xenialdan\PocketAI\entitytype\AIEntity;
 use xenialdan\PocketAI\entitytype\AIProjectile;
 
-class _ranged_attack extends BaseComponent
+class _ranged_attack extends BehaviourComponent
 {
     protected $name = "minecraft:behavior.ranged_attack";
     /** @var int $attack_interval_max Maximum amount of time in seconds the entity will wait after an attack before launching another */
@@ -42,6 +41,7 @@ class _ranged_attack extends BaseComponent
         $this->charge_shoot_trigger = $values['charge_shoot_trigger'] ?? $this->charge_shoot_trigger;
         $this->speed_multiplier = $values['speed_multiplier'] ?? $this->speed_multiplier;
 
+        parent::__construct($values);
     }
 
     /**
@@ -60,5 +60,10 @@ class _ranged_attack extends BaseComponent
     public function remove($entity): void
     {
         // TODO: Implement remove() method.
+    }
+
+    public function tick(int $tickDiff)
+    {
+        // TODO: Implement tick() method.
     }
 }

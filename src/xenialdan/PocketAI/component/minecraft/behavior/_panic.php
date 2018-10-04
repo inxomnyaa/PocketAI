@@ -2,11 +2,10 @@
 
 namespace xenialdan\PocketAI\component\minecraft\behavior;
 
-use xenialdan\PocketAI\component\BaseComponent;
 use xenialdan\PocketAI\entitytype\AIEntity;
 use xenialdan\PocketAI\entitytype\AIProjectile;
 
-class _panic extends BaseComponent
+class _panic extends BehaviourComponent
 {
     protected $name = "minecraft:behavior.panic";
     /** @var bool $force If true, this mob will not stop panicking until it can't move anymore or the goal is removed from it */
@@ -23,7 +22,7 @@ class _panic extends BaseComponent
     {
         $this->force = $values['force'] ?? $this->force;
         $this->speed_multiplier = $values['speed_multiplier'] ?? $this->speed_multiplier;
-
+        parent::__construct($values);
     }
 
     /**
@@ -42,5 +41,10 @@ class _panic extends BaseComponent
     public function remove($entity): void
     {
         // TODO: Implement remove() method.
+    }
+
+    public function tick(int $tickDiff)
+    {
+        // TODO: Implement tick() method.
     }
 }

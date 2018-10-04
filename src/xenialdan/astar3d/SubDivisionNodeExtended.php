@@ -26,9 +26,10 @@ class SubDivisionNodeExtended extends SubdivisionNode
         $z0 = clamp((int)round(($worldPos0->z - $worldBottomLeft->z - $nodeRadius) / $nodeDiameter), 0, $gridSizeZ - 1);
         $z1 = clamp((int)round(($worldPos1->z - $worldBottomLeft->z - $nodeRadius) / $nodeDiameter), 0, $gridSizeZ - 1);
 
-        $this->startStopX = [$x0, $x1];
-        $this->startStopY = [$y0, $y1];
-        $this->startStopZ = [$z0, $z1];
+        $startStopX = [$x0, $x1];
+        $startStopY = [$y0, $y1];
+        $startStopZ = [$z0, $z1];
+        parent::__construct($position, $startStopX, $startStopY, $startStopZ);
     }
 }
 

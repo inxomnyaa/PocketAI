@@ -2,11 +2,10 @@
 
 namespace xenialdan\PocketAI\component\minecraft\behavior;
 
-use xenialdan\PocketAI\component\BaseComponent;
 use xenialdan\PocketAI\entitytype\AIEntity;
 use xenialdan\PocketAI\entitytype\AIProjectile;
 
-class _eat_block extends BaseComponent
+class _eat_block extends BehaviourComponent
 {
     protected $name = "minecraft:behavior.eat_block";
     /** @var mixed (Trigger) $on_eat Trigger to fire when the mob eats a block of grass */
@@ -21,6 +20,7 @@ class _eat_block extends BaseComponent
     {
         $this->on_eat = $values['on_eat'] ?? $this->on_eat;
 
+        parent::__construct($values);
     }
 
     /**
@@ -39,5 +39,10 @@ class _eat_block extends BaseComponent
     public function remove($entity): void
     {
         // TODO: Implement remove() method.
+    }
+
+    public function tick(int $tickDiff)
+    {
+        // TODO: Implement tick() method.
     }
 }

@@ -1,7 +1,7 @@
 ---
 name: PocketAI
 author: XenialDan
-version: 0.15.3
+version: 0.17.0
 main: xenialdan\PocketAI\Loader
 api: [4.0.0+dev]
 # Changes:
@@ -23,4 +23,6 @@ api: [4.0.0+dev]
 # 0.15.1: Use Filters class in InventoryEventListener
 # 0.15.2: Change $filters to instanceof Filters
 # 0.15.3: Improve leashing
+# 0.16.0: Implement basic movement
+# 0.17.0: Nuke alot of code, Add new component types, add AIManager
 ...

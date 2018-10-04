@@ -2,11 +2,10 @@
 
 namespace xenialdan\PocketAI\component\minecraft\behavior;
 
-use xenialdan\PocketAI\component\BaseComponent;
 use xenialdan\PocketAI\entitytype\AIEntity;
 use xenialdan\PocketAI\entitytype\AIProjectile;
 
-class _leap_at_target extends BaseComponent
+class _leap_at_target extends BehaviourComponent
 {
     protected $name = "minecraft:behavior.leap_at_target";
     /** @var bool $must_be_on_ground If true, the mob will only jump at its target if its on the ground. Setting it to false will allow it to jump even if its already in the air */
@@ -24,6 +23,7 @@ class _leap_at_target extends BaseComponent
         $this->must_be_on_ground = $values['must_be_on_ground'] ?? $this->must_be_on_ground;
         $this->yd = $values['yd'] ?? $this->yd;
 
+        parent::__construct($values);
     }
 
     /**
@@ -42,5 +42,10 @@ class _leap_at_target extends BaseComponent
     public function remove($entity): void
     {
         // TODO: Implement remove() method.
+    }
+
+    public function tick(int $tickDiff)
+    {
+        // TODO: Implement tick() method.
     }
 }

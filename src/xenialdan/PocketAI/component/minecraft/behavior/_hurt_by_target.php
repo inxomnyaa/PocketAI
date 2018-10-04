@@ -2,12 +2,11 @@
 
 namespace xenialdan\PocketAI\component\minecraft\behavior;
 
-use xenialdan\PocketAI\component\BaseComponent;
 use xenialdan\PocketAI\entitytype\AIEntity;
 use xenialdan\PocketAI\entitytype\AIProjectile;
 use xenialdan\PocketAI\filter\Filters;
 
-class _hurt_by_target extends BaseComponent
+class _hurt_by_target extends BehaviourComponent
 {
     protected $name = "minecraft:behavior.hurt_by_target";
     /** @var bool $alert_same_type If true, nearby mobs of the same type will be alerted about the damage */
@@ -46,6 +45,7 @@ class _hurt_by_target extends BaseComponent
         $this->walk_speed_multiplier = $values['walk_speed_multiplier'] ?? $this->walk_speed_multiplier;
         $this->hurt_owner = $values['hurt_owner'] ?? $this->hurt_owner;
 
+        parent::__construct($values);
     }
 
     /**
@@ -64,5 +64,10 @@ class _hurt_by_target extends BaseComponent
     public function remove($entity): void
     {
         // TODO: Implement remove() method.
+    }
+
+    public function tick(int $tickDiff)
+    {
+        // TODO: Implement tick() method.
     }
 }

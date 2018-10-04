@@ -2,11 +2,10 @@
 
 namespace xenialdan\PocketAI\component\minecraft\movement;
 
-use xenialdan\PocketAI\component\BaseComponent;
 use xenialdan\PocketAI\entitytype\AIEntity;
 use xenialdan\PocketAI\entitytype\AIProjectile;
 
-class _jump extends BaseComponent
+class _jump extends MovementComponent
 {
     protected $name = "minecraft:movement.jump";
 
@@ -17,6 +16,7 @@ class _jump extends BaseComponent
      */
     public function __construct(array $values = [])
     {
+        parent::__construct($values);
 
     }
 

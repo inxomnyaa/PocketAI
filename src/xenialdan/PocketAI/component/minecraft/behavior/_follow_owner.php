@@ -2,11 +2,10 @@
 
 namespace xenialdan\PocketAI\component\minecraft\behavior;
 
-use xenialdan\PocketAI\component\BaseComponent;
 use xenialdan\PocketAI\entitytype\AIEntity;
 use xenialdan\PocketAI\entitytype\AIProjectile;
 
-class _follow_owner extends BaseComponent
+class _follow_owner extends BehaviourComponent
 {
     protected $name = "minecraft:behavior.follow_owner";
     /** @var float $speed_multiplier Movement speed multiplier of the mob when using this AI Goal */
@@ -27,6 +26,7 @@ class _follow_owner extends BaseComponent
         $this->start_distance = $values['start_distance'] ?? $this->start_distance;
         $this->stop_distance = $values['stop_distance'] ?? $this->stop_distance;
 
+        parent::__construct($values);
     }
 
     /**
@@ -45,5 +45,10 @@ class _follow_owner extends BaseComponent
     public function remove($entity): void
     {
         // TODO: Implement remove() method.
+    }
+
+    public function tick(int $tickDiff)
+    {
+        // TODO: Implement tick() method.
     }
 }

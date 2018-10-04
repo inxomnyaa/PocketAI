@@ -2,12 +2,11 @@
 
 namespace xenialdan\PocketAI\component\minecraft\behavior;
 
-use xenialdan\PocketAI\component\BaseComponent;
 use xenialdan\PocketAI\entitytype\AIEntity;
 use xenialdan\PocketAI\entitytype\AIProjectile;
 use xenialdan\PocketAI\filter\Filters;
 
-class _summon_entity extends BaseComponent
+class _summon_entity extends BehaviourComponent
 {
     protected $name = "minecraft:behavior.summon_entity";
     /** @var array $summon_choices List of spells for the mob to use to summon entities. Each spell has the following parameters:
@@ -88,6 +87,7 @@ class _summon_entity extends BaseComponent
         $this->start_sound_event = $values['start_sound_event'] ?? $this->start_sound_event;
         $this->weight = $values['weight'] ?? $this->weight;
 
+        parent::__construct($values);
     }
 
     /**
@@ -106,5 +106,10 @@ class _summon_entity extends BaseComponent
     public function remove($entity): void
     {
         // TODO: Implement remove() method.
+    }
+
+    public function tick(int $tickDiff)
+    {
+        // TODO: Implement tick() method.
     }
 }

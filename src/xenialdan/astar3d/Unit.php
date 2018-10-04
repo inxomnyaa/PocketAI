@@ -1,12 +1,9 @@
 <?php
 
-
-use pocketmine\math\Vector3;
-
 namespace xenialdan\astar3d;
 
-
 use pocketmine\level\Position;
+use pocketmine\math\Vector3;
 
 class Unit
 {
@@ -35,9 +32,9 @@ public function Update () :void{
 		//}
 	}
 
-	void OnPathReceived (Vector3[] newPath, bool success) {
-    if (success) {
-        path = newPath;
+	public function OnPathReceived ($newPath, bool $success) {
+    if ($success) {
+        $this->path = $newPath;
         StopCoroutine("FollowPath");
         StartCoroutine("FollowPath");
     }
@@ -47,12 +44,12 @@ private function FollowPath ():\Generator {
 /**@var Vector3 */$currentWaypoint = $this->path[0];
 
 		while (true) {
-            if (transform.position == currentWaypoint) {
-                targetIndex++;
-                if (targetIndex >= path.Length) {
+            if ($this == $currentWaypoint) {
+                $targetIndex++;
+                if ($targetIndex >= count($this->path)) {
                     yield;
 				}
-                currentWaypoint = path[targetIndex];
+                $currentWaypoint = $this->path[$targetIndex];
             }
             transform.position = Vector3.MoveTowards(transform.position, currentWaypoint, speed*Time.deltaTime);
             yield;

@@ -2,11 +2,10 @@
 
 namespace xenialdan\PocketAI\component\minecraft\behavior;
 
-use xenialdan\PocketAI\component\BaseComponent;
 use xenialdan\PocketAI\entitytype\AIEntity;
 use xenialdan\PocketAI\entitytype\AIProjectile;
 
-class _send_event extends BaseComponent
+class _send_event extends BehaviourComponent
 {
     protected $name = "minecraft:behavior.send_event";
     /** @var float $cast_duration Time in seconds for the entire event sending process */
@@ -36,6 +35,7 @@ class _send_event extends BaseComponent
         $this->event = $values['event'] ?? $this->event;
         $this->sound_event = $values['sound_event'] ?? $this->sound_event;
 
+        parent::__construct($values);
     }
 
     /**
@@ -54,5 +54,10 @@ class _send_event extends BaseComponent
     public function remove($entity): void
     {
         // TODO: Implement remove() method.
+    }
+
+    public function tick(int $tickDiff)
+    {
+        // TODO: Implement tick() method.
     }
 }

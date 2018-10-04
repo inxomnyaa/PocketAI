@@ -2,12 +2,11 @@
 
 namespace xenialdan\PocketAI\component\minecraft\behavior;
 
-use xenialdan\PocketAI\component\BaseComponent;
 use xenialdan\PocketAI\entitytype\AIEntity;
 use xenialdan\PocketAI\entitytype\AIProjectile;
 use xenialdan\PocketAI\filter\Filters;
 
-class _wither_target_highest_damage extends BaseComponent
+class _wither_target_highest_damage extends BehaviourComponent
 {
     protected $name = "minecraft:behavior.wither_target_highest_damage";
     /** @var mixed (JSON Object) $entity_types List of entity types the wither takes into account to find who dealt the most damage to it
@@ -40,6 +39,7 @@ class _wither_target_highest_damage extends BaseComponent
         $this->sprint_speed_multiplier = $values['sprint_speed_multiplier'] ?? $this->sprint_speed_multiplier;
         $this->walk_speed_multiplier = $values['walk_speed_multiplier'] ?? $this->walk_speed_multiplier;
 
+        parent::__construct($values);
     }
 
     /**
@@ -58,5 +58,10 @@ class _wither_target_highest_damage extends BaseComponent
     public function remove($entity): void
     {
         // TODO: Implement remove() method.
+    }
+
+    public function tick(int $tickDiff)
+    {
+        // TODO: Implement tick() method.
     }
 }

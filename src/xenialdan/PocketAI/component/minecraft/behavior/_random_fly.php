@@ -2,11 +2,10 @@
 
 namespace xenialdan\PocketAI\component\minecraft\behavior;
 
-use xenialdan\PocketAI\component\BaseComponent;
 use xenialdan\PocketAI\entitytype\AIEntity;
 use xenialdan\PocketAI\entitytype\AIProjectile;
 
-class _random_fly extends BaseComponent
+class _random_fly extends BehaviourComponent
 {
     protected $name = "minecraft:behavior.random_fly";
     /** @var bool $can_land_on_trees If true, the mob can stop flying and land on a tree instead of the ground */
@@ -27,6 +26,7 @@ class _random_fly extends BaseComponent
         $this->xz_dist = $values['xz_dist'] ?? $this->xz_dist;
         $this->y_dist = $values['y_dist'] ?? $this->y_dist;
 
+        parent::__construct($values);
     }
 
     /**
@@ -45,5 +45,10 @@ class _random_fly extends BaseComponent
     public function remove($entity): void
     {
         // TODO: Implement remove() method.
+    }
+
+    public function tick(int $tickDiff)
+    {
+        // TODO: Implement tick() method.
     }
 }

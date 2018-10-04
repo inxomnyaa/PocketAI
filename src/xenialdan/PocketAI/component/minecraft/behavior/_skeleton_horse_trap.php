@@ -2,11 +2,10 @@
 
 namespace xenialdan\PocketAI\component\minecraft\behavior;
 
-use xenialdan\PocketAI\component\BaseComponent;
 use xenialdan\PocketAI\entitytype\AIEntity;
 use xenialdan\PocketAI\entitytype\AIProjectile;
 
-class _skeleton_horse_trap extends BaseComponent
+class _skeleton_horse_trap extends BehaviourComponent
 {
     protected $name = "minecraft:behavior.skeleton_horse_trap";
     /** @var float $duration Amount of time in seconds the trap exists. After this amount of time is elapsed, the trap is removed from the world if it hasn't been activated */
@@ -24,6 +23,7 @@ class _skeleton_horse_trap extends BaseComponent
         $this->duration = $values['duration'] ?? $this->duration;
         $this->within_radius = $values['within_radius'] ?? $this->within_radius;
 
+        parent::__construct($values);
     }
 
     /**
@@ -42,5 +42,10 @@ class _skeleton_horse_trap extends BaseComponent
     public function remove($entity): void
     {
         // TODO: Implement remove() method.
+    }
+
+    public function tick(int $tickDiff)
+    {
+        // TODO: Implement tick() method.
     }
 }

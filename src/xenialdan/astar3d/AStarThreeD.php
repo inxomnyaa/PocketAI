@@ -111,8 +111,8 @@ class AStarThreeD
         $path = new SplStack();
         while ($point) {
             $path->push($point);
-            if ($point->parent) {
-                $point = $point->parent;
+            if ($point->parentNode) {
+                $point = $point->parentNode;
             } else {
                 break;
             }

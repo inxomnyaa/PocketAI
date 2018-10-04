@@ -2,12 +2,11 @@
 
 namespace xenialdan\PocketAI\component\minecraft\behavior;
 
-use xenialdan\PocketAI\component\BaseComponent;
 use xenialdan\PocketAI\entitytype\AIEntity;
 use xenialdan\PocketAI\entitytype\AIProjectile;
 use xenialdan\PocketAI\filter\Filters;
 
-class _nearest_attackable_target extends BaseComponent
+class _nearest_attackable_target extends BehaviourComponent
 {
     protected $name = "minecraft:behavior.nearest_attackable_target";
     /** @var int $attack_interval Time in seconds between attacks */
@@ -55,6 +54,7 @@ class _nearest_attackable_target extends BaseComponent
         $this->reselect_targets = $values['reselect_targets'] ?? $this->reselect_targets;
         $this->within_radius = $values['within_radius'] ?? $this->within_radius;
 
+        parent::__construct($values);
     }
 
     /**
@@ -73,5 +73,10 @@ class _nearest_attackable_target extends BaseComponent
     public function remove($entity): void
     {
         // TODO: Implement remove() method.
+    }
+
+    public function tick(int $tickDiff)
+    {
+        // TODO: Implement tick() method.
     }
 }
