@@ -5,8 +5,8 @@ namespace xenialdan\PocketAI\ai;
 use xenialdan\astar3d\Grid;
 use xenialdan\astar3d\Pathfinder;
 use xenialdan\PocketAI\component\minecraft\behavior\BehaviourComponent;
-use xenialdan\PocketAI\component\minecraft\behavior\MovementComponent;
-use xenialdan\PocketAI\component\minecraft\behavior\NavigationComponent;
+use xenialdan\PocketAI\component\minecraft\movement\MovementComponent;
+use xenialdan\PocketAI\component\minecraft\navigation\NavigationComponent;
 use xenialdan\PocketAI\EntityProperties;
 
 class AIManager
@@ -27,8 +27,17 @@ class AIManager
      * AIManager constructor.
      * @param EntityProperties $entityProperties
      */
-    public function __construct(EntityProperties &$entityProperties)
+    public function __construct(EntityProperties $entityProperties)
     {
+        $this->update($entityProperties);
+    }
+
+    /**
+     * Updates all fields.. maybe this is the shittiest thing ever to do..
+     * Maybe change this to be done by apply() and remove() directly inside the components instead?
+     * @param EntityProperties $entityProperties
+     */
+    public function update(EntityProperties $entityProperties){
         $this->navigators = new \SplQueue();
         $this->movements = new \SplQueue();
         $this->behaviours = new \SplPriorityQueue();
@@ -43,7 +52,7 @@ class AIManager
                 continue;
             }
             if($component instanceof BehaviourComponent){
-                $this->behaviours->insert($component, $component->priority);
+                $this->behaviours->insert($component, PHP_INT_MAX - $component->priority);
                 continue;
             }
         }
