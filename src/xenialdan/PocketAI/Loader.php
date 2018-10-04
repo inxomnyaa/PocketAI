@@ -168,19 +168,14 @@ class Loader extends PluginBase
                                     ARRAY_FILTER_USE_KEY
                                 )
                             ) {
-                                $this->getLogger()->notice("MULTIPLE!");
                                 foreach ($component_data as $component_datum) {
-                                    print_r($component_datum);
                                     if ($component_name == "minecraft:environment_sensor")//This is due to a probable Mojang-Json-Coding issue in dolphin.json. Investigating.
                                         $groups[] = new $c(["on_environment" => $component_datum]);
                                     else
                                         $groups[] = new $c($component_datum);
-                                    print_r($groups[count($groups) - 1]);
                                 }
                             } else {
-                                $this->getLogger()->notice("SINGLE!");
                                 $groups[] = new $c($component_data);
-                                print_r($groups[count($groups) - 1]);
                             }
                         }
                     }
