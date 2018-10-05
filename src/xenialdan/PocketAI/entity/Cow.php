@@ -40,7 +40,7 @@ class Cow extends AIEntity
     {
         parent::initEntity($nbt);
         $this->setEntityProperties(new EntityProperties("entities/cow", $this));
-        $this->aiManager = new AIManager($this->entityProperties);
+        $this->aiManager = new AIManager($this);
     }
 
     public function getName(): string

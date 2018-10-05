@@ -5,7 +5,7 @@ namespace xenialdan\astar3d;
 
 class SurfaceType implements \Serializable
 {
-    /** @var int */
+    /** @var int *///BlockID
     public $layerMask;
     /** @var int */
     public $penalty;
