@@ -25,5 +25,5 @@ api: [4.0.0+dev]
 # 0.15.3: Improve leashing
 # 0.16.0: Implement basic movement
 # 0.17.0: Nuke alot of code, Add new component types, add AIManager
-# 0.18.0:
+# 0.18.0: Build navigation & pathfinding tests
 ...

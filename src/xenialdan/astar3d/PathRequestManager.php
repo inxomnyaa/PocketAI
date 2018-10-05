@@ -4,7 +4,10 @@
 namespace xenialdan\astar3d;
 
 
+use pocketmine\level\particle\BlockForceFieldParticle;
+use pocketmine\level\particle\DestroyBlockParticle;
 use pocketmine\math\Vector3;
+use pocketmine\Server;
 
 class PathRequestManager
 {
@@ -22,7 +25,7 @@ class PathRequestManager
     /** @var PathRequestManager */
     public static $instance;
 
-    public function FinishedProcessingPath(Vector3 $path, bool $success)
+    public function FinishedProcessingPath($path, bool $success)
     {
         $this->currentPathRequest->callback($path, $success);
         $this->isProcessingPath = false;
@@ -59,5 +62,16 @@ class PathRequest
         $this->pathStart = $_pathStart;
         $this->pathEnd = $_pathEnd;
         $this->callback = $callback;
+    }
+
+    public function callback($path, bool &$success){
+        var_dump($path);
+        $success = false;
+        $level = Server::getInstance()->getPlayer("xenialdan")->getLevel();
+        /** @var Vector3 $value */
+        foreach ($path as $value){
+            $level->addParticle(new BlockForceFieldParticle($value));
+        }
+        $success = true;
     }
 }

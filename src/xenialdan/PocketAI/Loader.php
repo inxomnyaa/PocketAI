@@ -12,6 +12,7 @@ use pocketmine\Player;
 use pocketmine\plugin\PluginBase;
 use pocketmine\resourcepacks\ZippedResourcePack;
 use pocketmine\Server;
+use xenialdan\PocketAI\command\BuildNav;
 use xenialdan\PocketAI\command\KillentityCommand;
 use xenialdan\PocketAI\command\SummonCommand;
 use xenialdan\PocketAI\component\ComponentGroup;
@@ -64,6 +65,7 @@ class Loader extends PluginBase
     {
         $this->getServer()->getCommandMap()->register("pocketmine", new SummonCommand("summon"));
         $this->getServer()->getCommandMap()->register("pocketmine", new KillentityCommand("killentity"));
+        $this->getServer()->getCommandMap()->register("pocketmine", new BuildNav("buildnav"));
         #Attribute::addAttribute(Loader::HORSE_JUMP_POWER, "minecraft:horse_jump_power", 0.00, 4.00, 1.00);
         Attribute::addAttribute(Loader::HORSE_JUMP_POWER, "minecraft:horse.jump_strength", 0.00, 4.00, 1.00);
 

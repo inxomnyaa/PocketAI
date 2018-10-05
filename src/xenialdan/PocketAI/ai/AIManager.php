@@ -30,6 +30,7 @@ class AIManager
     public function __construct(EntityProperties $entityProperties)
     {
         $this->update($entityProperties);
+        $this->pathfinder = new Pathfinder();
     }
 
     /**

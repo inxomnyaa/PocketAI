@@ -22,7 +22,7 @@ class Pathfinder
         $this->FindPath($start, $end);
     }
 
-    private function FindPath(Vector3 $startPos, Vector3 $targetPos): \Generator
+    private function FindPath(Vector3 $startPos, Vector3 $targetPos)
     {
         /** @var Vector3[] */
         $waypoints = [];
@@ -78,7 +78,7 @@ class Pathfinder
             $msgb = $targetNode->walkable ? "" : "Target position is unwalkable. Unable to generate path";
             if (!empty($msga) || !empty($msgb)) MainLogger::getLogger()->Log($msga . $msgb);
         }
-        yield;
+        //yield;
         if ($wasSuccessful) {
             $waypoints = $this->RetracePath($startNode, $targetNode);
         }
@@ -151,5 +151,10 @@ class Pathfinder
 
         if ($dstX > $dstZ) return 14 * $dstZ + 10 * ($dstX - $dstZ);
         else return 14 * $dstX + 10 * ($dstZ - $dstX);
+    }
+
+    private function Contains(\SplQueue $closedSet, Node $neighbor):bool
+    {
+        return (in_array($neighbor, iterator_to_array($closedSet)));
     }
 }
