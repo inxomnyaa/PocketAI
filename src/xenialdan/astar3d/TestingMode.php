@@ -2,7 +2,7 @@
 
 namespace xenialdan\astar3d;
 
-class TestingMode extends \SplEnum
+class TestingMode
 {
     const __default = self::SWEEPTESTING;
     const SWEEPTESTING = 0;
