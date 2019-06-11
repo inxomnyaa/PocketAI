@@ -34,9 +34,9 @@ abstract class AIProjectile extends Projectile
     public $width = 0.0;
     public $height = 0.0;
 
-    protected function initEntity(CompoundTag $nbt): void
+    protected function initEntity(/*CompoundTag $nbt*/): void
     {
-        parent::initEntity($nbt);
+        parent::initEntity(/*$nbt*/);
 
         $this->setLootGenerator(new LootGenerator());
     }
@@ -216,16 +216,17 @@ abstract class AIProjectile extends Projectile
         parent::spawnTo($player);
     }
 
-    public function saveNBT(): CompoundTag
+    public function saveNBT()/*: CompoundTag*/
+    : void
     {//TODO properly fix
-        $nbt = parent::saveNBT();
+        #$nbt = parent::saveNBT();
         $activeComponents = new CompoundTag("components");
         foreach ($this->getEntityProperties()->getActiveComponentGroups() as $activeComponentGroupName => $activeComponentGroupValue) {
             $activeComponents->setByte($activeComponentGroupName, 1);
         }
 
-        $nbt->setTag($activeComponents);
-        return $nbt;
+        #$nbt->setTag($activeComponents);
+        #return $nbt;
     }
 
     /**

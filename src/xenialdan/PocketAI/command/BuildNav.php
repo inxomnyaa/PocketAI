@@ -23,14 +23,18 @@ namespace xenialdan\PocketAI\command;
 
 use pocketmine\command\CommandSender;
 use pocketmine\command\defaults\VanillaCommand;
-use pocketmine\lang\TranslationContainer;
+use pocketmine\level\particle\BlockForceFieldParticle;
+use pocketmine\level\particle\WaterParticle;
+use pocketmine\math\Vector3;
 use pocketmine\Player;
+use pocketmine\Server;
 use pocketmine\utils\TextFormat;
-use xenialdan\astar3d\Pathfinder;
 use xenialdan\PocketAI\entitytype\AIEntity;
 
 class BuildNav extends VanillaCommand
 {
+
+    public $res;
 
     public function __construct($name)
     {
@@ -49,12 +53,27 @@ class BuildNav extends VanillaCommand
         }
         /** @var Player $sender */
 
+        $this->res = false;
         foreach ($sender->getLevel()->getEntities() as $entity) {
             if (!$entity instanceof AIEntity) continue;
+            #PathRequestManager::RequestPath($entity, $sender, [$this, 'callback']);
             $entity->aiManager->pathfinder->StartFindingPath($entity, $sender);
             $entity->aiManager->navigationGrid = $entity->aiManager->pathfinder->grid;
         }
-        $sender->sendMessage(TextFormat::RED . "An error occurred");
-        return false;
+        if (!$this->res) $sender->sendMessage(TextFormat::RED . "An error occurred");
+        return $this->res;
+    }
+
+    public function callback($path, bool $res)
+    {
+        var_dump($path);
+        $this->res = false;
+        $level = Server::getInstance()->getPlayer("xenialdan")->getLevel();
+        /** @var Vector3 $value */
+        foreach ($path as $value) {
+            $level->addParticle(new BlockForceFieldParticle($value));
+            $level->addParticle(new WaterParticle($value));
+        }
+        $this->res = $res;
     }
 }

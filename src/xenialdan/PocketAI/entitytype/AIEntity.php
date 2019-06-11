@@ -8,16 +8,22 @@ use pocketmine\block\Liquid;
 use pocketmine\entity\Attribute;
 use pocketmine\entity\Entity;
 use pocketmine\entity\Living;
+use pocketmine\event\entity\EntityDamageByEntityEvent;
+use pocketmine\event\entity\EntityDamageEvent;
 use pocketmine\inventory\InventoryHolder;
 use pocketmine\item\Durable;
 use pocketmine\item\Item;
 use pocketmine\level\particle\HappyVillagerParticle;
+use pocketmine\level\particle\RedstoneParticle;
 use pocketmine\math\AxisAlignedBB;
 use pocketmine\math\Vector3;
 use pocketmine\nbt\tag\CompoundTag;
 use pocketmine\network\mcpe\protocol\EntityEventPacket;
 use pocketmine\network\mcpe\protocol\LevelSoundEventPacket;
 use pocketmine\Player;
+use salmonde\pathfinding\Pathfinder;
+use salmonde\pathfinding\PathResult;
+use salmonde\pathfinding\utils\validator\JumpHeightValidator;
 use xenialdan\PocketAI\ai\AIManager;
 use xenialdan\PocketAI\API;
 use xenialdan\PocketAI\component\ComponentGroup;
@@ -56,10 +62,12 @@ abstract class AIEntity extends Living implements InventoryHolder
 
     /** @var AIManager */
     public $aiManager;
+    /** @var PathResult|null */
+    private $path = null;
 
-    protected function initEntity(CompoundTag $nbt): void
+    protected function initEntity(/*CompoundTag $nbt*/): void
     {
-        parent::initEntity($nbt);
+        parent::initEntity(/*$nbt*/);
 
 
         $this->setLootGenerator(new LootGenerator());
@@ -73,6 +81,7 @@ abstract class AIEntity extends Living implements InventoryHolder
     /**
      * Leash entity to another entity. If passing null the entity will be unleashed
      * @param null|Entity $entity
+     * @throws \ReflectionException
      */
     public function setLeashedTo(?Entity $entity)
     {
@@ -85,14 +94,14 @@ abstract class AIEntity extends Living implements InventoryHolder
             foreach ($components as $component) {
                 if (is_null($entity)) {
                     if ($this->isLeashed()) {
-                        $this->getLevel()->getServer()->getPluginManager()->callEvent($ev = new AddonEvent(Loader::getInstance(), API::targetToTest($this, $entity, $component->on_unleash["target"]), $component->on_unleash["event"]));
+                        (new AddonEvent(Loader::getInstance(), API::targetToTest($this, $entity, $component->on_unleash["target"]), $component->on_unleash["event"]))->call();
                     }
                     $this->getDataPropertyManager()->setLong(self::DATA_LEAD_HOLDER_EID, -1);
                     $this->setGenericFlag(self::DATA_FLAG_LEASHED, false);
                     $pk = new EntityEventPacket();
                     $pk->event = EntityEventPacket::REMOVE_LEASH;
                     $pk->entityRuntimeId = $this->getId();
-                    $this->getLevel()->addGlobalPacket($pk);
+                    $this->getLevel()->broadcastGlobalPacket($pk);
                 } else {
                     print "\n\n";
                     print_r($this->isLeashed() ? "Leashed" : "Not leashed");
@@ -106,7 +115,7 @@ abstract class AIEntity extends Living implements InventoryHolder
                     print "\n";
                     print_r($this->isLeashed() ? "Leashed" : "Not leashed");
                     print "\n";
-                    if ($this->isLeashed()) $this->getLevel()->getServer()->getPluginManager()->callEvent($ev = new AddonEvent(Loader::getInstance(), API::targetToTest($this, $entity, $component->on_leash["target"]), $component->on_leash["event"]));
+                    if ($this->isLeashed()) (new AddonEvent(Loader::getInstance(), API::targetToTest($this, $entity, $component->on_leash["target"]), $component->on_leash["event"]))->call();
                 }
             }
         }
@@ -130,9 +139,50 @@ abstract class AIEntity extends Living implements InventoryHolder
             foreach (API::getAABBCorners($this->getBoundingBox()) as $corner) {
                 $this->getLevel()->addParticle(new HappyVillagerParticle($corner));
             }
+            if ($this->ticksLived % 20 * 30 === 0) {
+                if (is_null(($target = $this->getTargetEntity()))) {
+                    $this->path = null;
+                } else {
+                    $pathfinder = new Pathfinder($this->level, $this->floor(), $this->getTargetEntity()->floor(), $this->getBoundingBox() ?? null);
+                    $pathfinder->getAlgorithm()->addValidator(new JumpHeightValidator($pathfinder->getAlgorithm()->getLowestValidatorPriority() - 1, 1));
+                    $this->getLevel()->getServer()->getLogger()->debug('[A*] Calculating ...');
+                    $pathfinder->findPath();
+                    $this->getLevel()->getServer()->getLogger()->debug('[A*] Done.');
+                    $this->path = $pathfinder->getPathResult();
+                    if ($this->path === null)
+                        $this->getLevel()->getServer()->getLogger()->debug('[A*] Null.');
+                    $this->getLevel()->getServer()->getLogger()->debug('[A*] Done.');
+                }
+            }
+
+            if (!is_null($this->path) && ($this->path) instanceof PathResult) {
+                $cpypth = $this->path;
+                foreach ($cpypth as $block) {
+                    $this->getLevel()->addParticle(new RedstoneParticle($block->add(0.5, 0, 0.5)));
+                }
+                $this->checkBlockCollision();
+                $this->path->rewind();
+                /** @var Vector3 */
+                $current = $this->path->current();
+                if ($this->path->getNextPosition()->getY() > $this->getY() && $this->isOnGround() && $this->isCollidedVertically)
+                    $this->jump();
+                $delta = $current->add($this->getWidth() / 2, 0, $this->getWidth())->subtract($this)->normalize()->multiply($this->getAttributeMap()->getAttribute(Attribute::MOVEMENT_SPEED)->getValue() * $tickDiff);
+                $this->setMotion($delta);
+
+                /*if($this->floor()->equals($current->floor())){//TODO wtf
+                    $this->path = $this->path->getPredecessor();
+                }*/
+            }
         }
 
         return $hasUpdate;
+    }
+
+    public function attack(EntityDamageEvent $source): void
+    {
+        if ($source instanceof EntityDamageByEntityEvent) {
+            $this->setTargetEntity($source->getDamager());
+        }
     }
 
     protected function applyGravity(): void
@@ -342,9 +392,10 @@ abstract class AIEntity extends Living implements InventoryHolder
         return $drops;
     }
 
-    public function saveNBT(): CompoundTag
+    public function saveNBT()/*: CompoundTag*/
+    : void
     {//TODO properly fix
-        $nbt = parent::saveNBT();
+        #$nbt = parent::saveNBT();
         $activeComponents = new CompoundTag("components");
         /** @var ComponentGroup $activeComponentGroup */
         if (!is_null($this->getEntityProperties())) {
@@ -352,8 +403,8 @@ abstract class AIEntity extends Living implements InventoryHolder
                 $activeComponents->setByte($activeComponentGroup->getName(), 1);
             }
         }
-        $nbt->setTag($activeComponents);
-        return $nbt;
+        #$nbt->setTag($activeComponents);
+        #return $nbt;
     }
 
     /**
@@ -413,6 +464,11 @@ abstract class AIEntity extends Living implements InventoryHolder
 
     //INTERACTIONS
 
+    /**
+     * @param Player $player
+     * @return bool
+     * @throws \ReflectionException
+     */
     public function onRightClick(Player $player): bool
     {
         $entityProperties = $this->getEntityProperties();
@@ -422,7 +478,7 @@ abstract class AIEntity extends Living implements InventoryHolder
             if ($this->getEntityProperties()->hasComponent("minecraft:leashable")) {
                 $holder = $this->getLeadHolder();
                 if ($holder instanceof LeashKnot) $holder->kill();
-                elseif ($holder->getId() === $player->getId()){
+                elseif ($holder->getId() === $player->getId()) {
                     $this->getLevel()->dropItem($this, new Lead());
                     $this->setLeashedTo(null);
                 }

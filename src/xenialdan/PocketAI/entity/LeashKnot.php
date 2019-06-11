@@ -27,7 +27,6 @@ use pocketmine\block\Fence;
 use pocketmine\entity\Entity;
 use pocketmine\event\entity\EntityDamageEvent;
 use pocketmine\math\Vector3;
-use pocketmine\nbt\tag\CompoundTag;
 use pocketmine\network\mcpe\protocol\LevelSoundEventPacket;
 use pocketmine\Player;
 use xenialdan\PocketAI\entitytype\AIEntity;
@@ -50,11 +49,11 @@ class LeashKnot extends AIEntity
 
     public $canCollide = false;
 
-    protected function initEntity(CompoundTag $nbt): void
+    protected function initEntity(/*CompoundTag $nbt*/): void
     {
         $this->setMaxHealth(1);
         $this->setHealth(1);
-        parent::initEntity($nbt);
+        parent::initEntity(/*$nbt*/);
         $this->setEntityProperties(null);
     }
 
@@ -69,6 +68,9 @@ class LeashKnot extends AIEntity
         parent::attack($source);
     }
 
+    /**
+     * @throws \ReflectionException
+     */
     public function onNearbyBlockChange(): void
     {
         parent::onNearbyBlockChange();
@@ -103,6 +105,11 @@ class LeashKnot extends AIEntity
         return false;
     }
 
+    /**
+     * @param int $tickDiff
+     * @return bool
+     * @throws \ReflectionException
+     */
     public function entityBaseTick(int $tickDiff = 1): bool
     {
         if ($this->ticksLived % 300 === 0 || $this->ticksLived === 0) return parent::entityBaseTick($tickDiff);
@@ -113,6 +120,9 @@ class LeashKnot extends AIEntity
         return true;
     }
 
+    /**
+     * @throws \ReflectionException
+     */
     public function kill(): void
     {
         $this->getLevel()->broadcastLevelSoundEvent($this, LevelSoundEventPacket::SOUND_LEASHKNOT_BREAK);
@@ -126,6 +136,11 @@ class LeashKnot extends AIEntity
         parent::kill();
     }
 
+    /**
+     * @param Player $player
+     * @return bool
+     * @throws \ReflectionException
+     */
     public function onRightClick(Player $player):bool
     {
         $any = false;

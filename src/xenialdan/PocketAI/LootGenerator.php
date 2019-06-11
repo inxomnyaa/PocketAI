@@ -85,13 +85,13 @@ class LootGenerator
                                             {
                                                 switch ($function["data"]) {
                                                     case 1:
-                                                        $item = Item::get(Item::RAW_SALMON, $item->getDamage(), $item->getCount(), $item->getCompoundTag());
+                                                        $item = Item::get(Item::RAW_SALMON, $item->getDamage(), $item->getCount(), $item->getNamedTag());
                                                         break;
                                                     case 2:
-                                                        $item = Item::get(Item::CLOWNFISH, $item->getDamage(), $item->getCount(), $item->getCompoundTag());
+                                                        $item = Item::get(Item::CLOWNFISH, $item->getDamage(), $item->getCount(), $item->getNamedTag());
                                                         break;
                                                     case 3:
-                                                        $item = Item::get(Item::PUFFERFISH, $item->getDamage(), $item->getCount(), $item->getCompoundTag());
+                                                        $item = Item::get(Item::PUFFERFISH, $item->getDamage(), $item->getCount(), $item->getNamedTag());
                                                         break;
                                                     default:
                                                         break;

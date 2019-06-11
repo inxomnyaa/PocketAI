@@ -30,12 +30,14 @@ class AddonEventListener implements Listener
     /**
      * Built-in Events
      * @param ExplosionPrimeEvent $event
+     * @throws \ReflectionException
      */
     public function onPrime(ExplosionPrimeEvent $event)
     {
         if (($entity = $event->getEntity()) instanceof AIEntity && !$event->isCancelled()) {
             /** @var AIEntity $entity */
-            $this->owner->getServer()->getPluginManager()->callEvent($ev = new AddonEvent($this->owner, $entity, "minecraft:on_prime"));
+            $ev = new AddonEvent($this->owner, $entity, "minecraft:on_prime");
+            $ev->call();
             $event->setCancelled($ev->isCancelled());
         }
     }
@@ -43,12 +45,14 @@ class AddonEventListener implements Listener
     /**
      * Built-in Events
      * @param EntitySpawnEvent $event
+     * @throws \ReflectionException
      */
     public function entitySpawned(EntitySpawnEvent $event)
     {
         /** @var AIEntity $entity */
         if (($entity = $event->getEntity()) instanceof AIEntity && $entity->ticksLived === 0) {
-            $this->owner->getServer()->getPluginManager()->callEvent($ev = new AddonEvent($this->owner, $entity, "minecraft:entity_spawned"));
+            $ev = new AddonEvent($this->owner, $entity, "minecraft:entity_spawned");
+            $ev->call();
         }
     }
 

@@ -31,6 +31,12 @@ class FishingRod extends Tool
         return 65;
     }
 
+    /**
+     * @param Player $player
+     * @param Vector3 $directionVector
+     * @return bool
+     * @throws \ReflectionException
+     */
     public function onClickAir(Player $player, Vector3 $directionVector): bool
     {
         var_dump($this->isCasted($player));
@@ -54,7 +60,7 @@ class FishingRod extends Tool
                     $ev->setCancelled();
                 }
 
-                $player->getServer()->getPluginManager()->callEvent($ev);
+                $ev->call();
 
                 $entity = $ev->getProjectile(); //This might have been changed by plugins
 
@@ -63,7 +69,7 @@ class FishingRod extends Tool
                     $player->getInventory()->sendContents($player);
                 } else {
                     $entity->setMotion($entity->getMotion()->multiply($ev->getForce()));
-                    $player->getServer()->getPluginManager()->callEvent($projectileEv = new ProjectileLaunchEvent($entity));
+                    ($projectileEv = new ProjectileLaunchEvent($entity))->call();
                     if ($projectileEv->isCancelled() || !$projectileEv->getEntity() instanceof FishingHook) {
                         $ev->getProjectile()->flagForDespawn();
                     } else {
@@ -79,9 +85,7 @@ class FishingRod extends Tool
         } else {
             if ($this->getHook($player) instanceof Projectile) {
                 $force = 0.8;
-                $ev = new EntityReelRodEvent($player, $this, $this->getHook($player), $force);
-
-                $player->getServer()->getPluginManager()->callEvent($ev);
+                ($ev = new EntityReelRodEvent($player, $this, $this->getHook($player), $force))->call();
 
                 $entity = $ev->getProjectile();
 

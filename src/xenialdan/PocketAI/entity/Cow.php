@@ -24,7 +24,6 @@ declare(strict_types=1);
 namespace xenialdan\PocketAI\entity;
 
 use pocketmine\math\Vector3;
-use pocketmine\nbt\tag\CompoundTag;
 use xenialdan\PocketAI\ai\AIManager;
 use xenialdan\PocketAI\EntityProperties;
 use xenialdan\PocketAI\entitytype\AIEntity;
@@ -36,9 +35,9 @@ class Cow extends AIEntity
     /** @var Vector3 */
     public $direction = null;
 
-    protected function initEntity(CompoundTag $nbt): void
+    protected function initEntity(/*CompoundTag $nbt*/): void
     {
-        parent::initEntity($nbt);
+        parent::initEntity(/*$nbt*/);
         $this->setEntityProperties(new EntityProperties("entities/cow", $this));
         $this->aiManager = new AIManager($this);
     }

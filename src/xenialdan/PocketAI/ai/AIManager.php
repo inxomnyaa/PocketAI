@@ -2,12 +2,6 @@
 
 namespace xenialdan\PocketAI\ai;
 
-use pocketmine\block\BlockIds;
-use pocketmine\entity\Entity;
-use xenialdan\astar3d\Grid;
-use xenialdan\astar3d\Pathfinder;
-use xenialdan\astar3d\SurfaceType;
-use xenialdan\astar3d\TestingMode;
 use xenialdan\PocketAI\component\minecraft\behavior\BehaviourComponent;
 use xenialdan\PocketAI\component\minecraft\movement\MovementComponent;
 use xenialdan\PocketAI\component\minecraft\navigation\NavigationComponent;
@@ -23,10 +17,6 @@ class AIManager
     public $movements;
     /** @var \SplPriorityQueue */
     public $behaviours;
-    /** @var Pathfinder */
-    public $pathfinder;
-    /** @var Grid */
-    public $navigationGrid;
 
     /**
      * AIManager constructor.
@@ -35,15 +25,6 @@ class AIManager
     public function __construct(AIEntity $entity)
     {
         $this->update($entity->getEntityProperties());
-        $this->pathfinder = new Pathfinder();
-        $this->pathfinder->grid = new Grid();
-        $this->pathfinder->grid->Base = $entity;
-        $this->pathfinder->grid->nodeRadius = $entity->getWidth()/2;
-        $this->pathfinder->grid->testingMode = TestingMode::SWEEPTESTING;
-        $surfaceType = new SurfaceType();
-        $surfaceType->layerMask = BlockIds::GRASS;
-        $surfaceType->penalty = 0;
-        $this->pathfinder->grid->walkableRegions[] = $surfaceType;
     }
 
     /**

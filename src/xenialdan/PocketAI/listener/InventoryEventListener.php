@@ -2,23 +2,14 @@
 
 namespace xenialdan\PocketAI\listener;
 
-use pocketmine\entity\Entity;
 use pocketmine\event\Listener;
 use pocketmine\event\server\DataPacketReceiveEvent;
 use pocketmine\inventory\InventoryHolder;
-use pocketmine\item\Durable;
-use pocketmine\item\Item;
 use pocketmine\network\mcpe\protocol\InteractPacket;
 use pocketmine\network\mcpe\protocol\InventoryTransactionPacket;
-use pocketmine\network\mcpe\protocol\LevelSoundEventPacket;
 use pocketmine\Player;
 use pocketmine\plugin\Plugin;
-use xenialdan\PocketAI\component\Components;
-use xenialdan\PocketAI\component\minecraft\_interact;
-use xenialdan\PocketAI\entity\LeashKnot;
 use xenialdan\PocketAI\entitytype\AIEntity;
-use xenialdan\PocketAI\filter\Filters;
-use xenialdan\PocketAI\Loader;
 
 /**
  * Class EventListener
@@ -38,6 +29,10 @@ class InventoryEventListener implements Listener
         $this->owner = $plugin;
     }
 
+    /**
+     * @param DataPacketReceiveEvent $event
+     * @throws \ReflectionException
+     */
     public function onDataPacket(DataPacketReceiveEvent $event)
     {
         $player = $event->getPlayer();
@@ -100,6 +95,7 @@ class InventoryEventListener implements Listener
      * @param InventoryTransactionPacket $packet
      * @param Player $player
      * @return bool
+     * @throws \ReflectionException
      */
     public function handleInventoryTransaction(InventoryTransactionPacket $packet, Player $player): bool
     {

@@ -1,9 +1,9 @@
 ---
 name: PocketAI
 author: XenialDan
-version: 0.18.0
+version: 0.19.0
 main: xenialdan\PocketAI\Loader
-api: [4.0.0+dev]
+api: [3.0.0, 4.0.0]
 # Changes:
 # 0.7.0: bumped to 4.0.0+dev
 # 0.8.0: Added component classes
@@ -26,4 +26,5 @@ api: [4.0.0+dev]
 # 0.16.0: Implement basic movement
 # 0.17.0: Nuke alot of code, Add new component types, add AIManager
 # 0.18.0: Build navigation & pathfinding tests
+# 0.19.0: Use SalmonDE's Pathfinding virion
 ...

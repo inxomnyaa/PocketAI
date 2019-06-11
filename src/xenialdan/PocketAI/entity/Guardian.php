@@ -26,7 +26,6 @@ namespace xenialdan\PocketAI\entity;
 use pocketmine\event\entity\EntityDamageByEntityEvent;
 use pocketmine\event\entity\EntityDamageEvent;
 use pocketmine\math\Vector3;
-use pocketmine\nbt\tag\CompoundTag;
 use xenialdan\PocketAI\EntityProperties;
 use xenialdan\PocketAI\entitytype\AIEntity;
 
@@ -41,11 +40,11 @@ class Guardian extends AIEntity
 
     private $switchDirectionTicker = 0;
 
-    protected function initEntity(CompoundTag $nbt): void
+    protected function initEntity(/*CompoundTag $nbt*/): void
     {
         $this->setEntityProperties(new EntityProperties("entities/guardian", $this));
         $this->setBreathing(false);
-        parent::initEntity($nbt);
+        parent::initEntity(/*$nbt*/);
         //$this->addEffect(Effect::getEffect(Effect::WATER_BREATHING)->setDuration(INT32_MAX)->setVisible(false)); // Fixes death in water
     }
 
@@ -79,7 +78,7 @@ class Guardian extends AIEntity
         if (++$this->switchDirectionTicker >= 100 or $this->isCollided || $this->onGround) {
             $this->switchDirectionTicker = 0;
             if (mt_rand(0, 50) < 10) {
-                $this->direction = $this->generateRandomDirection();
+                #$this->direction = $this->generateRandomDirection();
             }
         }
 

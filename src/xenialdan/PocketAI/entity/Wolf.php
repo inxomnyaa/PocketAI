@@ -24,7 +24,6 @@ declare(strict_types=1);
 namespace xenialdan\PocketAI\entity;
 
 use pocketmine\math\Vector3;
-use pocketmine\nbt\tag\CompoundTag;
 use xenialdan\PocketAI\EntityProperties;
 use xenialdan\PocketAI\entitytype\AIEntity;
 
@@ -35,10 +34,10 @@ class Wolf extends AIEntity
     /** @var Vector3 */
     public $direction = null;
 
-    protected function initEntity(CompoundTag $nbt): void
+    protected function initEntity(/*CompoundTag $nbt*/): void
     {
         $this->setEntityProperties(new EntityProperties("entities/wolf", $this));
-        parent::initEntity($nbt);
+        parent::initEntity(/*$nbt*/);
     }
 
     public function getName(): string

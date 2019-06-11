@@ -10,13 +10,14 @@ use pocketmine\event\entity\EntityDamageByChildEntityEvent;
 use pocketmine\event\entity\EntityDamageByEntityEvent;
 use pocketmine\event\entity\EntityDamageEvent;
 use pocketmine\math\Vector3;
-use pocketmine\nbt\tag\CompoundTag;
 use pocketmine\network\mcpe\protocol\EntityEventPacket;
 use pocketmine\Player;
 use xenialdan\PocketAI\EntityProperties;
 use xenialdan\PocketAI\entitytype\AIProjectile;
 use xenialdan\PocketAI\Loader;
 
+
+//TODO pull in physics: Just fucking throw the item at the players face!!!11!!1!1!111!!1 motion, distance via direction->normalize->multiply distance
 class FishingHook extends AIProjectile
 {
     const NETWORK_ID = self::FISHING_HOOK;
@@ -29,10 +30,10 @@ class FishingHook extends AIProjectile
     protected $gravity = 0.1;
     protected $drag = 0.05;
 
-    protected function initEntity(CompoundTag $nbt): void
+    protected function initEntity(/*CompoundTag $nbt*/): void
     {
         $this->setEntityProperties(new EntityProperties("entities/fishing_hook", $this));
-        parent::initEntity($nbt);
+        parent::initEntity(/*$nbt*/);
         $this->propertyManager->setFloat(34, 1);
         $this->propertyManager->setFloat(35, 1);
         $this->propertyManager->setFloat(36, 1);

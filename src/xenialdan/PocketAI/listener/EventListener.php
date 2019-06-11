@@ -47,6 +47,10 @@ class EventListener implements Listener
         }
     }
 
+    /**
+     * @param PlayerInteractEvent $event
+     * @throws \ReflectionException
+     */
     public function onInteract(PlayerInteractEvent $event)
     {
         switch ($event->getAction()) {

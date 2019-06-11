@@ -26,7 +26,6 @@ namespace xenialdan\PocketAI\entity;
 use pocketmine\event\entity\EntityDamageByEntityEvent;
 use pocketmine\event\entity\EntityDamageEvent;
 use pocketmine\math\Vector3;
-use pocketmine\nbt\tag\CompoundTag;
 use pocketmine\network\mcpe\protocol\EntityEventPacket;
 use xenialdan\PocketAI\EntityProperties;
 use xenialdan\PocketAI\entitytype\AIEntity;
@@ -44,12 +43,12 @@ class Squid extends AIEntity
 
     private $switchDirectionTicker = 0;
 
-    protected function initEntity(CompoundTag $nbt): void
+    protected function initEntity(/*CompoundTag $nbt*/): void
     {
         $this->setEntityProperties(new EntityProperties("entities/squid", $this));
 
         $this->setBreathing(true);
-        parent::initEntity($nbt);
+        parent::initEntity(/*$nbt*/);
     }
 
     public function getName(): string
@@ -107,7 +106,7 @@ class Squid extends AIEntity
                     $this->motion->z = $this->swimDirection->z * $this->swimSpeed;
                 }
             } else {
-                $this->swimDirection = $this->generateRandomDirection();
+                #$this->swimDirection = $this->generateRandomDirection();
                 $this->swimSpeed = mt_rand(150, 350) / 2000;
             }
 

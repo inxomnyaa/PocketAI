@@ -27,7 +27,6 @@ use pocketmine\entity\Attribute;
 use pocketmine\event\entity\EntityDamageEvent;
 use pocketmine\inventory\InventoryHolder;
 use pocketmine\math\Vector3;
-use pocketmine\nbt\tag\CompoundTag;
 use xenialdan\PocketAI\EntityProperties;
 use xenialdan\PocketAI\entitytype\AIEntity;
 use xenialdan\PocketAI\event\AddonEvent;
@@ -42,14 +41,17 @@ class Horse extends AIEntity implements Rideable, Tamable, InventoryHolder
     /** @var Vector3 */
     public $direction = null;
 
-    protected function initEntity(CompoundTag $nbt): void
+    /**
+     * @throws \ReflectionException
+     */
+    protected function initEntity(/*CompoundTag $nbt*/): void
     {
         $this->setEntityProperties(new EntityProperties("entities/horse", $this));
-        parent::initEntity($nbt);
+        parent::initEntity(/*$nbt*/);
 
         // TODO: remove - just for testing purposes
         //Temp auto-tame
-        Loader::getInstance()->getServer()->getPluginManager()->callEvent($ev = new AddonEvent(Loader::getInstance(), $this, "minecraft:on_tame"));
+        ($ev = new AddonEvent(Loader::getInstance(), $this, "minecraft:on_tame"))->call();
         #$this->setDataFlag(self::DATA_FLAGS, self::DATA_FLAG_TAMED, true);
         $this->setDataFlag(self::DATA_FLAGS, self::DATA_FLAG_WASD_CONTROLLED, true);
         $this->setDataFlag(self::DATA_FLAGS, self::DATA_FLAG_CAN_POWER_JUMP, true);

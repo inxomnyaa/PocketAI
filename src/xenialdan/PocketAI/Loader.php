@@ -20,7 +20,6 @@ use xenialdan\PocketAI\component\ComponentGroups;
 use xenialdan\PocketAI\component\Components;
 use xenialdan\PocketAI\entity\Cow;
 use xenialdan\PocketAI\entity\FishingHook;
-use xenialdan\PocketAI\entity\LeashKnot;
 use xenialdan\PocketAI\entitytype\AIEntity;
 use xenialdan\PocketAI\item\FishingRod;
 use xenialdan\PocketAI\item\Lead;
@@ -197,8 +196,8 @@ class Loader extends PluginBase
     {
         Entity::registerEntity(Cow::class, true, ["pocketai:cow", "minecraft:cow"]);//TODO use _identifier
         $this->getLogger()->notice("Registered AI for: Cow");
-        Entity::registerEntity(LeashKnot::class, true, ["pocketai:leash_knot", "minecraft:leash_knot"]);
-        $this->getLogger()->notice("Registered Entity: LeashKnot");
+        //Entity::registerEntity(LeashKnot::class, true, ["pocketai:leash_knot", "minecraft:leash_knot"]);
+        //$this->getLogger()->notice("Registered Entity: LeashKnot");
     }
 
     public function registerItems()
