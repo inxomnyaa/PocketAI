@@ -5,6 +5,7 @@ namespace xenialdan\PocketAI\component\minecraft;
 use xenialdan\PocketAI\component\BaseComponent;
 use xenialdan\PocketAI\entitytype\AIEntity;
 use xenialdan\PocketAI\entitytype\AIProjectile;
+use xenialdan\PocketAI\event\CallableEvent;
 
 class _interact extends BaseComponent
 {
@@ -22,7 +23,7 @@ class _interact extends BaseComponent
     public $hurt_item;
     /** @var string $interact_text Text to show when the player is able to interact in this way with this entity when playing with Touch-screen controls */
     public $interact_text;
-    /** @var mixed $on_interact Event to fire when the interaction occurs */
+    /** @var CallableEvent $on_interact Event to fire when the interaction occurs */
     public $on_interact;
     /** @var string $play_sounds List of sounds to play when the interaction occurs */
     public $play_sounds;
@@ -52,7 +53,7 @@ class _interact extends BaseComponent
         $this->cooldown = $values['cooldown'] ?? $this->cooldown;
         $this->hurt_item = $values['hurt_item'] ?? $this->hurt_item;
         $this->interact_text = $values['interact_text'] ?? $this->interact_text;
-        $this->on_interact = $values['on_interact'] ?? $this->on_interact;
+        $this->on_interact = new CallableEvent($values['on_interact'] ?? []);
         $this->play_sounds = $values['play_sounds'] ?? $this->play_sounds;
         $this->spawn_entities = $values['spawn_entities'] ?? $this->spawn_entities;
         $this->spawn_items = $values['spawn_items'] ?? $this->spawn_items;

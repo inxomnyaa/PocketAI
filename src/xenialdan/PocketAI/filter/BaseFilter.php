@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace xenialdan\PocketAI\filter;
 
 use pocketmine\entity\Entity;
-use pocketmine\Player;
+use xenialdan\PocketAI\API;
 use xenialdan\PocketAI\entitytype\AIEntity;
 
 abstract class BaseFilter
@@ -35,7 +35,7 @@ abstract class BaseFilter
      */
     public function test(AIEntity $caller, Entity $other): bool
     {
-        $toTest = $this->subjectToTest($caller, $other);
+        $toTest = API::targetToTest($caller, $other, $this->subject);
         if (is_null($toTest)) return false;
         $this->subjectToTest = $toTest;
         return true;
@@ -47,49 +47,6 @@ abstract class BaseFilter
     public function getName(): string
     {
         return $this->name;
-    }
-
-    /**
-     * Returns the subject that the test should run on
-     * @param AIEntity $caller
-     * @param Entity $other
-     * @return null|Entity
-     */
-    public function subjectToTest(AIEntity $caller, Entity $other): ?Entity
-    {
-        switch ($this->subject) {
-            //The other member of an interaction, not the caller
-            case "other":
-                {
-                    return $other;
-                    break;
-                }
-            //The caller's current parent
-            case "parent":
-                {
-                    return $caller->getParentEntity();
-                    break;
-                }
-            //TODO The player involved with the interaction --Could possibly be even another entity?
-            case "player":
-                {
-                    return ($other instanceof Player) ? $other : null;
-                    break;
-                }
-            //The entity or object calling the test
-            case "self":
-                {
-                    return $caller;
-                    break;
-                }
-            //The caller's current target
-            case "target":
-                {
-                    return $caller->getTargetEntity();
-                    break;
-                }
-        }
-        return null;
     }
 
     /**

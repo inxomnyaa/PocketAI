@@ -155,6 +155,11 @@ class API
                     return $caller->getTargetEntity();
                     break;
                 }
+            //TODO
+            case "baby":
+                {
+                    break;
+                }
         }
         return null;
     }

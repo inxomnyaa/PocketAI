@@ -5,15 +5,16 @@ namespace xenialdan\PocketAI\component\minecraft;
 use xenialdan\PocketAI\component\BaseComponent;
 use xenialdan\PocketAI\entitytype\AIEntity;
 use xenialdan\PocketAI\entitytype\AIProjectile;
+use xenialdan\PocketAI\event\CallableEvent;
 
 class _peek extends BaseComponent
 {
     protected $name = "minecraft:peek";
-    /** @var string $on_close Event to call when the entity is done peeking */
+    /** @var CallableEvent $on_close Event to call when the entity is done peeking */
     public $on_close;
-    /** @var string $on_open Event to call when the entity starts peeking */
+    /** @var CallableEvent $on_open Event to call when the entity starts peeking */
     public $on_open;
-    /** @var string $on_target_open Event to call when the entity's target entity starts peeking */
+    /** @var CallableEvent $on_target_open Event to call when the entity's target entity starts peeking */
     public $on_target_open;
 
     /**
@@ -23,9 +24,9 @@ class _peek extends BaseComponent
      */
     public function __construct(array $values = [])
     {
-        $this->on_close = $values['on_close'] ?? $this->on_close;
-        $this->on_open = $values['on_open'] ?? $this->on_open;
-        $this->on_target_open = $values['on_target_open'] ?? $this->on_target_open;
+        $this->on_close = new CallableEvent($values['on_close'] ?? []);
+        $this->on_open = new CallableEvent($values['on_open'] ?? []);
+        $this->on_target_open = new CallableEvent($values['on_target_open'] ?? []);
 
     }
 

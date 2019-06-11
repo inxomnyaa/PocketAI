@@ -27,7 +27,7 @@ class AddonEvent extends PluginEvent implements Cancellable
         parent::__construct($plugin);
         $this->setEntity($entity);
         $this->setEvent($event);
-        $plugin->getLogger()->info("Called addon event: " . $this->getEvent());
+        $plugin->getLogger()->info("Created addon event: " . $this->getEvent());
     }
 
     /**
@@ -63,11 +63,13 @@ class AddonEvent extends PluginEvent implements Cancellable
     }
 
     /**
-     *  Issues an event
+     * TODO change to @see PluginEvent::call()
+     * Issues an event
      * @param array $data Event data
      */
-    public function execute($data): void
+    public function execute(array $data = []): void
     {
+        $this->getPlugin()->getLogger()->info("Called addon event: " . $this->getEvent());
         foreach ($data as $function => $function_properties) {
             switch ($function) {
                 case "randomize":
@@ -94,7 +96,7 @@ class AddonEvent extends PluginEvent implements Cancellable
                                     }
                                 default:
                                     {
-                                        $this->entity->getLevel()->getServer()->getLogger()->notice("Function \"" . $function_property . "\" for add component events is not coded into the plugin yet");
+                                        $this->entity->getLevel()->getServer()->getLogger()->notice("Function \"" . $function_property . "\" for component \"$function\" events is not coded into the plugin yet");
                                     }
                             }
                         }
@@ -113,7 +115,7 @@ class AddonEvent extends PluginEvent implements Cancellable
                                     }
                                 default:
                                     {
-                                        Loader::getInstance()->getLogger()->notice("Function \"" . $function_property . "\" for remove component events is not coded into the plugin yet");
+                                        Loader::getInstance()->getLogger()->notice("Function \"" . $function_property . "\" for component \"$function\" events is not coded into the plugin yet");
                                     }
                             }
                         }

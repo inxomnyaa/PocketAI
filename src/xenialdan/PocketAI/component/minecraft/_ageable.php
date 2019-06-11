@@ -5,6 +5,7 @@ namespace xenialdan\PocketAI\component\minecraft;
 use xenialdan\PocketAI\component\BaseComponent;
 use xenialdan\PocketAI\entitytype\AIEntity;
 use xenialdan\PocketAI\entitytype\AIProjectile;
+use xenialdan\PocketAI\event\CallableEvent;
 
 class _ageable extends BaseComponent
 {
@@ -13,7 +14,7 @@ class _ageable extends BaseComponent
     public $duration = 1200.0;
     /** @var array $feedItems List of items that can be fed to the entity. Includes 'item' for the item name and 'growth' to define how much time it grows up by */
     public $feedItems;
-    /** @var string $grow_up Event to run when this entity grows up */
+    /** @var CallableEvent $grow_up Event to run when this entity grows up */
     public $grow_up;
 
     /**
@@ -25,8 +26,7 @@ class _ageable extends BaseComponent
     {
         $this->duration = $values['duration'] ?? $this->duration;
         $this->feedItems = $values['feedItems'] ?? $this->feedItems;
-        $this->grow_up = $values['grow_up'] ?? $this->grow_up;
-
+        $this->grow_up = new CallableEvent($values['grow_up'] ?? []);
     }
 
     /**
@@ -35,7 +35,6 @@ class _ageable extends BaseComponent
      */
     public function apply($entity): void
     {
-        // TODO: Implement apply() method.
     }
 
     /**
@@ -44,6 +43,5 @@ class _ageable extends BaseComponent
      */
     public function remove($entity): void
     {
-        // TODO: Implement remove() method.
     }
 }

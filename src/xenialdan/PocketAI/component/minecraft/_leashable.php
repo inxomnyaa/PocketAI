@@ -5,6 +5,7 @@ namespace xenialdan\PocketAI\component\minecraft;
 use xenialdan\PocketAI\component\BaseComponent;
 use xenialdan\PocketAI\entitytype\AIEntity;
 use xenialdan\PocketAI\entitytype\AIProjectile;
+use xenialdan\PocketAI\event\CallableEvent;
 
 class _leashable extends BaseComponent
 {
@@ -13,9 +14,9 @@ class _leashable extends BaseComponent
     public $hard_distance = 6.0;
     /** @var float $max_distance Distance in blocks at which the leash breaks */
     public $max_distance = 10.0;
-    /** @var string $on_leash Event to call when this entity is leashed */
+    /** @var CallableEvent $on_leash Event to call when this entity is leashed */
     public $on_leash;
-    /** @var string $on_unleash Event to call when this entity is unleashed */
+    /** @var CallableEvent $on_unleash Event to call when this entity is unleashed */
     public $on_unleash;
     /** @var float $soft_distance Distance in blocks at which the 'spring' effect starts acting to keep this entity close to the entity that leashed it */
     public $soft_distance = 4.0;
@@ -29,8 +30,8 @@ class _leashable extends BaseComponent
     {
         $this->hard_distance = $values['hard_distance'] ?? $this->hard_distance;
         $this->max_distance = $values['max_distance'] ?? $this->max_distance;
-        $this->on_leash = $values['on_leash'] ?? $this->on_leash;
-        $this->on_unleash = $values['on_unleash'] ?? $this->on_unleash;
+        $this->on_leash = new CallableEvent($values['on_leash'] ?? []);
+        $this->on_unleash = new CallableEvent($values['on_unleash'] ?? []);
         $this->soft_distance = $values['soft_distance'] ?? $this->soft_distance;
 
     }

@@ -5,6 +5,7 @@ namespace xenialdan\PocketAI\component\minecraft;
 use xenialdan\PocketAI\component\BaseComponent;
 use xenialdan\PocketAI\entitytype\AIEntity;
 use xenialdan\PocketAI\entitytype\AIProjectile;
+use xenialdan\PocketAI\event\CallableEvent;
 
 class _tameable extends BaseComponent
 {
@@ -13,7 +14,7 @@ class _tameable extends BaseComponent
     public $probability = 1.0;
     /** @var array $tameItems The list of items that can be used to tame this entity */
     public $tameItems;
-    /** @var string $tame_event Event to run when this entity becomes tamed */
+    /** @var CallableEvent $tame_event Event to run when this entity becomes tamed */
     public $tame_event;
 
     /**
@@ -25,7 +26,7 @@ class _tameable extends BaseComponent
     {
         $this->probability = $values['probability'] ?? $this->probability;
         $this->tameItems = $values['tameItems'] ?? $this->tameItems;
-        $this->tame_event = $values['tame_event'] ?? $this->tame_event;
+        $this->tame_event = new CallableEvent($values['tame_event'] ?? []);
 
     }
 

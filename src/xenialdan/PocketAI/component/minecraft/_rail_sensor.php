@@ -5,6 +5,7 @@ namespace xenialdan\PocketAI\component\minecraft;
 use xenialdan\PocketAI\component\BaseComponent;
 use xenialdan\PocketAI\entitytype\AIEntity;
 use xenialdan\PocketAI\entitytype\AIProjectile;
+use xenialdan\PocketAI\event\CallableEvent;
 
 class _rail_sensor extends BaseComponent
 {
@@ -15,9 +16,9 @@ class _rail_sensor extends BaseComponent
     public $eject_on_activate = true;
     /** @var bool $eject_on_deactivate If true, this entity will eject all of its riders when it passes over a deactivated rail */
     public $eject_on_deactivate = false;
-    /** @var string $on_activate Event to call when the rail is activated */
+    /** @var CallableEvent $on_activate Event to call when the rail is activated */
     public $on_activate;
-    /** @var string $on_deactivate Event to call when the rail is deactivated */
+    /** @var CallableEvent $on_deactivate Event to call when the rail is deactivated */
     public $on_deactivate;
     /** @var bool $tick_command_block_on_activate If true, command blocks will start ticking when passing over an activated rail */
     public $tick_command_block_on_activate = true;
@@ -34,8 +35,8 @@ class _rail_sensor extends BaseComponent
         $this->check_block_types = $values['check_block_types'] ?? $this->check_block_types;
         $this->eject_on_activate = $values['eject_on_activate'] ?? $this->eject_on_activate;
         $this->eject_on_deactivate = $values['eject_on_deactivate'] ?? $this->eject_on_deactivate;
-        $this->on_activate = $values['on_activate'] ?? $this->on_activate;
-        $this->on_deactivate = $values['on_deactivate'] ?? $this->on_deactivate;
+        $this->on_activate = new CallableEvent($values['on_activate'] ?? []);
+        $this->on_deactivate = new CallableEvent($values['on_deactivate'] ?? []);
         $this->tick_command_block_on_activate = $values['tick_command_block_on_activate'] ?? $this->tick_command_block_on_activate;
         $this->tick_command_block_on_deactivate = $values['tick_command_block_on_deactivate'] ?? $this->tick_command_block_on_deactivate;
 

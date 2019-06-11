@@ -87,9 +87,11 @@ class EntityProperties extends DataPropertyManager
         return iterator_to_array($this->components);
     }
 
-    public function findComponents(string $name): Components
+    public function findComponents(string $name): Components//TODO optimize
     {
+        if (class_exists($name) && is_subclass_of($name, BaseComponent::class)) $name = (new $name)->getName();
         $c = new Components();
+        if (!$this->hasComponent($name)) return $c;
         $map = array_filter($this->getComponentsArray(), function ($v) use ($name) {
             /** @var BaseComponent $v */
             return $v->getName() === $name;
@@ -108,19 +110,21 @@ class EntityProperties extends DataPropertyManager
         return $c;
     }
 
-    public function hasComponent(string $name):bool{
-        $map = array_filter($this->getComponentsArray(), function ($v) use ($name) {
+    public function hasComponent(string $name): bool
+    {
+        if (class_exists($name) && is_subclass_of($name, BaseComponent::class)) $name = (new $name)->getName();
+        foreach ($this->getComponentsArray() as $v) {
             /** @var BaseComponent $v */
-            return $v->getName() === $name;
-        });
+            if ($v->getName() === $name) return true;
+        };
         foreach ($this->getActiveComponentGroups() as $componentGroup) {
             /** @var ComponentGroup $componentGroup */
-            $map = array_merge(array_filter($componentGroup->getComponentsArray(), function ($v) use ($name) {//TODO check if array_merge removes components
+            foreach ($componentGroup->getComponentsArray() as $v) {
                 /** @var BaseComponent $v */
-                return $v->getName() === $name;
-            }), $map);
+                if ($v->getName() === $name) return true;
+            };
         }
-        return !empty($map);
+        return false;
     }
 
     /**

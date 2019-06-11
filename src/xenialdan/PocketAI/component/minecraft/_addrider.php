@@ -13,7 +13,7 @@ class _addrider extends BaseComponent
     public $entity_type;
 
     /**
-     * Adds a rider to the entity. Requires ''minecraft:''rideable.
+     * Adds a rider to the entity. Requires minecraft:rideable.
      * _addrider constructor.
      * @param array $values
      */

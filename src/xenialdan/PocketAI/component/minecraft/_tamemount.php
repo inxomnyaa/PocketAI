@@ -5,6 +5,7 @@ namespace xenialdan\PocketAI\component\minecraft;
 use xenialdan\PocketAI\component\BaseComponent;
 use xenialdan\PocketAI\entitytype\AIEntity;
 use xenialdan\PocketAI\entitytype\AIProjectile;
+use xenialdan\PocketAI\event\CallableEvent;
 
 class _tamemount extends BaseComponent
 {
@@ -33,7 +34,7 @@ class _tamemount extends BaseComponent
     public $minTemper;
     /** @var string $ride_text The text that shows in the riding interact button */
     public $ride_text;
-    /** @var string $tame_event Event that triggers when the entity becomes tamed */
+    /** @var CallableEvent $tame_event Event that triggers when the entity becomes tamed */
     public $tame_event;
 
     /**
@@ -52,7 +53,7 @@ class _tamemount extends BaseComponent
         $this->maxTemper = $values['maxTemper'] ?? $this->maxTemper;
         $this->minTemper = $values['minTemper'] ?? $this->minTemper;
         $this->ride_text = $values['ride_text'] ?? $this->ride_text;
-        $this->tame_event = $values['tame_event'] ?? $this->tame_event;
+        $this->tame_event = new CallableEvent($values['tame_event'] ?? []);
 
     }
 

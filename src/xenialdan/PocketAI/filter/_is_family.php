@@ -38,7 +38,7 @@ class _is_family extends BaseFilter
         //TODO check vanilla entities?
         if ($this->subjectToTest instanceof Player && $this->value === "player") return true;//TODO check if Human are also allowed
         /** @var Components $components */
-        $components = $caller->getEntityProperties()->findComponents("minecraft:type_family");
+        $components = $caller->getEntityProperties()->findComponents(_type_family::class);
         /** @var _type_family $component */
         foreach ($components as $component) {
             if (is_array($component->family) && in_array($this->value, $component->family)) return true;

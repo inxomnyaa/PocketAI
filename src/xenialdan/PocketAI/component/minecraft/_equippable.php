@@ -5,6 +5,7 @@ namespace xenialdan\PocketAI\component\minecraft;
 use xenialdan\PocketAI\component\BaseComponent;
 use xenialdan\PocketAI\entitytype\AIEntity;
 use xenialdan\PocketAI\entitytype\AIProjectile;
+use xenialdan\PocketAI\event\CallableEvent;
 
 class _equippable extends BaseComponent
 {
@@ -20,9 +21,9 @@ class _equippable extends BaseComponent
     public $interact_text;
     /** @var string $item Name of the item that can be equipped for this slot */
     public $item;
-    /** @var string $on_equip Event to trigger when this entity is equipped with this item */
+    /** @var CallableEvent $on_equip Event to trigger when this entity is equipped with this item */
     public $on_equip;
-    /** @var string $on_unequip Event to trigger when this item is removed from this entity */
+    /** @var CallableEvent $on_unequip Event to trigger when this item is removed from this entity */
     public $on_unequip;
     /** @var int $slot The slot number of this slot */
     public $slot;
@@ -38,8 +39,8 @@ class _equippable extends BaseComponent
         $this->accepted_items = $values['accepted_items'] ?? $this->accepted_items;
         $this->interact_text = $values['interact_text'] ?? $this->interact_text;
         $this->item = $values['item'] ?? $this->item;
-        $this->on_equip = $values['on_equip'] ?? $this->on_equip;
-        $this->on_unequip = $values['on_unequip'] ?? $this->on_unequip;
+        $this->on_equip = new CallableEvent($values['on_equip'] ?? []);
+        $this->on_unequip = new CallableEvent($values['on_unequip'] ?? []);
         $this->slot = $values['slot'] ?? $this->slot;
 
     }

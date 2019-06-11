@@ -28,8 +28,10 @@ use xenialdan\PocketAI\ai\AIManager;
 use xenialdan\PocketAI\API;
 use xenialdan\PocketAI\component\ComponentGroup;
 use xenialdan\PocketAI\component\Components;
+use xenialdan\PocketAI\component\minecraft\_ageable;
 use xenialdan\PocketAI\component\minecraft\_interact;
 use xenialdan\PocketAI\component\minecraft\_leashable;
+use xenialdan\PocketAI\component\minecraft\_physics;
 use xenialdan\PocketAI\entity\LeashKnot;
 use xenialdan\PocketAI\EntityProperties;
 use xenialdan\PocketAI\event\AddonEvent;
@@ -88,7 +90,7 @@ abstract class AIEntity extends Living implements InventoryHolder
         //$this->getDataPropertyManager()->setLong(self::DATA_LEAD_HOLDER_EID, -1);
         if (is_null($this->getEntityProperties())) return;
         /** @var Components $components */
-        $components = $this->getEntityProperties()->findComponents("minecraft:leashable");
+        $components = $this->getEntityProperties()->findComponents(_leashable::class);
         if ($components->count() > 0) {
             /** @var _leashable $component */
             foreach ($components as $component) {
@@ -139,6 +141,18 @@ abstract class AIEntity extends Living implements InventoryHolder
             foreach (API::getAABBCorners($this->getBoundingBox()) as $corner) {
                 $this->getLevel()->addParticle(new HappyVillagerParticle($corner));
             }
+            /** @see _ageable ticking */
+            /** @var Components $components */
+            $components = $this->getEntityProperties()->findComponents(_ageable::class);
+            if ($components->count() > 0) {
+                /** @var _ageable $component */
+                foreach ($components as $component) {
+                    if ($this->ticksLived >= $component->duration) {
+                        $component->grow_up;
+                    }
+                }
+            }
+            //
             if ($this->ticksLived % 20 * 30 === 0) {
                 if (is_null(($target = $this->getTargetEntity()))) {
                     $this->path = null;
@@ -187,7 +201,7 @@ abstract class AIEntity extends Living implements InventoryHolder
 
     protected function applyGravity(): void
     {
-        if ($this->getEntityProperties()->hasComponent("minecraft:physics")) {
+        if ($this->getEntityProperties()->hasComponent(_physics::class)) {
             parent::applyGravity();
         }
     }
@@ -475,7 +489,7 @@ abstract class AIEntity extends Living implements InventoryHolder
         if (is_null($entityProperties)) return false;
         //leashing start
         if ($this->isLeashed()) {
-            if ($this->getEntityProperties()->hasComponent("minecraft:leashable")) {
+            if ($this->getEntityProperties()->hasComponent(_leashable::class)) {
                 $holder = $this->getLeadHolder();
                 if ($holder instanceof LeashKnot) $holder->kill();
                 elseif ($holder->getId() === $player->getId()) {
@@ -492,7 +506,7 @@ abstract class AIEntity extends Living implements InventoryHolder
         switch ($player->getInventory()->getItemInHand()->getId()) {
             case Item::LEAD:
                 {
-                    if ($this->getEntityProperties()->hasComponent("minecraft:leashable")) {
+                    if ($this->getEntityProperties()->hasComponent(_leashable::class)) {
                         if (!$this->isLeashed()) {
                             $player->getInventory()->getItemInHand()->pop();
                             $this->setLeashedTo($player);
@@ -503,7 +517,7 @@ abstract class AIEntity extends Living implements InventoryHolder
             default:
                 {
                     /** @var Components $components */
-                    $components = $this->getEntityProperties()->findComponents("minecraft:interact");
+                    $components = $this->getEntityProperties()->findComponents(_interact::class);
                     if ($components->count() > 0) {
                         /** @var _interact $component */
                         foreach ($components as $component) {
@@ -589,7 +603,7 @@ abstract class AIEntity extends Living implements InventoryHolder
         /** @var Components $components */
         $entityProperties = $target->getEntityProperties();
         if (is_null($entityProperties)) return false;
-        $components = $entityProperties->findComponents("minecraft:interact");
+        $components = $entityProperties->findComponents(_interact::class);
         if ($components->count() > 0) {
             /** @var _interact $component */
             foreach ($components as $component) {

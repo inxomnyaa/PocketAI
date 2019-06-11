@@ -5,6 +5,7 @@ namespace xenialdan\PocketAI\component\minecraft;
 use xenialdan\PocketAI\component\BaseComponent;
 use xenialdan\PocketAI\entitytype\AIEntity;
 use xenialdan\PocketAI\entitytype\AIProjectile;
+use xenialdan\PocketAI\event\CallableEvent;
 
 class _breedable extends BaseComponent
 {
@@ -22,7 +23,7 @@ class _breedable extends BaseComponent
     public $breedsWith;
     /** @var string $babyType The entity definition of this entity's babies */
     public $babyType;
-    /** @var string $breed_event Event to run when this entity breeds */
+    /** @var CallableEvent $breed_event Event to run when this entity breeds */
     public $breed_event;
     /** @var string $mateType The entity definition of this entity's mate */
     public $mateType;
@@ -56,7 +57,7 @@ class _breedable extends BaseComponent
         $this->breedItems = $values['breedItems'] ?? $this->breedItems;
         $this->breedsWith = $values['breedsWith'] ?? $this->breedsWith;
         $this->babyType = $values['babyType'] ?? $this->babyType;
-        $this->breed_event = $values['breed_event'] ?? $this->breed_event;
+        $this->breed_event = new CallableEvent($values['breed_event'] ?? []);
         $this->mateType = $values['mateType'] ?? $this->mateType;
         $this->extraBabyChance = $values['extraBabyChance'] ?? $this->extraBabyChance;
         $this->inheritTamed = $values['inheritTamed'] ?? $this->inheritTamed;

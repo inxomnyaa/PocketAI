@@ -5,13 +5,14 @@ namespace xenialdan\PocketAI\component\minecraft;
 use xenialdan\PocketAI\component\BaseComponent;
 use xenialdan\PocketAI\entitytype\AIEntity;
 use xenialdan\PocketAI\entitytype\AIProjectile;
+use xenialdan\PocketAI\event\CallableEvent;
 
 class _sittable extends BaseComponent
 {
     protected $name = "minecraft:sittable";
-    /** @var string $sit_event Event to run when the entity enters the 'sit' state */
+    /** @var CallableEvent $sit_event Event to run when the entity enters the 'sit' state */
     public $sit_event;
-    /** @var string $stand_event Event to run when the entity exits the 'sit' state */
+    /** @var CallableEvent $stand_event Event to run when the entity exits the 'sit' state */
     public $stand_event;
 
     /**
@@ -21,8 +22,8 @@ class _sittable extends BaseComponent
      */
     public function __construct(array $values = [])
     {
-        $this->sit_event = $values['sit_event'] ?? $this->sit_event;
-        $this->stand_event = $values['stand_event'] ?? $this->stand_event;
+        $this->sit_event = new CallableEvent($values['sit_event'] ?? []);
+        $this->stand_event = new CallableEvent($values['stand_event'] ?? []);
 
     }
 
